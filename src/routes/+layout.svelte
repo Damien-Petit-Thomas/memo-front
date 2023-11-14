@@ -1,7 +1,6 @@
 
 <script>
     import Header from './Header.svelte'// Définir les catégories pour les révisions DevOps
-    import Category from './Category.svelte';
 </script>
 
 <div class="app">
@@ -12,9 +11,14 @@
 
     <footer>
         <p>merci de votre visite</p>
+				<a href="/">home</a>
     </footer>
 </div>
+
+
 <style>
+
+	
 main {
 		flex: 1;
 		display: flex;
@@ -35,5 +39,5 @@ main {
 
 
 
-</style>
+</style> 
 

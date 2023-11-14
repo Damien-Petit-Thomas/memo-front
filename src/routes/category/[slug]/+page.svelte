@@ -2,6 +2,5 @@
     export let data;
 </script>
 
-
-<h1>{data.post.title}</h1>
-<div>{@html data.post.content}</div>
+<div>{JSON.stringify(data)}</div>
+<h2>ceci est un nouveau titre qu'il faudra dynamiser</h2>

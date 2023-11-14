@@ -1,18 +1,17 @@
 <script>
-        import {categories} from '$lib/data.js';
+  export let data
 </script>
+
 <ul class="category-list">
-    <!-- Parcourir les catégories et afficher des liens pour chaque catégorie -->
-    {#each categories as category (category.id)}
-        <li class="category-item" >
-            <a href="/{category.slug}" class="category-link" style="background-color: {category.color}">
-                {category.title}
-            </a>
-        </li>
-    {/each}
+  <!-- Parcourir les catégories et afficher des liens pour chaque catégorie -->
+  {#each data.categories as category (category.id)}
+    <li class="category-item">
+      <a href="/category/{category.slug}" class="category-link" style="background-color: {category.color}">
+        {category.name}
+      </a>
+    </li>
+  {/each}
 </ul>
-
-
 
 <style>
 

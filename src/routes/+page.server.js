@@ -8,7 +8,7 @@ import axios from 'axios'
 export async function load({ params }) {
     try {
         const { data: categories } = await axios.get(`http://localhost:3000/api/tag`);
-        console.log(categories);
+     
         return {
         
             categories
