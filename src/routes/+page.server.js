@@ -1,20 +1,23 @@
-import { error } from '@sveltejs/kit'
-import axios from 'axios'
-
-
-// on fait un appel à l'api locale pour récupérer les tags sur le endpoint http://localhost:3000/api/tag
-
-
-export async function load({ params }) {
-    try {
-        const { data: categories } = await axios.get(`http://localhost:3000/api/tag`);
-     
-        return {
-        
-            categories
-        
-        };
-    } catch (err) {
-        return error(err);
+export const load = async ({ fetch }) => {
+  try {
+    const [cateoriesResponse, todosResponse] = await Promise.all([
+      fetch(
+        'http://localhost:3000/api/tag',
+      ),
+      fetch(
+        'http://localhost:3000/api/todo',
+      ),
+    ]);
+    if (!cateoriesResponse.ok) {
+      throw new Error(`HTTP error: ${cateoriesResponse.status}`);
     }
+    if (!todosResponse.ok) {
+      throw new Error(`HTTP error: ${todosResponse.status}`);
     }
+    const categories = await cateoriesResponse.json();
+    const todos = await todosResponse.json();
+    return { categories, todos };
+  } catch (error) {
+    return { error: 'Unable to fetch currencies' };
+  }
+};
