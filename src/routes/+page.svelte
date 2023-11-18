@@ -1,7 +1,23 @@
 <script>
 	import { createTodoStore } from '$lib/stores/todos.js';
+	import {createCategoryStore} from '$lib/stores/category.js';
+	import Categorielist from '../lib/components/categorylist/Categorylist.svelte';
 	import TodoList from '$lib/components/todolist/Todolist.svelte';
    export let data;
+	 const categoriesDB = data.categories.map((category) => {
+		return {
+			id: category.id,
+			name: category.name,
+			slug: category.slug,
+			color : category.color
+		};
+	});
+  
+	const categories = createCategoryStore(
+	categoriesDB
+	);
+
+
 	 const todosDB = data.todos.map((todo) => {
 		return {
 			done: todo.done,
@@ -14,6 +30,7 @@
 	);
 	
 </script>
+
 <div class="board">
 	<input
 		placeholder="ajouter une tâche"
@@ -24,7 +41,6 @@
 			}
 		}}
 	/>
-
 	<div class="wrapper">
 		<div class="todo">
 			<h2>À FAIRE</h2>
@@ -34,9 +50,36 @@
 			<h2>EN COURS</h2>
 			<TodoList store={todos} done={true} />
 		</div>
-		</div>
+	</div>
+	<Categorielist store={categories}  />
+
+</div>
+
+
+<div>
+	<!-- <input
+	placeholder="ajouter une tâche"
+	on:keydown={(e) => {
+				if (e.key === 'Enter') {
+					todos.add(e.currentTarget.value);
+					e.currentTarget.value = '';
+				}
+			}}
+		/>
+	 -->
+		<!-- <div class="wrapper">
+			<div class="todo">
+				<h2>À FAIRE</h2>
+				<TodoList store={todos} done={false} />
+			</div>
+			<div class="done">
+				<h2>EN COURS</h2>
+				<TodoList store={todos} done={true} />
+			</div>
+		</div> -->
 	</div>
 
+	
 <style>
 	.wrapper {
 		display: flex;

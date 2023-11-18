@@ -2,7 +2,7 @@ export const load = async ({ fetch }) => {
   try {
     const [cateoriesResponse, todosResponse] = await Promise.all([
       fetch(
-        'http://localhost:3000/api/tag',
+        'http://localhost:3000/api/category',
       ),
       fetch(
         'http://localhost:3000/api/todo',
