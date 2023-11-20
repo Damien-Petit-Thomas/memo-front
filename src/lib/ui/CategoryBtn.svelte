@@ -1,12 +1,17 @@
 <script>
-  export let category;
+    import { createEventDispatcher } from "svelte";
+ export let item;
+  const dispatch = createEventDispatcher();
+
 </script>
 
 
 <button 
-class="btn-category"
-style="background-color: {category.color}"
->{category.name}</button>
+class="category-btn"
+style="background-color: {item.color}"
+on:click|preventDefault={(e) => dispatch("click", e)}
+>{item.name}
+</button>
 
 
 
@@ -20,6 +25,7 @@ style="background-color: {category.color}"
         font-weight: bold;
         font-size: 1.2rem;
         cursor: pointer;
+        display: inline;
     }
 
     button:hover{

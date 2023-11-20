@@ -1,14 +1,14 @@
 <script>
   import { send, receive } from '$lib/utils/transition.js';
+
   import CategoryBtn from '$lib/ui/CategoryBtn.svelte';
 
   export let store;
- 
 
   let name = '';
   let color = '#ff0000';
 
-  const addCategory = () => {
+  const addTag = () => {
     if (name && color) {
       const data = {
         name,
@@ -22,23 +22,23 @@
 </script>
 
 <div class="board">
-  <form on:submit|preventDefault={addCategory}>
-    <label for="name">Nom de la catégorie</label><br>
-    <input type="text" id="name" bind:value={name}><br>
+  <form on:submit|preventDefault={addTag}>
+    <label for="name">Nom du tag</label><br>
+     <input type="text" id="name" bind:value={name}><br>
     <label for="color">Choix de la couleur</label><br>
     <input type="color" id="color" bind:value={color}><br>
     <button type="submit">Valider</button>
   </form>
 
-  <ul class="categories">
-    {#each $store as category (category.id)}
+  <ul class="tags">
+    {#each $store as tag (tag.id)}
       <li
-        class="categorie"
-        in:receive={{ key: category.id }}
-        out:send={{ key: category.id }}
+        class="tag"
+        in:receive={{ key: tag.id }}
+        out:send={{ key: tag.id }}
       >
-        <CategoryBtn item={category} />
-        <button class="remove" on:click={() => store.remove(category)} aria-label="Remove" />
+      <CategoryBtn item={tag} />
+        <button class="remove" on:click={() => store.remove(tag)} aria-label="Remove" />
       </li>
     {/each}
   </ul>
