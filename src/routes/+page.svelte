@@ -1,12 +1,16 @@
 <script>
-	import { todos } from '$lib/stores/todo.js';
+	import { memos } from '$lib/stores/memo.js';
+ 	import { todos } from '$lib/stores/todo.js';
 	import {categories} from '$lib/stores/category.js';
 	import {tags} from '$lib/stores/tag.js'
-	import Categorielist from '../lib/components/categorylist/Categorylist.svelte';
+	import Categorielist from '../lib/components/createList/CreateList.svelte';
 	import TodoList from '$lib/components/todolist/Todolist.svelte';
-	import Taglist from '$lib/components/tagList/TagList.svelte'
   export let data;
 	
+
+
+
+
 	const tagDB = data.tags.map((tag) => {
 	  return{
 			id : tag.id,
@@ -17,6 +21,17 @@
 		})
 		
 		tags.update(() => tagDB);
+
+		const memoDB = data.tags.map((tag) => {
+	  return{
+			id : tag.id,
+			name: tag.name,
+			slug : tag.slug,
+			color: tag.color
+			}
+		})
+		
+		memos.update(() => memoDB);
 			
 			const categoriesDB = data.categories.map((category) => {
 				return {
@@ -62,12 +77,22 @@
 		</div>
 		<div class="done">
 			<h2>EN COURS</h2>
-			<TodoList store={todos} done={true} />
+			<TodoList 
+			store={todos}
+			 done={true}
+	
+			 />
 		</div>
 	</div>
 	<div class="list-container">
-		<Categorielist store={categories}  />
-		<Taglist store={tags} />
+		
+		<Categorielist
+		 store={categories}
+		 title="creer une catégorie"
+		 />
+		<Categorielist 
+		title="creer un tag"
+		store={tags} />
 	</div>
 
 </div>

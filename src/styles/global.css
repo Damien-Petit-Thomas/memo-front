@@ -9,23 +9,31 @@
 * {
   margin: 0;
 }
-body {
+:is(body) {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
 }
-img, picture, video, canvas, svg {
+:is(img, picture, video, canvas, svg) {
   display: block;
   max-width: 100%;
 }
-input, button, textarea, select {
+:is(input, button, textarea, select) {
   font: inherit;
 }
-p, h1, h2, h3, h4, h5, h6 {
+:is(p, h1, h2, h3, h4, h5, h6) {
   overflow-wrap: break-word;
 }
+
+
+is:a {
+	text-decoration: none;
+	color: inherit;
+}
+
 #root, #__next {
   isolation: isolate;
 }
+
 
 	/* Primary */
 
@@ -123,4 +131,15 @@ main{
 
 ul, ol {
 	list-style: none;
+}
+
+a {
+	text-decoration: none;
+	color: inherit;
+	cursor: pointer;
+}
+
+a:hover {
+	text-decoration: underline;
+	cursor: pointer;
 }

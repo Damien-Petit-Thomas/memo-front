@@ -3,6 +3,7 @@
   import Footer from '$lib/components/footer/Footer.svelte';
   import Sidebar from '../lib/components/sidebar/Sidebar.svelte';
   import '../styles/global.css';
+
 </script>
 
 <main>

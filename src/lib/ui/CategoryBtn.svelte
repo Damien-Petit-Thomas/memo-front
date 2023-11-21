@@ -9,7 +9,7 @@
 <button 
 class="category-btn"
 style="background-color: {item.color}"
-on:click|preventDefault={(e) => dispatch("click", e)}
+on:click|preventDefault={() => dispatch("click", item.id)}
 >{item.name}
 </button>
 
