@@ -15,6 +15,7 @@
 		"eslint-config-airbnb-base": "^15.0.0",
 		"eslint-plugin-import": "^2.29.0",
 		"svelte": "^4.0.5",
+		"svelte-dnd-action": "^0.9.33",
 		"vite": "^4.4.2"
 	},
 	"type": "module",

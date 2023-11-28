@@ -99,7 +99,7 @@
 
 
 <a href="/new-memo">creer un mémo</a>
-	
+	<a href="/test" >drag-test</a>
 <style>
 	.list-container{
 		display: flex;

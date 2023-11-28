@@ -23,7 +23,7 @@
         text-align: center;
         margin: 0;
         padding: 0;
-        margin-bottom: 2rem;
+     
         position: sticky;
     }
 </style>

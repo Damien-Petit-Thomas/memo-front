@@ -1,6 +1,8 @@
 <footer>
-  <p> ceci est un magnifique footer</p>
-  <a href="/">retour à l'accueil</a>
+  <div>
+    <p> ceci est un magnifique footer</p>
+    <a href="/">retour à l'accueil</a>
+  </div>
 </footer>
 
 
@@ -8,12 +10,11 @@
 footer {
   background-color: red;
   color: black;
-  font-size: 3rem;
   font-weight: 700;
   text-align: center;
   margin: 0;
+  position: sticky;
   padding: 0;
-  position: absolute;
   bottom: 0;
   width: 100%;
 }
