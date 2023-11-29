@@ -8,8 +8,7 @@
   import Btn from '$lib/ui/CategoryBtn.svelte';
   import  {memos} from '$lib/stores/memo.js';
   export let data; 
-  let prevContent = "";
-  let style = {};
+  
   let editor = false;
 
 
@@ -109,8 +108,10 @@ function updateTitle(e) {
 function updatePreviewCurrentContent(e) {
   currentContent = e.target.value;
   const type = "updatePreviewCurrentContent";
-  sendUpdateToPreview({currentContent}, type); 
+  const formattedContent = currentContent.replace(/\n/g, '<br>'); // Remplacer les sauts de ligne par des balises <br>
+  sendUpdateToPreview({  formattedContent }, type);
 }
+
 
 
 
@@ -126,11 +127,11 @@ function sendUpdateToPreview(data, type) {
 
 function saveContent() {
   contents = [...contents, currentContent];
-  
-  preview.add({contents})
+  const formattedContents = contents.join('<br>'); // Join avec des balises <br> pour les sauts de ligne
+  preview.add({ contents: formattedContents });
   currentContent = "";
   const type = "updatePreviewContents";
-  sendUpdateToPreview({contents}, type); 
+  sendUpdateToPreview({ contents: formattedContents }, type);
 }
 
 
@@ -166,7 +167,10 @@ function saveContent() {
         </div>
         <label for="content">Résumé</label>
         <textarea name="content" id="content" cols="30" rows="10" placeholder="Résumé du new-memo"bind:value={content}></textarea>
-        <button on:click={saveMemo}>Enregistrer</button>
+        <div>
+          
+          <button on:click={saveMemo}>Enregistrer</button>
+        </div>
       </div>
       {/if}
       {#if editor}
@@ -178,10 +182,14 @@ function saveContent() {
           placeholder="écrivez votre contenu ici"
           on:input={updatePreviewCurrentContent}
           ></textarea>
-      
-        <button
-        on:click={saveContent}
-        >sauvegarder</button>
+          <div>
+            <button
+            on:click={() => editor = !editor}
+            >retour</button>
+                    <button
+                    on:click={saveContent}
+                    >sauvegarder</button>
+          </div>
       </div>
       {/if}
       <div class="mini-map">
@@ -199,6 +207,7 @@ function saveContent() {
 
 .write-content {
     display: flex;
+    align-items: center;
     flex-direction: column;
     background: rgb(136, 90, 90);
     min-width: 50vw;
@@ -211,6 +220,7 @@ function saveContent() {
     background-color: rgb(73, 69, 69);
     color: rgb(100, 113, 119);  
     height: 50vh;
+    min-width: 50vw;
     resize: none;
   }
   .container {

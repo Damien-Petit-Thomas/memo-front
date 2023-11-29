@@ -22,14 +22,15 @@ function handleMessage(event) {
   
    
     // Mettre à jour la fenêtre de prévisualisation avec les données
-    currentContent = data.currentContent
+    currentContent = data.formattedContent
  
     // Mettez à jour votre store ou effectuez d'autres opérations en fonction des données reçues
   }
   if (type === 'updatePreviewContents') {
     console.log("message content received")
     // Mettre à jour la fenêtre de prévisualisation avec les données
-    contents = data.contents
+   contents =  [...contents, currentContent]
+
     currentContent = ""
     // Mettez à jour votre store ou effectuez d'autres opérations en fonction des données reçues
   }
@@ -45,9 +46,9 @@ function handleMessage(event) {
 
 <h2>{title}</h2>
 {#each contents as content}
-  <p>{content}</p>
+  <p>{@html content}</p>
 {/each}
-<p>{currentContent}</p>
+<p>{@html currentContent}</p>
 </div>
 
 <style>
