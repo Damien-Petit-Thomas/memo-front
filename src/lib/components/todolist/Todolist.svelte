@@ -2,7 +2,7 @@
 	import { send, receive } from '$lib/utils/transition.js';
 
 	export let store;
-	export let done = false;
+	export let done ;
 </script>
 
 <ul class="todos">

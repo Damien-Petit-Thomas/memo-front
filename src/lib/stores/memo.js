@@ -49,7 +49,6 @@ export const memos = (() => {
   const mark = async (memo) => {
     const done = !memo.done;
     const { description } = memo;
-    const data = { done, description };
 
     try {
       const response = await fetch(`http://localhost:3000/api/memo/${memo.id}`, {
@@ -57,7 +56,7 @@ export const memos = (() => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify({ done, description }),
       });
 
       if (response.ok) {

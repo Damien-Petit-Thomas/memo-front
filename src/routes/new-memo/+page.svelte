@@ -1,4 +1,5 @@
 <script>
+  import { preview} from '$lib/stores/preview.js'
   import {onMount} from 'svelte';
   import { tags } from '$lib/stores/tag.js';
   import { categories } from '$lib/stores/category.js';
@@ -9,15 +10,15 @@
   export let data; 
   let prevContent = "";
   let style = {};
-  const items1 = [
-    {id:1 , name: "titre"},
-  ]
-  const items2 = [
-        {id: 1, name: "item1"},
-        {id: 2, name: "item2"},
-        {id: 3, name: "item3"},
-        {id: 4, name: "item4"}
-    ];
+  let editor = false;
+
+
+  function coucou(e){
+    console.log(e.detail)
+    editor = true;
+
+  }
+
   // si on a pas de catégories, on fetch les catégories
   onMount(() => {
     console.log($categories.length)
@@ -28,6 +29,7 @@
       fetchTags();
     }
   });
+  const contentTypeElem = data.contents
 function fetchTags() {
   const tagDB = data.tags.map((tag) => {
     return {
@@ -67,12 +69,6 @@ function togleSelected(e) {
     : (tagsIds = [...tagsIds, e.detail]);
 }
 
-let content = "";
-let title = "";
-let contents = [];
-let categoryId =null;
-let tagsIds = [];
-
 
 
 function saveMemo(){
@@ -94,32 +90,68 @@ function saveMemo(){
 
 
 
-function openPreviewWindow() {
-  const previewWindow = window.open("", "Preview Window", "width=800,height=600");
 
-  const prev = previewWindow.document;
-  prev.body.innerHTML = `<div id="preview-content">${prevContent}</div>`;
 
-  // Accéder au style de la div dans la nouvelle fenêtre et le modifier
-  const prevStyle = prev.getElementById("preview-content").style;
 
-  // Exemple de modification du style (vous pouvez adapter selon vos besoins)
-  prevStyle.backgroundColor = "blue";
-  prevStyle.padding = "20px";
+let content = "";
+let title = "";
+let contents = [];
+let categoryId =null;
+let tagsIds = [];
+let currentContent = "";
+
+function updateTitle(e) {
+  title = e.target.value;
+  preview.add({title})
+  const type = "updatePreviewTitle";
+  sendUpdateToPreview({title}, type); 
+}
+function updatePreviewCurrentContent(e) {
+  currentContent = e.target.value;
+  const type = "updatePreviewCurrentContent";
+  sendUpdateToPreview({currentContent}, type); 
 }
 
+
+
+
+let previewWindow;
+function openPreviewWindow() {
+   previewWindow = window.open('http://localhost:5173/new-memo/previsualisation', "Preview Window", "width=800,height=600");
+}
+function sendUpdateToPreview(data, type) {
+  console.log("sending update to preview")
+  previewWindow.postMessage({ data , type }, '*');
+}
+
+function saveContent() {
+  contents = [...contents, currentContent];
   
+  preview.add({contents})
+  currentContent = "";
+  const type = "updatePreviewContents";
+  sendUpdateToPreview({contents}, type); 
+}
 
 
 </script>
-
+{JSON.stringify($preview)}
+<h2>preview est {$preview.title}</h2>
     
+<a href="/new-memo/previsualisation" >preview</a>
+<a href="/new-memo/previsualisation" target="_blank" >preview blank</a>
+
+
+
 <div class="container">
   
     <div class="main-wrapper">
+      {#if !editor}
       <div class="edit-memo">
         <label for="title">titre du new-memo</label>
-        <input type="text" name="title" id="title" placeholder="titre"  bind:value={title}  >
+        <input type="text" name="title" id="title"
+         placeholder="titre"  bind:value={title} 
+         on:input={updateTitle}>
         <h2>catégorie du mémo</h2>
         <div class="categories">
           {#each $categories as category (category.id)}
@@ -132,22 +164,55 @@ function openPreviewWindow() {
             <Btn item={tag} on:click={togleSelected} />
           {/each}
         </div>
-        <label for="content">contenu du new-memo</label>
-        <textarea name="content" id="content" cols="30" rows="10" placeholder="contenu du new-memo"bind:value={content}></textarea>
+        <label for="content">Résumé</label>
+        <textarea name="content" id="content" cols="30" rows="10" placeholder="Résumé du new-memo"bind:value={content}></textarea>
         <button on:click={saveMemo}>Enregistrer</button>
-        <button on:click={openPreviewWindow}>Ouvrir la prévisualisation dans une nouvelle fenêtre</button>
       </div>
-      <div class="mini-map">
-        <MiniMap items={items1}/>
+      {/if}
+      {#if editor}
+      <div class="write-content">
+    
+          <textarea 
+          id="write-content-textarea"  
+          bind:value={currentContent}
+          placeholder="écrivez votre contenu ici"
+          on:input={updatePreviewCurrentContent}
+          ></textarea>
       
+        <button
+        on:click={saveContent}
+        >sauvegarder</button>
+      </div>
+      {/if}
+      <div class="mini-map">
+        <MiniMap on:openEditor={coucou}/>
+        
       </div>
     </div>
-    <MemoElemList items={items2}/>
+    <MemoElemList items={contentTypeElem}/>
+    <button on:click={openPreviewWindow}>Ouvrir la prévisualisation dans une nouvelle fenêtre</button>
 </div>
 
 
 
 <style>
+
+.write-content {
+    display: flex;
+    flex-direction: column;
+    background: rgb(136, 90, 90);
+    min-width: 50vw;
+    min-height: 50vh;
+    height: 100%;
+  }
+
+
+  textarea#write-content-textarea {
+    background-color: rgb(73, 69, 69);
+    color: rgb(100, 113, 119);  
+    height: 50vh;
+    resize: none;
+  }
   .container {
     display: flex;
     flex-direction: column;
@@ -170,6 +235,7 @@ function openPreviewWindow() {
      height: 100%;
      border-right: black 1px solid;
      }
+
   .categories {
     display: flex;
     flex-wrap: wrap;

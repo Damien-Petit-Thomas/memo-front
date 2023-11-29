@@ -22,7 +22,7 @@
 		
 		tags.update(() => tagDB);
 
-		const memoDB = data.tags.map((tag) => {
+		const memoDB = data.memos.map((tag) => {
 	  return{
 			id : tag.id,
 			name: tag.name,

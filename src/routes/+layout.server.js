@@ -30,7 +30,9 @@ export const load = async ({ fetch }) => {
     const memos = await memoResponse.json();
     const categories = await cateoriesResponse.json();
     const todos = await todosResponse.json();
-    return { tags, categories, todos, memos };
+    return {
+      tags, categories, todos, memos,
+    };
   } catch (error) {
     return { error: 'Unable to fetch currencies' };
   }
