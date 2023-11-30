@@ -5,9 +5,6 @@
   const dispatch = createEventDispatcher();
 
   function openEditor(item) {
-    const id =item.id;
-    const selectedItem = items.find(item => item.id === id);
-    console.log(item)
     dispatch('openEditor', item);
   }
 
@@ -16,6 +13,7 @@
   function handleSort(e) {
 
 		items = e.detail.items;
+    console.log(items)
 	}
 
   function remove(item) {
@@ -51,9 +49,12 @@
 <div class="mini-map">
   <section use:dndzone={{items, flipDurationMs}} on:consider={handleSort} on:finalize={handleSort}>
     {#each items as item(item.id)}
-        <div class="content-item" id={item.id} animate:flip="{{duration: flipDurationMs}}" on:dblclick={openEditor(item)}>
+        <div 
+        class="content-item" 
+        id={item.id} animate:flip="{{duration: flipDurationMs}}" 
+        on:dblclick={openEditor(item)}>
             <span>{item.name}</span>
-            <button on:click={remove(item)}      />
+            <button on:click={remove(item)}/>
         </div>
     {/each}
   </section>

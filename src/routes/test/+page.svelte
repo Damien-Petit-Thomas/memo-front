@@ -1,37 +1,38 @@
 <script>
-  import CopyOnDragList from './MiniMap.svelte';
-  import DragulaCopyOnDragList from './ShadowCopy.svelte';
-  const items1 = [
-    {id: 101, name: "item101"},
-  
-  ];
-  const items2 = [
-    {id: 201, name: "item201"},
-    {id: 202, name: "item202"},
-    {id: 203, name: "item203"},
-    {id: 204, name: "item204"},
-    {id: 205, name: "item205"},
-    {id: 206, name: "item206"}
-  ];
+  import Editor from '../../lib/components/editor/Editor.svelte';
+  import EditSidebar from '../../lib/components/sidebar/EditSidebar.svelte';
+  export let data; 
+  const contentTypeElem = data.contents
+  let selectItems = []
+  function handleSelectItem(e) {
+    console.log(e.detail)
+    selectItems = [...selectItems, e.detail]
+  }
+
+
+
 </script>
 
-<style>
-  :global(section) {
-      width: 50%;
-      padding: 0.3em;
-      border: 1px solid black;
-  }
-  :global(div) {
-      padding: 0.2em;
-      border: 1px solid blue;
-      margin: 0.15em 0;
-  }
- :global(h3, p) {
-  line-height: 1em;
- }
-</style>
+<div class="container">
+  
+      <EditSidebar 
+      items={contentTypeElem}
+      on:selectItem={handleSelectItem}
+      />
+      <Editor items={selectItems} />
+      <EditSidebar items={contentTypeElem} />
+  
+</div>
 
-<main>
-<CopyOnDragList items={items1}/>
-<DragulaCopyOnDragList items={items2}/>
-</main>
+
+
+<style>
+  .container {
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+    width: 100vw;
+  }
+ 
+
+</style>

@@ -20,6 +20,9 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@tiptap/core": "^2.1.12",
+		"@tiptap/pm": "^2.1.12",
+		"@tiptap/starter-kit": "^2.1.12",
 		"axios": "^1.6.1",
 		"marked": "^10.0.0",
 		"simplemde": "^1.11.2",

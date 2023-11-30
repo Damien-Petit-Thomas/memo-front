@@ -24,12 +24,20 @@
       }
   }
 
+
+
+
+
+
 </script>
 
 
 <section use:dndzone={{items, flipDurationMs}} on:consider={handleDndConsider} >
   {#each items as item(item.id)}
-      <div animate:flip="{{duration: flipDurationMs}}">
+      <div 
+      animate:flip="{{duration: flipDurationMs}}"
+     
+      >
           {item.name}
       </div>
   {/each}

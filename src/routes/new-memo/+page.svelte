@@ -12,15 +12,14 @@
   let editor = false;
 
 
-  function coucou(e){
+  function editHandler(e){
     console.log(e.detail)
     editor = true;
-
+    className = e.detail.css
   }
 
   // si on a pas de catégories, on fetch les catégories
   onMount(() => {
-    console.log($categories.length)
     if ($categories.length === 0) {
       fetchCategories();
     }
@@ -91,7 +90,7 @@ function saveMemo(){
 
 
 
-
+let className = "";
 let content = "";
 let title = "";
 let contents = [];
@@ -100,10 +99,12 @@ let tagsIds = [];
 let currentContent = "";
 
 function updateTitle(e) {
+  className = "h1";
+  console.log(e.target)
   title = e.target.value;
   preview.add({title})
   const type = "updatePreviewTitle";
-  sendUpdateToPreview({title}, type); 
+  sendUpdateToPreview({title, className}, type); 
 }
 function updatePreviewCurrentContent(e) {
   currentContent = e.target.value;
@@ -121,7 +122,6 @@ function openPreviewWindow() {
    previewWindow = window.open('http://localhost:5173/new-memo/previsualisation', "Preview Window", "width=800,height=600");
 }
 function sendUpdateToPreview(data, type) {
-  console.log("sending update to preview")
   previewWindow.postMessage({ data , type }, '*');
 }
 
@@ -193,7 +193,7 @@ function saveContent() {
       </div>
       {/if}
       <div class="mini-map">
-        <MiniMap on:openEditor={coucou}/>
+        <MiniMap on:openEditor={editHandler}/>
         
       </div>
     </div>

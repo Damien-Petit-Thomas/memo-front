@@ -5,10 +5,9 @@ console.log(preview)
 let title = "";
 let contents = [];
 let currentContent = "";
-
+let className = "";
 
 function handleMessage(event) {
- 
   const data = event.data.data
   const type = event.data.type
   if (type === 'updatePreviewTitle') {
@@ -17,22 +16,23 @@ function handleMessage(event) {
     title = data.title
 
     // Mettez à jour votre store ou effectuez d'autres opérations en fonction des données reçues
+    className = data.className
+
+    console.log(data)
   }
   if (type === 'updatePreviewCurrentContent') {
   
    
     // Mettre à jour la fenêtre de prévisualisation avec les données
     currentContent = data.formattedContent
- 
-    // Mettez à jour votre store ou effectuez d'autres opérations en fonction des données reçues
+    className = data.className || ""
   }
   if (type === 'updatePreviewContents') {
     console.log("message content received")
-    // Mettre à jour la fenêtre de prévisualisation avec les données
    contents =  [...contents, currentContent]
 
     currentContent = ""
-    // Mettez à jour votre store ou effectuez d'autres opérations en fonction des données reçues
+  
   }
 }
 
@@ -44,13 +44,27 @@ function handleMessage(event) {
 
 <div>
 
-<h2>{title}</h2>
+<h1 class={className}>{title}</h1>
 {#each contents as content}
-  <p>{@html content}</p>
+  <p >{@html content}</p>
 {/each}
-<p>{@html currentContent}</p>
+<p class={className} >{@html currentContent}</p>
 </div>
 
 <style>
+.red {
+  color: red;
+} 
+
+.h1 {
+  font-size: 3rem;
+  color: teal;
+  font-weight: 700;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  position: sticky;
+}
+
 
 </style>
