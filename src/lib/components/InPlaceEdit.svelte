@@ -1,6 +1,6 @@
 <script>
   import { createEventDispatcher, onMount } from 'svelte'
-  
+  import DOMPurity from 'dompurify'
   export let value, required = true
   export let item;
   const dispatch = createEventDispatcher()
@@ -11,24 +11,41 @@
   })
   
   function edit() {
-    editing = true
+    editing = true;
   }
-  
   function submit() {
+
+    value = DOMPurity.sanitize(value)
     if (value != original) {
-      dispatch('submit', value)
-		}
-		
-    editing = false
-  }
-  
-  function keydown(event) {
-    if (event.key == 'Escape') {
-      event.preventDefault()
-      value = original
-      editing = false
+      dispatch('submit', value);
     }
+
+    editing = false;
   }
+
+
+ 
+  
+
+
+
+  function sendUpdateToPreview(data, type) {
+    const event = new CustomEvent('updatePreview', {
+      detail: {
+        data,
+        type,
+      },
+    });
+    window.dispatchEvent(event);
+  }
+
+
+  
+
+  
+
+  
+
 	
 	function focus(element) {
     element.focus()
@@ -41,16 +58,12 @@
 </script>
 
 {#if editing}
-<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-{#if item.css === 'p' || item.css === 'blockquote'}
-<form on:submit|preventDefault={submit} on:keydown={keydown}>
+<!-- svelte-ignore a11y-no-noninteractive-element-interctions -->
+<form on:submit|preventDefault={submit} on:keydown={handleKeyDown}>
   <textarea  id={item.css}   bind:value on:blur={submit} {required} use:focus/>
 </form>
-{:else}
-<form on:submit|preventDefault={submit} on:keydown={keydown}>
-  <input id={item.css} bind:value on:blur={submit} {required} use:focus/>
-</form>
-{/if}
+
+
 
 {:else}
 <div on:click={edit} on:keydown={(event) => handleKeyDown(event)} role="button" tabindex="0">
@@ -59,14 +72,21 @@
   {:else if item.css === 'h2'}
   <h2>{value}</h2>
   {:else if item.css === 'blockquote'}
-  <blockquote>{value}</blockquote>
+  <pre>
+    <blockquote><pre>{value}</pre></blockquote>
+  </pre>
   {:else if item.css === 'p'}
-  <p>{value}</p>
+  <p>
+    <pre>
+      {value}
+    </pre>
+  
   {/if}
 </div>
 {/if}
 <style>
-  textarea {
+  textarea  {
+    margin: 1rem 0 0 0; 
     border: none;
     background: none;
     font-size: inherit;
@@ -74,6 +94,8 @@
     font-weight: inherit;
     text-align: inherit;
     box-shadow: none;
+    width: 100%;
+    white-space: pre-wrap; 
   }
 
 
@@ -102,15 +124,19 @@ p {
 }
 
 
+
 blockquote ,textarea#blockquote {
-	background: var(--color-preview-qoute-bg);
+	background: rgb(53, 48, 48);
 	border-left: 4px solid var(--color-orange);
+	border-right: 4px solid var(--color-orange);
 	font-family: Roboto Slab;
 	padding: 2.4rem;
+  width: 100%;
 	border-radius: 0.4rem;
 	color: var(--color-preview-qoute-body) !important;
 	font-weight: bold !important;
 }
+
 
 
 

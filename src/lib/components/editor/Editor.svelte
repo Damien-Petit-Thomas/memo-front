@@ -19,7 +19,7 @@
     <InPlaceEdit
        {item}
       value={item.name}
-      on:submit={submit('name')}
+      on:submit={submit(item.name)}
     />
     
   {/each}
