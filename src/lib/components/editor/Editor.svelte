@@ -13,9 +13,7 @@
 
 <HeaderBar />
 <div class="editor">
-
- {#each items as item(item.id)}
-
+ {#each items as item (item.id)}
     <InPlaceEdit
        {item}
       value={item.name}

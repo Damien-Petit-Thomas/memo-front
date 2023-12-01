@@ -4,9 +4,12 @@
   export let data; 
   const contentTypeElem = data.contents
   let selectItems = []
+  let count = 0;
   function handleSelectItem(e) {
+    count += 1
+    const newItem = { ...e.detail, id: count}
     console.log(e.detail)
-    selectItems = [...selectItems, e.detail]
+    selectItems = [...selectItems, newItem]
   }
 
 

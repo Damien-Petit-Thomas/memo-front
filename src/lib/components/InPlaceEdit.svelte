@@ -1,8 +1,8 @@
 <script>
   import { createEventDispatcher, onMount } from 'svelte'
   import DOMPurity from 'dompurify'
-  export let value, required = true
-  export let item;
+  export let item, value, required = true
+  
   const dispatch = createEventDispatcher()
   let editing = false, original
   
@@ -24,23 +24,9 @@
   }
 
 
- 
-  
-
-
-
-  function sendUpdateToPreview(data, type) {
-    const event = new CustomEvent('updatePreview', {
-      detail: {
-        data,
-        type,
-      },
-    });
-    window.dispatchEvent(event);
+  function deleteItem() {
+    dispatch('delete', item);
   }
-
-
-  
 
   
 
@@ -61,6 +47,7 @@
 <!-- svelte-ignore a11y-no-noninteractive-element-interctions -->
 <form on:submit|preventDefault={submit} on:keydown={handleKeyDown}>
   <textarea  id={item.css}   bind:value on:blur={submit} {required} use:focus/>
+  <button type="submit" on:click={deleteItem} >supprimer</button>
 </form>
 
 
