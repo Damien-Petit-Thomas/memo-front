@@ -3,7 +3,7 @@
  	import { todos } from '$lib/stores/todo.js';
 	import {categories} from '$lib/stores/category.js';
 	import {tags} from '$lib/stores/tag.js'
-	import Categorielist from '../lib/components/createList/CreateList.svelte';
+	import Categorielist from '$lib/components/createList/CreateList.svelte';
 	import TodoList from '$lib/components/todolist/Todolist.svelte';
   export let data;
 	
@@ -43,7 +43,6 @@
 			});
 			
 		categories.update(() => categoriesDB);
-		console.log(categories)
 				
 				const todosDB = data.todos.map((todo) => {
 					return {

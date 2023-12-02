@@ -1,6 +1,7 @@
 <script>
   import { send, receive } from '$lib/utils/transition.js';
   import CategoryBtn from '$lib/ui/CategoryBtn.svelte';
+  
   export let title;
   export let store;
  

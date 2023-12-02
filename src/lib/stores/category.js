@@ -47,9 +47,8 @@ export const categories = (() => {
   };
 
   const mark = async (category) => {
-    const done = !category.done;
     const { description } = category;
-    const data = { done, description };
+    const data = { description };
 
     try {
       const response = await fetch(`http://localhost:3000/api/category/${category.id}`, {
@@ -63,7 +62,7 @@ export const categories = (() => {
       if (response.ok) {
         update(($categories) => [
           ...$categories.filter((t) => t !== category),
-          { ...category, done },
+          { ...category, description },
         ]);
       } else {
         console.error(`Error marking category: ${response.status}`);

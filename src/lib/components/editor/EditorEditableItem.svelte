@@ -1,11 +1,15 @@
 <script>
+  import { memoItems} from '$lib/stores/Editor.js'
+  import {title} from '$lib/stores/title.js'
   import { createEventDispatcher, onMount } from 'svelte'
   import DOMPurity from 'dompurify'
   export let item, value, required = true
   
   const dispatch = createEventDispatcher()
   let editing = false, original
-  
+  let content = value;
+
+
   onMount(() => {
     original = value
   })
@@ -13,59 +17,62 @@
   function edit() {
     editing = true;
   }
-  function submit() {
-
-    value = DOMPurity.sanitize(value)
-    if (value != original) {
-      dispatch('submit', value);
+  function saveContent() {
+    console.log('saveContent')
+    content = DOMPurity.sanitize(content)
+    if (content !== original) {
+      //si c'est le titre on update le store title
+      if(item.css === 'h1'){
+        title.update(() => content);
+      }
+      memoItems.update(items => {
+     
+        const index = items.findIndex(memItem => memItem.id === item.id)
+        if (index !== -1) {
+          items[index].content = content
+          console.log(items[index])
+        }
+        return items
+      })
     }
+    editing = false
+  }
 
     editing = false;
-  }
-
-
-  function deleteItem() {
-    dispatch('delete', item);
-  }
-
   
-
-  
-
-	
 	function focus(element) {
     element.focus()
 	}
   function handleKeyDown(event) {
-    if (event.key === 'ctrl + e') {
+  
       edit();
-    }
+    
   }
 </script>
 
 {#if editing}
 <!-- svelte-ignore a11y-no-noninteractive-element-interctions -->
-<form on:submit|preventDefault={submit} on:keydown={handleKeyDown}>
-  <textarea  id={item.css}   bind:value on:blur={submit} {required} use:focus/>
-  <button type="submit" on:click={deleteItem} >supprimer</button>
-</form>
+<section  >
+  <textarea  id={item.css}   bind:value={content} on:blur={saveContent} {required} use:focus/>
+</section>
+  
 
 
 
 {:else}
 <div on:click={edit} on:keydown={(event) => handleKeyDown(event)} role="button" tabindex="0">
   {#if item.css === 'h1'}
-  <h1>{value}</h1>
+  <h1>{content}</h1>
   {:else if item.css === 'h2'}
-  <h2>{value}</h2>
+  <h2>{content}</h2>
   {:else if item.css === 'blockquote'}
   <pre>
-    <blockquote><pre>{value}</pre></blockquote>
+    <blockquote><pre>{content}</pre></blockquote>
   </pre>
   {:else if item.css === 'p'}
   <p>
     <pre>
-      {value}
+      {content}
     </pre>
   
   {/if}
