@@ -10,37 +10,16 @@
    // si on a pas de catégories, on fetch les catégories
    onMount(() => {
     if ($categories.length === 0) {
-      fetchCategories();
+    categories.get()
     }
     if ($tags.length === 0) {
-      fetchTags();
+      tags.get()
     }
   });
 
-function fetchTags() {
-  const tagDB = data.tags.map((tag) => {
-    return {
-      id: tag.id,
-      name: tag.name,
-      slug: tag.slug,
-      color: tag.color
-    };
-  });
-  tags.update(() => tagDB);
-};
 
- function  fetchCategories() {
 	
-  const categoriesDB = data.categories.map((category) => {
-				return {
-					id: category.id,
-					name: category.name,
-					slug: category.slug,
-					color : category.color
-				};
-			});
-      categories.update(() => categoriesDB);
-    };
+  
 
     function selecteCategory(e, id) {
       const categories = document.querySelectorAll(".category-button")

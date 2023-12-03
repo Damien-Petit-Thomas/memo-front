@@ -4,6 +4,21 @@ export const tags = (() => {
   const { subscribe, update } = writable([]);
 
   // Méthode pour ajouter une nouvelle tâche
+
+  const get = async () => {
+    try {
+      const response = await fetch('http://localhost:3000/api/tag');
+      if (response.ok) {
+        const data = await response.json();
+        update(() => data);
+      } else {
+        console.error(`Error fetching tags: ${response.status}`);
+      }
+    } catch (error) {
+      console.error('An unexpected error occurred:', error);
+    }
+  };
+
   const add = async (description) => {
     try {
       // Envoyer la description à la BDD pour créer un nouveau tag
@@ -78,5 +93,6 @@ export const tags = (() => {
     add,
     remove,
     mark,
+    get,
   };
 })();

@@ -4,6 +4,21 @@ export const memos = (() => {
   const { subscribe, update } = writable([]);
 
   // Méthode pour ajouter une nouvelle tâche
+
+  const get = async () => {
+    try {
+      const response = await fetch('http://localhost:3000/api/memo');
+      if (response.ok) {
+        const data = await response.json();
+        update(() => data);
+      } else {
+        console.error(`Error fetching memos: ${response.status}`);
+      }
+    } catch (error) {
+      console.error('An unexpected error occurred:', error);
+    }
+  };
+
   const add = async (description) => {
     try {
       // Envoyer la description à la BDD pour créer un nouveau memo
@@ -71,11 +86,13 @@ export const memos = (() => {
       console.error('An unexpected error occurred:', error);
     }
   };
+
   return {
     update,
     subscribe,
     add,
     remove,
     mark,
+    get
   };
 })();

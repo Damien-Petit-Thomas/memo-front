@@ -1,5 +1,6 @@
 <script>
-  import { memoItems } from '$lib/stores/Editor.js';
+  import {memos} from '$lib/stores/memo.js';
+   import { memoItems } from '$lib/stores/Editor.js';
   import Editor from '$lib/components/editor/Editor.svelte';
   import EditorSidebar from '$lib/components/editor/EditorSidebar.svelte';
   import {title} from '$lib/stores/title.js';
@@ -34,27 +35,7 @@
     console.log("title" + $title)
     console.log(itemsToSave)
   console.log(memoItems)
-   try{ const response = await fetch('http://localhost:3000/api/memo', {
-  
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        title : $title,
-        contents : itemsToSave,
-        categoryId ,
-        tagsIds
-      })
-    })
-  
-    if (response.ok) {
-      const data = await response.json()
-      console.log(data)
-    }
-  } catch (err) {
-    console.log(err)
-  }
+  memos.add({title : $title, contents : itemsToSave, categoryId , tagsIds})
 
 }
 
