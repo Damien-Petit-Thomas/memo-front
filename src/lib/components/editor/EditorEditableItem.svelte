@@ -1,14 +1,13 @@
 <script>
   import { memoItems} from '$lib/stores/Editor.js'
   import {title} from '$lib/stores/title.js'
-  import { createEventDispatcher, onMount } from 'svelte'
+  import { onMount } from 'svelte'
   import DOMPurity from 'dompurify'
   export let item, value, required = true
-  
-  const dispatch = createEventDispatcher()
-  let editing = false, original
-  let content = value;
 
+  let editing = false, original
+
+let content = value
 
   onMount(() => {
     original = value
@@ -16,10 +15,16 @@
   
   function edit() {
     editing = true;
+    if(content === value){
+      content = ""
+    }
   }
   function saveContent() {
-    console.log('saveContent')
+  
     content = DOMPurity.sanitize(content)
+    if (content === '') {
+      content = original
+    }
     if (content !== original) {
       //si c'est le titre on update le store title
       if(item.css === 'h1'){

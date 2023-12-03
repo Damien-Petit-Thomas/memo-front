@@ -11,7 +11,8 @@ const title = {content : "Titre", css : "h1"};
 
   function handleConsider(e) {
     const { items: newItems, info: { source, trigger } } = e.detail;
-    memoItems.set(newItems);  // Mettez à jour le store ici
+    console.log("consider", newItems, source, trigger)
+    memoItems.set(newItems); 
     if (source === SOURCES.KEYBOARD && trigger === TRIGGERS.DRAG_STOPPED) {
       dragDisabled = true;
     }
@@ -19,7 +20,8 @@ const title = {content : "Titre", css : "h1"};
 
   function handleFinalize(e) {
     const { items: newItems, info: { source } } = e.detail;
-    memoItems.set(newItems);  // Mettez à jour le store ici
+    console.log("finalize", newItems, source, $memoItems)
+    memoItems.set(newItems);  
     if (source === SOURCES.POINTER) {
       dragDisabled = true;
     }
@@ -67,7 +69,7 @@ const title = {content : "Titre", css : "h1"};
                on:mousedown={startDrag}
                on:touchstart={startDrag}
                on:keydown={handleKeyDown} />
-          <EditableItem {item} value={item.name} on:submit={submit(item.name)} on:deleteItem={deleteItem} />
+          <EditableItem {item} value={item.name} placeholder={item.name} on:submit={submit(item.name)} on:deleteItem={deleteItem} />
           <button class="delete" on:click={() => deleteItem(item)}>X</button>
           {/if}
         </div>
