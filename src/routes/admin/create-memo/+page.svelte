@@ -32,9 +32,7 @@
         type_id: item.initialTypeId, 
       }
     })
-    console.log("title" + $title)
-    console.log(itemsToSave)
-  console.log(memoItems)
+  
   memos.add({title : $title, contents : itemsToSave, categoryId , tagsIds})
 
 }

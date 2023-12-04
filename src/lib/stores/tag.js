@@ -1,7 +1,7 @@
 import { writable } from 'svelte/store';
 
 export const tags = (() => {
-  const { subscribe, update } = writable([]);
+  const { subscribe, set, update } = writable([]);
 
   // Méthode pour ajouter une nouvelle tâche
 
@@ -88,6 +88,7 @@ export const tags = (() => {
     }
   };
   return {
+    set,
     update,
     subscribe,
     add,

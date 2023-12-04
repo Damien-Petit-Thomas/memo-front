@@ -2,6 +2,9 @@
   <div>
     <p> ceci est un magnifique footer</p>
     <a href="/">retour à l'accueil</a>
+    <a href="/test">test</a>
+<a href="/new-memo">new</a>
+<a href="/admin">home-admin</a>
   </div>
 </footer>
 

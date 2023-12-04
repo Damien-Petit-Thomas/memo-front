@@ -1,62 +1,24 @@
 <script>
 	import { memos } from '$lib/stores/memo.js';
  	import { todos } from '$lib/stores/todo.js';
+	 import {onMount} from 'svelte';
+
 	import {categories} from '$lib/stores/category.js';
 	import {tags} from '$lib/stores/tag.js'
 	import Categorielist from '$lib/components/createList/CreateList.svelte';
 	import TodoList from '$lib/components/todolist/Todolist.svelte';
-  export let data;
 	
+  onMount(() => {
+    if ($categories.length === 0) {
+      console.log('get categories')
+      categories.get()
+    }
+    if ($tags.length === 0) {
+      tags.get()
+    }
+  });
 
-
-
-
-	// const tagDB = data.tags.map((tag) => {
-	//   return{
-	// 		id : tag.id,
-	// 		name: tag.name,
-	// 		slug : tag.slug,
-	// 		color: tag.color
-	// 		}
-	// 	})
-		
-	// 	tags.update(() => tagDB);
-
-	// 	const memoDB = data.memos.map((tag) => {
-	//   return{
-	// 		id : tag.id,
-	// 		name: tag.name,
-	// 		slug : tag.slug,
-	// 		color: tag.color
-	// 		}
-	// 	})
-		
-	// 	memos.update(() => memoDB);
-			
-	// 		const categoriesDB = data.categories.map((category) => {
-	// 			return {
-	// 				id: category.id,
-	// 				name: category.name,
-	// 				slug: category.slug,
-	// 				color : category.color
-	// 			};
-	// 		});
-			
-	// 	categories.update(() => categoriesDB);
-				
-	// 			const todosDB = data.todos.map((todo) => {
-	// 				return {
-	// 					done: todo.done,
-	// 					description: todo.description,
-	// 					id: todo.id
-	// 				};
-	// 			});
-	// 			todos.update(() => todosDB);
-				
-		
-
-
-
+	
 				</script>
 
 <div class="board">

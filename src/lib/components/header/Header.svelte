@@ -6,10 +6,12 @@
         hackEffect('#title', 30, 5);
     });
 </script>
-
-<h1 id="title">
-    Memo Devop
-</h1>
+<header>
+    
+    <h1 id="title">
+        Memo Devop
+    </h1>
+</header>
 
 
 

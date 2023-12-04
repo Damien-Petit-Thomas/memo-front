@@ -1,7 +1,7 @@
 import { writable } from 'svelte/store';
 
 export const memos = (() => {
-  const { subscribe, update } = writable([]);
+  const { subscribe, set, update } = writable([]);
 
   // Méthode pour ajouter une nouvelle tâche
 
@@ -88,11 +88,12 @@ export const memos = (() => {
   };
 
   return {
+    set,
     update,
     subscribe,
     add,
     remove,
     mark,
-    get
+    get,
   };
 })();

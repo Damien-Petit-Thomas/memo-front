@@ -8,15 +8,15 @@
   export let data;
   let tagsIds = [];
    // si on a pas de catégories, on fetch les catégories
-   onMount(() => {
-    if ($categories.length === 0) {
+onMount(() => {
+  if ($categories.length === 0) {
+    console.log('get categories')
     categories.get()
-    }
-    if ($tags.length === 0) {
-      tags.get()
-    }
-  });
-
+  }
+  if ($tags.length === 0) {
+    tags.get()
+  }
+});
 
 	
   
