@@ -1,26 +1,31 @@
 <script>
+
   import {page} from '$app/stores';
   import {memos} from '$lib/stores/memo.js';
+  import {fullmemos} from '$lib/stores/fullmemos.js';
 	import Sidebar from '$lib/components/sidebar/Sidebar.svelte';
-  const memo = $memos.find(memo => memo.slug === $page.params.slug);
-const currentContent = $page.data.contents.filter(content => content.memo_id === memo.id);
-  page.subscribe(value => {
-    console.log(value);
+  
+  let pageSlug;
+  let memo 
+  page.subscribe(($page) => {
+    pageSlug = $page.params.slug;
+
+    memo = $fullmemos.filter((memo) => memo.slug === pageSlug)[0];
   });
   
-
 </script>
 
 
 
 
 <section class="container">
+  
   <Sidebar />
-
   <div class="content">
-{#each currentContent as content (content.id)}
-{JSON.stringify(content)}
-    <p>{content.content}</p>
+    {memo.title}
+{#each memo.contents as content (content.id)}
+
+<p>{content.content}</p>
     {/each}
   </div>
 
@@ -32,6 +37,7 @@ const currentContent = $page.data.contents.filter(content => content.memo_id ===
 <style>
   .container {
     display: flex;
+ 
     height: 100vh;
     width: 100vw;
   }

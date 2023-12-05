@@ -1,4 +1,5 @@
 <script>
+	import  {fullmemos} from '$lib/stores/fullmemos.js';
 	import { memos } from '$lib/stores/memo.js';
  	import { todos } from '$lib/stores/todo.js';
 	import {categories} from '$lib/stores/category.js';
@@ -15,6 +16,7 @@
 		tags.set(data.tags);
 		memos.set(data.memos);
 		todos.set(data.todos);
+		fullmemos.set(data.fullmemos);
 	});
 
 
@@ -30,7 +32,9 @@
 
 
 
-<div class="container"><Sidebar/></div>
+<div class="container">
+	<Sidebar/>
+</div>
 
 
 

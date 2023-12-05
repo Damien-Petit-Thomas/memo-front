@@ -1,6 +1,6 @@
 export const load = async ({ fetch }) => {
   try {
-    const [cateoriesResponse, todosResponse, tagResponse, memoResponse] = await Promise.all([
+    const [cateoriesResponse, todosResponse, tagResponse, memoResponse, allMemmo] = await Promise.all([
       fetch(
         'http://localhost:3000/api/category',
       ),
@@ -12,6 +12,9 @@ export const load = async ({ fetch }) => {
       ),
       fetch(
         'http://localhost:3000/api/memo',
+      ),
+      fetch(
+        'http://localhost:3000/api/memo/all',
       ),
     ]);
     if (!cateoriesResponse.ok) {
@@ -26,12 +29,16 @@ export const load = async ({ fetch }) => {
     if (!memoResponse.ok) {
       throw new Error(`HHTP error ${tagResponse.status}`);
     }
+    if (!allMemmo.ok) {
+      throw new Error(`HHTP error ${tagResponse.status}`);
+    }
     const tags = await tagResponse.json();
     const memos = await memoResponse.json();
     const categories = await cateoriesResponse.json();
     const todos = await todosResponse.json();
+    const fullmemos = await allMemmo.json();
     return {
-      tags, categories, todos, memos,
+      tags, categories, todos, memos, fullmemos,
     };
   } catch (error) {
     return { error: 'Unable to fetch currencies' };
