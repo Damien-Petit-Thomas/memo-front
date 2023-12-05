@@ -11,7 +11,7 @@
   }
 </script>
 
-  <div class="sidebar">
+  <section class="sidebar">
     {#each $categories as category (category.id)}
       <div class="category" style="border-left: {category.color} solid 6px;">
         <h2>{category.name} 
@@ -26,14 +26,13 @@
         {/if}
       </div>
     {/each}
-  </div>
+  </section>
 
 
 <style>
 
   .sidebar {
-    width: 15rem;
-    background-color: #111;
+    min-width: 15%;
     padding-top: 20px;
     overflow-x: hidden;
   }
