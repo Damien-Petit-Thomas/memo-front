@@ -1,0 +1,30 @@
+<script>
+  import { lexicon } from '$lib/stores/lexicon.js';
+  import { onMount } from 'svelte';
+
+  onMount(() => {
+    if ($lexicon.length === 0) {
+      lexicon.get();
+    }
+  });
+
+  let word='';
+  let definition='';
+  function handleSubmit(){
+    const data = {word, definition}
+    lexicon.add(data)
+  }
+  
+
+</script>
+
+
+<div class="container">
+  <form action="">
+    <label for="lexicon">ajouter un mot au lexique</label>
+    <input type="text" id="lexicon" placeholder="ajouter un mot" bind:value={word} >
+    <label for="defintition">entrer une définitioin</label>
+    <input type="text" id="definition" placeholder="ajouter une définition" bind:value={definition} >
+    <button type="submit"  on:click|preventDefault={handleSubmit}>Valider</button>
+  </form>
+  </div>

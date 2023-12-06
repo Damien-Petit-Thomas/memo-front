@@ -2,6 +2,7 @@
   import {memos} from '$lib/stores/memo.js';
    import { memoItems } from '$lib/stores/Editor.js';
   import Editor from '$lib/components/editor/Editor.svelte';
+  import Lexicon from '$lib/components/editor/Lexicon.svelte'
   import EditorSidebar from '$lib/components/editor/EditorSidebar.svelte';
   import {title} from '$lib/stores/title.js';
   import  EditorSidebarTagNCategory  from '$lib/components/editor/EditorSidebarTagNCategory.svelte';
@@ -54,6 +55,8 @@
     on:selectedTags={handleTags}
     {data}
     />
+    <Lexicon/>
+
 </div>
 
 

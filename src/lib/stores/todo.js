@@ -3,7 +3,20 @@ import { writable } from 'svelte/store';
 export const todos = (() => {
   const { subscribe, set, update } = writable([]);
   // si le store est vide, on va chercher les données dans la BDD
-  
+  const get = async () => {
+    try {
+      const response = await fetch('http://localhost:3000/api/todo');
+      if (response.ok) {
+        const data = await response.json();
+        update(() => data);
+      } else {
+        console.error(`Error fetching categories: ${response.status}`);
+      }
+    } catch (error) {
+      console.error('An unexpected error occurred:', error);
+    }
+  };
+
   const add = async (description) => {
     try {
       const response = await fetch('http://localhost:3000/api/todo', {
@@ -48,7 +61,7 @@ export const todos = (() => {
 
     try {
       const response = await fetch(`http://localhost:3000/api/todo/${todo.id}`, {
-        method: 'PUT',
+        method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -66,6 +79,7 @@ export const todos = (() => {
   };
 
   return {
+    get,
     set,
     update,
     subscribe,

@@ -5,7 +5,7 @@
   import {onMount} from 'svelte';
   import {createEventDispatcher} from 'svelte';
   const dispatch = createEventDispatcher();
-  export let data;
+
   let tagsIds = [];
    // si on a pas de catégories, on fetch les catégories
 onMount(() => {

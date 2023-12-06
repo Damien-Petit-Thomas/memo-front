@@ -16,6 +16,9 @@
     if ($tags.length === 0) {
       tags.get()
     }
+		if ($todos.length === 0) {
+			todos.get()
+		}
   });
 
 	
