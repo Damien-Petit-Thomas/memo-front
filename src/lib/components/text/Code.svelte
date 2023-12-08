@@ -2,7 +2,7 @@
   export let value;
 </script>
 
-<code>{value}</code>
+<pre><code>{value}</code></pre>
 
 <style>
   code {

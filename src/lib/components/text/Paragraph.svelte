@@ -3,7 +3,9 @@
 </script>
 
 
-<p>{value}</p>
+<pre>
+  <p>{@html value}</p>
+</pre>
 
 
 

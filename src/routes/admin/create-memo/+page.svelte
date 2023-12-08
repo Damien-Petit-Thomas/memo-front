@@ -11,11 +11,11 @@
   let tagsIds = [];
   const contentTypeElem = data.contents
   function handleSelectCategory(e) {
-    console.log(e.detail)
+  
     categoryId = e.detail;
   }
   function handleTags(e) {
-    console.log(e.detail);
+
     tagsIds = e.detail;
   }
   function handleSelectItem(e) {
@@ -55,7 +55,7 @@
     on:selectedTags={handleTags}
     {data}
     />
-    <Lexicon/>
+    <Lexicon {categoryId} />
 
 </div>
 

@@ -35,7 +35,6 @@ let content = value
         const index = items.findIndex(memItem => memItem.id === item.id)
         if (index !== -1) {
           items[index].content = content
-          console.log(items[index])
         }
         return items
       })

@@ -20,6 +20,7 @@ export const memos = (() => {
   };
 
   const add = async (description) => {
+    console.log(JSON.stringify({ ...description }));
     try {
       // Envoyer la description à la BDD pour créer un nouveau memo
       const response = await fetch('http://localhost:3000/api/memo', {

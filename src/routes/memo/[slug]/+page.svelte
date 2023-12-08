@@ -1,10 +1,13 @@
 <script>
+  import { textToMarkdown } from '$lib/utils/textToMarkdown.js';
+  import { onMount } from 'svelte';
   import Paragraphe from '$lib/components/text/Paragraph.svelte';
   import Subtitle from '$lib/components/text/Subtitle.svelte';
   import Blockquote from '$lib/components/text/Blockquote.svelte';
   import { page } from '$app/stores';
   import { fullmemos } from '$lib/stores/fullmemos.js';
-  import Sidebar from '$lib/components/sidebar/Sidebar.svelte';
+  import MainSidebar from '$lib/components/sidebar/MainSidebar.svelte';
+  import ReadMemoSidebar from '$lib/components/sidebar/ReadMemoSidebar.svelte';
 
   const components = {
     paragraphe: Paragraphe,
@@ -14,31 +17,54 @@
 
   let pageSlug;
   let memo;
-  let currentComponent;
+  let lexicon;
+  let isDataReady = false;
 
-  page.subscribe(($page) => {
+  page.subscribe(async ($page) => {
+    if ($fullmemos.length === 0) {
+      await fullmemos.get();
+    }
+
     pageSlug = $page.params.slug;
     memo = $fullmemos.find((m) => m.slug === pageSlug);
+
+    if (memo) {
+      textMarkdown(memo);
+      isDataReady = true;
+    }
+
   });
+  
+  function textMarkdown(memo) {
+    lexicon = $page.data.lexicon;
+    memo.contents.forEach(content => {
+      content.content = textToMarkdown(content.content);
+
+      lexicon.forEach(wordObj => {
+        const word = wordObj.word;
+        if (content.content.includes(word)) {
+          content.content = content.content.replaceAll(word, `<span style="color:red">${word}</span>`);
+        }
+      });
+    });
+  }
 </script>
 
-
-
 <div class="container">
-  <Sidebar />
+  <MainSidebar />
   <div class="content">
-    <h2><strong>{memo.title}</strong></h2>
-    {#if memo}
-  {#each memo.contents as content (content.id)}
-    {#if components[content.type.name]}
-      <svelte:component this={components[content.type.name]} value={content.content} css={content.type.css}/>
+    {#if isDataReady}
+      <h2><strong>{memo.title}</strong></h2>
+      {#if memo}
+        {#each memo.contents as content (content.id)}
+          {#if components[content.type.name]}
+            <svelte:component this={components[content.type.name]} value={content.content} css={content.type.css}/>
+          {/if}
+        {/each}
+      {/if}
     {/if}
-  {/each}
-{/if}
   </div>
-  <div class="option">
-
-  </div>
+  <ReadMemoSidebar />
 </div>
 
 <style>
@@ -51,29 +77,15 @@
   .content {
     display: flex;
     flex-direction: column;
+    flex-wrap: wrap;
     padding: 20px;
     flex-wrap: wrap;
     min-width: 70%;
     widows: 15%;
     background-color: rgb(29, 32, 32);
-    
-
   }
-
 
   h2 {
     text-align: center;
   }
-
-  .option {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        min-width: 15%;
-        widows: 15%;
-  }
-
-
-
 </style>

@@ -3,7 +3,9 @@
   export let css;
 </script>
 
-<blockquote style={css} >{value}</blockquote>
+<pre>
+	<blockquote style={css} >{value}</blockquote>
+</pre>
 
 
 

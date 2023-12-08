@@ -43,16 +43,16 @@ export const lexicon = (() => {
   };
 
   // Méthode pour supprimer une tâche
-  const remove = async (lexicon) => {
+  const remove = async (lexical) => {
     try {
       // Envoyer la demande de suppression à la BDD
-      const response = await fetch(`http://localhost:3000/api/lexicon/${lexicon.id}`, {
+      const response = await fetch(`http://localhost:3000/api/lexicon/${lexical.id}`, {
         method: 'DELETE',
       });
 
       if (response.ok) {
         // Mettre à jour le store en excluant la tâche supprimée
-        update(($words) => $words.filter((t) => t.id !== lexicon.id));
+        update(($words) => $words.filter((t) => t.id !== lexical.id));
       } else {
         console.error(`Error removing lexicon: ${response.status}`);
       }
@@ -61,23 +61,20 @@ export const lexicon = (() => {
     }
   };
 
-  const mark = async (lexicon) => {
-    const { description } = lexicon;
-    const data = { description };
-
+  const mark = async (lexical) => {
     try {
-      const response = await fetch(`http://localhost:3000/api/lexicon/${lexicon.id}`, {
+      const response = await fetch(`http://localhost:3000/api/lexicon/${lexical.id}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(lexical),
       });
 
       if (response.ok) {
         update(($words) => [
           ...$words.filter((t) => t !== lexicon),
-          { ...lexicon, description },
+          { ...lexicon, lexical },
         ]);
       } else {
         console.error(`Error marking lexicon: ${response.status}`);

@@ -2,7 +2,9 @@
   export let value;
 </script>
 
-<h3>{value}</h3>
+<pre>
+  <h3>{value}</h3>
+</pre>
 
 <style>
   h3 {

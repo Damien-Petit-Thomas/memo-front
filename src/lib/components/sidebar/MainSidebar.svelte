@@ -3,8 +3,27 @@
 <script>
   import { categories } from '$lib/stores/category.js';
   import { memos} from '$lib/stores/memo.js';
-
+  import  {memoData} from '$lib/utils/dataService.js';
+  import { onMount } from 'svelte';
   let categoryStates = {};
+
+
+
+
+
+  onMount(() => {
+    if ($categories.length === 0) {
+      categories.get();
+    }
+    if ($memos.length === 0) {
+      memos.get();
+    }
+    $categories.forEach((category) => {
+      categoryStates[category.id] = false;
+    });
+  });
+
+
 
   function toggleMemo(categoryId) {
     categoryStates[categoryId] = !categoryStates[categoryId];
@@ -20,7 +39,9 @@
         {#if categoryStates[category.id]}
           <div class="memo">
             {#each $memos.filter(memo => memo.category_id === category.id) as memo}
-              <div><a href="/memo/{memo.slug}">{memo.title}</a></div>
+              <div>
+                <a href="/memo/{memo.slug}"
+                >{memo.title}</a></div>
             {/each}
           </div>
         {/if}
@@ -58,6 +79,6 @@
   }
 
   .memo {
-    padding-left: 16px; /* Adjust as needed */
+    padding-left: 16px;
   }
 </style>

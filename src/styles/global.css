@@ -144,3 +144,13 @@ a:hover {
 	text-decoration: underline;
 	cursor: pointer;
 }
+
+button {
+	cursor: pointer;
+	background-color: #2a405a;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border: none;
+  border-radius: 5%;
+}

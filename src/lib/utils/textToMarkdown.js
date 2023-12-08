@@ -1,5 +1,4 @@
-
-const textToMarkdown = (text) => {
+export const textToMarkdown = (text) => {
   // on crée un tableau de lignes
   const lines = text.split('\n');
 
@@ -51,26 +50,4 @@ const textToMarkdown = (text) => {
 
   // on retourne le markdown
   return markdownLines.join('\n');
-}
-
-// Exemple d'utilisation
-const inputText = `
-# Titre principal
-Ceci est un paragraphe de texte.
-
-## Sous-titre
-- Liste non ordonnée 1
-- Liste non ordonnée 2
-
-1. Liste ordonnée 1
-2. Liste ordonnée 2
-
-**Texte en gras**
-
-*Texte en italique*
-
-[Lien vers Google](https://www.google.com)
-`;
-
-const markdownOutput = textToMarkdown(inputText);
-console.log(markdownOutput);
+};
