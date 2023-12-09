@@ -2,24 +2,52 @@
   import {memos} from '$lib/stores/memo.js';
    import { memoItems } from '$lib/stores/Editor.js';
   import Editor from '$lib/components/editor/Editor.svelte';
+  import Lexicon from '$lib/components/editor/Lexicon.svelte'
   import EditorSidebar from '$lib/components/editor/EditorSidebar.svelte';
   import {title} from '$lib/stores/title.js';
   import  EditorSidebarTagNCategory  from '$lib/components/editor/EditorSidebarTagNCategory.svelte';
+  let memoId;
   export let data; 
+
+  import { currentMemo } from '$lib/stores/currentMemo.js';
+  import { onMount } from 'svelte';
+
+  onMount(() => {
+    if ($currentMemo.contents && $currentMemo.contents.length > 0) {
+      memoId = $currentMemo.id
+      // on boucle sur la fonction handleSelectItem pour ajouter les items du memo dans le store memoItems
+      $currentMemo.contents.forEach(item => {
+      
+        // on en profite pour passer item.content 
+        handleSelectItem({detail : {...item.type, content : item.content}})
+        
+      })
+      currentMemo.set("")
+
+    }
+  });
+
+
+
+
   let categoryId;
   let tagsIds = [];
   const contentTypeElem = data.contents
+
+
+
   function handleSelectCategory(e) {
-    console.log(e.detail)
+  
     categoryId = e.detail;
   }
   function handleTags(e) {
-    console.log(e.detail);
+
     tagsIds = e.detail;
   }
   function handleSelectItem(e) {
+
     const count = Math.random()
-    const newItem = { ...e.detail, id: count, initialTypeId: e.detail.id }
+    const newItem = { ...e.detail, id: count, initialTypeId: e.detail.id,  }
     memoItems.update(items => [...items, newItem]);
   }
 
@@ -32,7 +60,9 @@
         type_id: item.initialTypeId, 
       }
     })
-  
+  if(memoId){
+  return  memos.mark({title : $title, contents : itemsToSave, categoryId , tagsIds}, memoId)
+  }else
   memos.add({title : $title, contents : itemsToSave, categoryId , tagsIds})
 
 }
@@ -52,8 +82,9 @@
     <EditorSidebarTagNCategory
     on:selectedCategory={handleSelectCategory}
     on:selectedTags={handleTags}
-    {data}
     />
+    <Lexicon {categoryId} />
+
 </div>
 
 

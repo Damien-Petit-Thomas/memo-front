@@ -3,15 +3,33 @@
 <script>
   import { categories } from '$lib/stores/category.js';
   import { memos} from '$lib/stores/memo.js';
-
+  import { onMount } from 'svelte';
   let categoryStates = {};
+
+
+
+
+
+  onMount(() => {
+    if ($categories.length === 0) {
+      categories.get();
+    }
+    if ($memos.length === 0) {
+      memos.get();
+    }
+    $categories.forEach((category) => {
+      categoryStates[category.id] = false;
+    });
+  });
+
+
 
   function toggleMemo(categoryId) {
     categoryStates[categoryId] = !categoryStates[categoryId];
   }
 </script>
 
-  <div class="sidebar">
+  <section class="sidebar">
     {#each $categories as category (category.id)}
       <div class="category" style="border-left: {category.color} solid 6px;">
         <h2>{category.name} 
@@ -20,20 +38,21 @@
         {#if categoryStates[category.id]}
           <div class="memo">
             {#each $memos.filter(memo => memo.category_id === category.id) as memo}
-              <div><a href="/memo/{memo.slug}">{memo.title}</a></div>
+              <div>
+                <a href="/memo/{memo.slug}"
+                >{memo.title}</a></div>
             {/each}
           </div>
         {/if}
       </div>
     {/each}
-  </div>
+  </section>
 
 
 <style>
 
   .sidebar {
-    width: 15rem;
-    background-color: #111;
+    min-width: 15%;
     padding-top: 20px;
     overflow-x: hidden;
   }
@@ -59,6 +78,6 @@
   }
 
   .memo {
-    padding-left: 16px; /* Adjust as needed */
+    padding-left: 16px;
   }
 </style>

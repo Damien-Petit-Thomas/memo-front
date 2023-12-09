@@ -13,14 +13,12 @@
 
 
   function editHandler(e){
-    console.log(e.detail)
     editor = true;
     className = e.detail.css
   }
 
   onMount(() => {
     if ($categories.length === 0) {
-      console.log('get categories')
       categories.get()
     }
     if ($tags.length === 0) {
@@ -32,12 +30,10 @@
 
 
 function selecteCategory(e) {
-  console.log(e.detail)
    categoryId = e.detail;
 }
 function togleSelected(e) {
  
-  console.log(e.detail);
   tagsIds.includes(e.detail)
     ? (tagsIds = tagsIds.filter((id) => id !== e.detail))
     : (tagsIds = [...tagsIds, e.detail]);
@@ -46,7 +42,6 @@ function togleSelected(e) {
 
 
 function saveMemo(){
-  console.log(title, contents, categoryId, tagsIds);
   const memo = {
     title,
     contents,
@@ -76,7 +71,6 @@ let currentContent = "";
 
 function updateTitle(e) {
   className = "h1";
-  console.log(e.target)
   title = e.target.value;
   preview.add({title})
   const type = "updatePreviewTitle";

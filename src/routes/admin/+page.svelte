@@ -10,12 +10,14 @@
 	
   onMount(() => {
     if ($categories.length === 0) {
-      console.log('get categories')
       categories.get()
     }
     if ($tags.length === 0) {
       tags.get()
     }
+		if ($todos.length === 0) {
+			todos.get()
+		}
   });
 
 	
@@ -60,7 +62,7 @@
 
 
 
-	<!-- <a href="" >drag-test</a> -->
+	
 	<a href="/admin/create-memo" >creer un memo</a>
 <style>
 	.list-container{

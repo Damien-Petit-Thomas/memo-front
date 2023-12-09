@@ -5,6 +5,7 @@
     <a href="/test">test</a>
 <a href="/new-memo">new</a>
 <a href="/admin">home-admin</a>
+<a href="/lexicon">lexique</a>
   </div>
 </footer>
 
@@ -16,7 +17,7 @@ footer {
   font-weight: 700;
   text-align: center;
   margin: 0;
-  position: sticky;
+  position: fixed;
   padding: 0;
   bottom: 0;
   width: 100%;

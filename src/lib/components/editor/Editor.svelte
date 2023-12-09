@@ -4,14 +4,18 @@
   import EditableItem from "$lib/components/editor/EditorEditableItem.svelte";
   import Toolbar from "./EditorToolBar.svelte";
   import { memoItems } from '$lib/stores/Editor.js';
-const title = {content : "Titre", css : "h1"};
+  import { currentMemo } from '$lib/stores/currentMemo.js';
+  
+
+
+const title = {content : $currentMemo.title ? $currentMemo.title : "titre", css : "h1"};
   const flipDurationMs = 200;
   let dragDisabled = true;
   let deletedItems = [];
 
   function handleConsider(e) {
     const { items: newItems, info: { source, trigger } } = e.detail;
-    console.log("consider", newItems, source, trigger)
+   
     memoItems.set(newItems); 
     if (source === SOURCES.KEYBOARD && trigger === TRIGGERS.DRAG_STOPPED) {
       dragDisabled = true;
@@ -20,12 +24,10 @@ const title = {content : "Titre", css : "h1"};
 
   function handleFinalize(e) {
     const { items: newItems, info: { source } } = e.detail;
-    console.log("finalize", newItems, source, $memoItems)
     memoItems.set(newItems);  
     if (source === SOURCES.POINTER) {
       dragDisabled = true;
     }
-    console.log(newItems);
   }
 
   function startDrag(e) {
@@ -44,9 +46,12 @@ const title = {content : "Titre", css : "h1"};
   }
 
   function deleteItem({ id }) {
-    console.log("delete item");
-    console.log(memoItems);  // Utilisez le store ici
     memoItems.update(items => items.filter(item => item.id !== id));
+  }
+
+
+  function handleValue(item) {
+  return  item.content !== undefined ? item.content : item.content = item.name
   }
 </script>
 
@@ -54,22 +59,24 @@ const title = {content : "Titre", css : "h1"};
 <div class="wrapper">
   <EditableItem item={title} value={title.content} on:submit={submit(title.content)} on:deleteItem={deleteItem} />
   <section class="editor"
-           use:dndzone="{{ items: $memoItems, dragDisabled, flipDurationMs }}"
-           on:consider="{handleConsider}"
-           on:finalize="{handleFinalize}">
-  
-  
+          use:dndzone="{{ items: $memoItems, dragDisabled, flipDurationMs }}"
+          on:consider="{handleConsider}"
+          on:finalize="{handleFinalize}">
+
     {#each $memoItems as item (item.id)}
     <div animate:flip="{{ duration: flipDurationMs }}">
       {#if !deletedItems.includes(item)}
+          <!-- svelte-ignore a11y-no-static-element-interactions -->
+          <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
           <div tabindex={dragDisabled ? 0 : -1}
-               aria-label="drag-handle"
-               class="handle"
-               style={dragDisabled ? 'cursor: grab' : 'cursor: grabbing'}
-               on:mousedown={startDrag}
-               on:touchstart={startDrag}
-               on:keydown={handleKeyDown} />
-          <EditableItem {item} value={item.name} placeholder={item.name} on:submit={submit(item.name)} on:deleteItem={deleteItem} />
+              aria-label="drag-handle"
+              class="handle"
+              style={dragDisabled ? 'cursor: grab' : 'cursor: grabbing'}
+              on:mousedown={startDrag}
+              on:touchstart={startDrag}
+              on:keydown={handleKeyDown} />
+        
+          <EditableItem {item} value={handleValue(item)}  on:submit={submit(item.name)} on:deleteItem={deleteItem} />
           <button class="delete" on:click={() => deleteItem(item)}>X</button>
           {/if}
         </div>

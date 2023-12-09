@@ -1,18 +1,18 @@
 import { writable } from 'svelte/store';
 
-export const memos = (() => {
-  const { subscribe, set, update } = writable([]);
+export const lexicon = (() => {
+  const { subscribe, update, set } = writable([]);
 
   // Méthode pour ajouter une nouvelle tâche
 
   const get = async () => {
     try {
-      const response = await fetch('http://localhost:3000/api/memo');
+      const response = await fetch('http://localhost:3000/api/lexicon');
       if (response.ok) {
         const data = await response.json();
         update(() => data);
       } else {
-        console.error(`Error fetching memos: ${response.status}`);
+        console.error(`Error fetching words: ${response.status}`);
       }
     } catch (error) {
       console.error('An unexpected error occurred:', error);
@@ -21,8 +21,8 @@ export const memos = (() => {
 
   const add = async (description) => {
     try {
-      // Envoyer la description à la BDD pour créer un nouveau memo
-      const response = await fetch('http://localhost:3000/api/memo', {
+      // Envoyer la description à la BDD pour créer un nouveau lexicon
+      const response = await fetch('http://localhost:3000/api/lexicon', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -31,11 +31,11 @@ export const memos = (() => {
       });
 
       if (response.ok) {
-        const newmemo = await response.json();
-        // Mettre à jour le store avec le nouveau memo de la BDD
-        update(($memos) => [...$memos, newmemo]);
+        const newlexicon = await response.json();
+        // Mettre à jour le store avec le nouveau lexicon de la BDD
+        update(($words) => [...$words, newlexicon]);
       } else {
-        console.error(`Error adding memo: ${response.status}`);
+        console.error(`Error adding lexicon: ${response.status}`);
       }
     } catch (error) {
       console.error('An unexpected error occurred:', error);
@@ -43,45 +43,46 @@ export const memos = (() => {
   };
 
   // Méthode pour supprimer une tâche
-  const remove = async (memo) => {
+  const remove = async (lexical) => {
     try {
       // Envoyer la demande de suppression à la BDD
-      const response = await fetch(`http://localhost:3000/api/memo/${memo.id}`, {
+      const response = await fetch(`http://localhost:3000/api/lexicon/${lexical.id}`, {
         method: 'DELETE',
       });
 
       if (response.ok) {
         // Mettre à jour le store en excluant la tâche supprimée
-        update(($memos) => $memos.filter((t) => t.id !== memo.id));
+        update(($words) => $words.filter((t) => t.id !== lexical.id));
       } else {
-        console.error(`Error removing memo: ${response.status}`);
+        console.error(`Error removing lexicon: ${response.status}`);
       }
     } catch (error) {
       console.error('An unexpected error occurred:', error);
     }
   };
 
-  const mark = async (memo, id) => {
+  const mark = async (lexical) => {
     try {
-      const response = await fetch(`http://localhost:3000/api/memo/${id}`, {
+      const response = await fetch(`http://localhost:3000/api/lexicon/${lexical.id}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ ...memo }),
+        body: JSON.stringify(lexical),
       });
 
       if (response.ok) {
-        const newmemo = await response.json();
-        update(($memos) => $memos.map((t) => (t.id === memo.id ? newmemo : t)));
+        update(($words) => [
+          ...$words.filter((t) => t !== lexicon),
+          { ...lexicon, lexical },
+        ]);
       } else {
-        console.error(`Error marking memo: ${response.status}`);
+        console.error(`Error marking lexicon: ${response.status}`);
       }
     } catch (error) {
       console.error('An unexpected error occurred:', error);
     }
   };
-
   return {
     set,
     update,

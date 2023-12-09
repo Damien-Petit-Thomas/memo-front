@@ -67,7 +67,7 @@ export const categories = (() => {
 
     try {
       const response = await fetch(`http://localhost:3000/api/category/${category.id}`, {
-        method: 'PUT',
+        method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
         },

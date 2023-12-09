@@ -6,16 +6,20 @@
   export let item, value, required = true
 
   let editing = false, original
+  
 
-let content = value
+let content = item.content !== undefined ? item.content : item.name
+
+
 
   onMount(() => {
+
     original = value
   })
   
   function edit() {
     editing = true;
-    if(content === value){
+    if(!content || content === item.name){
       content = ""
     }
   }
@@ -35,7 +39,6 @@ let content = value
         const index = items.findIndex(memItem => memItem.id === item.id)
         if (index !== -1) {
           items[index].content = content
-          console.log(items[index])
         }
         return items
       })
@@ -58,7 +61,7 @@ let content = value
 {#if editing}
 <!-- svelte-ignore a11y-no-noninteractive-element-interctions -->
 <section  >
-  <textarea  id={item.css}   bind:value={content} on:blur={saveContent} {required} use:focus/>
+  <textarea  id={item.name}   bind:value={content} on:blur={saveContent} {required} use:focus/>
 </section>
   
 
@@ -68,13 +71,13 @@ let content = value
 <div on:click={edit} on:keydown={(event) => handleKeyDown(event)} role="button" tabindex="0">
   {#if item.css === 'h1'}
   <h1>{content}</h1>
-  {:else if item.css === 'h2'}
+  {:else if item.name === 'subtitle'}
   <h2>{content}</h2>
-  {:else if item.css === 'blockquote'}
+  {:else if item.name === 'blockquote'}
   <pre>
     <blockquote><pre>{content}</pre></blockquote>
   </pre>
-  {:else if item.css === 'p'}
+  {:else if item.name === 'paragraphe'}
   <p>
     <pre>
       {content}
