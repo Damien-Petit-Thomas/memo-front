@@ -9,7 +9,7 @@
   import MainSidebar from '$lib/components/sidebar/MainSidebar.svelte';
   import ReadMemoSidebar from '$lib/components/sidebar/ReadMemoSidebar.svelte';
   import  {currentMemo} from '$lib/stores/currentMemo.js';
-
+  // import  
 
 
 
@@ -33,21 +33,21 @@
     memo = $fullmemos.find((m) => m.slug === pageSlug);
 
     if (memo) {
-      textMarkdown(memo);
+      formatText(memo);
       isDataReady = true;
     }
 
   });
   
-  function textMarkdown(memo) {
+  function formatText(memo) {
     lexicon = $page.data.lexicon;
-    memo.contents.forEach(content => {
-      content.content = textToMarkdown(content.content);
+    memo.contents.forEach(item => {
+      item.content = textToMarkdown(item.content);
 
       lexicon.forEach(wordObj => {
         const word = wordObj.word;
-        if (content.content.includes(word)) {
-          content.content = content.content.replaceAll(word, `<span style="color:red">${word}</span>`);
+        if (item.content.includes(word)) {
+          item.content = item.content.replaceAll(word, `<span style="color:red">${word}</span>`);
         }
       });
     });

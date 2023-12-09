@@ -50,7 +50,9 @@
     .word-word {
       font-size: 1.5rem;
       font-weight: bold;
-    }
+      padding-left: 1rem;
+      border-left: 3px solid black;
+       }
 
     .definition {
       font-size: 1.2rem;

@@ -60,9 +60,9 @@ let content = item.content !== undefined ? item.content : item.name
 
 {#if editing}
 <!-- svelte-ignore a11y-no-noninteractive-element-interctions -->
-<section  >
+
   <textarea  id={item.name}   bind:value={content} on:blur={saveContent} {required} use:focus/>
-</section>
+
   
 
 
@@ -88,7 +88,12 @@ let content = item.content !== undefined ? item.content : item.name
 {/if}
 <style>
   textarea  {
+
+    height: 50vh;
+    outline: none;
+    border: none;
     margin: 1rem 0 0 0; 
+    padding-bottom: 2rem;
     border: none;
     background: none;
     font-size: inherit;
@@ -97,7 +102,7 @@ let content = item.content !== undefined ? item.content : item.name
     text-align: inherit;
     box-shadow: none;
     width: 100%;
-    white-space: pre-wrap; 
+  
   }
 
 
