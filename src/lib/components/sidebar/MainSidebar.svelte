@@ -3,7 +3,6 @@
 <script>
   import { categories } from '$lib/stores/category.js';
   import { memos} from '$lib/stores/memo.js';
-  import  {memoData} from '$lib/utils/dataService.js';
   import { onMount } from 'svelte';
   let categoryStates = {};
 

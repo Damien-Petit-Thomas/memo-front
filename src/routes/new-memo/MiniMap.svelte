@@ -13,7 +13,6 @@
   function handleSort(e) {
 
 		items = e.detail.items;
-    console.log(items)
 	}
 
   function remove(item) {
@@ -25,7 +24,6 @@
 
   function edit(item) {
     const id = item.id;
-    console.log(id)
     const edit = document.getElementById(id)
     if(edit.classList.contains('edit')) return;
     edit.classList.add('edit');

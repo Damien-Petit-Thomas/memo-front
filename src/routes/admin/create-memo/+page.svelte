@@ -14,7 +14,6 @@
 
   onMount(() => {
     if ($currentMemo.contents && $currentMemo.contents.length > 0) {
-      console.log("====================",$currentMemo)
       memoId = $currentMemo.id
       // on boucle sur la fonction handleSelectItem pour ajouter les items du memo dans le store memoItems
       $currentMemo.contents.forEach(item => {
@@ -47,7 +46,6 @@
   }
   function handleSelectItem(e) {
 
-    console.log(e.detail)
     const count = Math.random()
     const newItem = { ...e.detail, id: count, initialTypeId: e.detail.id,  }
     memoItems.update(items => [...items, newItem]);
@@ -63,10 +61,8 @@
       }
     })
   if(memoId){
-    console.log("update memo")
   return  memos.mark({title : $title, contents : itemsToSave, categoryId , tagsIds}, memoId)
   }else
-  console.log("create memo")
   memos.add({title : $title, contents : itemsToSave, categoryId , tagsIds})
 
 }

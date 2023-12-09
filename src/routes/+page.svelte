@@ -3,6 +3,7 @@
  	import { todos } from '$lib/stores/todo.js';
 	import {categories} from '$lib/stores/category.js';
 	import {tags} from '$lib/stores/tag.js'
+	import { lexicon } from '$lib/stores/lexicon.js';
 	import Sidebar from '../lib/components/sidebar/MainSidebar.svelte';
 
 	import {onMount} from 'svelte';
@@ -14,6 +15,8 @@
 		tags.set(data.tags);
 		memos.set(data.memos);
 		todos.set(data.todos);
+		lexicon.set(data.lexicon);
+
 	});
 
 

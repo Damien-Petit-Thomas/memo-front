@@ -1,6 +1,15 @@
 export const textToMarkdown = (text) => {
   // on crée un tableau de lignes
   const lines = text.split('\n');
+  // si une ligne est trop longue, on la coupe
+  const maxLength = 120;
+
+ 
+  // lines.forEach((line, index) => {
+  //   if (line.length > maxLength) {
+  //     lines[index] = `${line.slice(0, maxLength)}\n${line.slice(maxLength)}`;
+  //   }
+  // });
 
   // on crée un tableau de lignes markdown
   const markdownLines = lines.map((line) => {

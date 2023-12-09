@@ -1,7 +1,6 @@
 
 <script>
 import  { preview } from '$lib/stores/preview.js';
-console.log(preview)
 let title = "";
 let contents = [];
 let currentContent = "";
@@ -18,7 +17,6 @@ function handleMessage(event) {
     // Mettez à jour votre store ou effectuez d'autres opérations en fonction des données reçues
     className = data.className
 
-    console.log(data)
   }
   if (type === 'updatePreviewCurrentContent') {
   
@@ -28,7 +26,6 @@ function handleMessage(event) {
     className = data.className || ""
   }
   if (type === 'updatePreviewContents') {
-    console.log("message content received")
    contents =  [...contents, currentContent]
 
     currentContent = ""

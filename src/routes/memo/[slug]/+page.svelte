@@ -88,9 +88,7 @@ $: currentMemo.set(memo)
   .content {
     display: flex;
     flex-direction: column;
-    flex-wrap: wrap;
     padding: 20px;
-    flex-wrap: wrap;
     min-width: 70%;
     widows: 15%;
     background-color: rgb(29, 32, 32);
