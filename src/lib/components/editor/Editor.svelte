@@ -75,7 +75,7 @@ const title = {content : $currentMemo.title ? $currentMemo.title : "titre", css 
               on:mousedown={startDrag}
               on:touchstart={startDrag}
               on:keydown={handleKeyDown} />
-        {JSON.stringify(item)}
+        
           <EditableItem {item} value={handleValue(item)}  on:submit={submit(item.name)} on:deleteItem={deleteItem} />
           <button class="delete" on:click={() => deleteItem(item)}>X</button>
           {/if}

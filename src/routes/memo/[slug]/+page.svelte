@@ -54,7 +54,6 @@
   }
 
 $: currentMemo.set(memo)
-$: console.log($currentMemo)
 
 
 

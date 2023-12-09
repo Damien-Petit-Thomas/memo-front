@@ -1,7 +1,6 @@
 <script>
   import { send, receive } from '$lib/utils/transition.js';
   import CategoryBtn from '$lib/ui/CategoryBtn.svelte';
-  
   export let title;
   export let store;
  
@@ -15,6 +14,7 @@
         name,
         color
       };
+    
       store.add(data);
       name = '';
       color = '#ff0000';
@@ -32,14 +32,14 @@
   </form>
 
   <ul class="categories">
-    {#each $store as category (category.id)}
+    {#each $store as item (item.id)}
       <li
         class="categorie"
-        in:receive={{ key: category.id }}
-        out:send={{ key: category.id }}
+        in:receive={{ key: item.id }}
+        out:send={{ key: item.id }}
       >
-        <CategoryBtn item={category} />
-        <button class="remove" on:click={() => store.remove(category)} aria-label="Remove" />
+        <CategoryBtn {item} />
+        <button class="remove" on:click={() => store.remove(item)} aria-label="Remove" />
       </li>
     {/each}
   </ul>

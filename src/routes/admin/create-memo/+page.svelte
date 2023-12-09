@@ -6,7 +6,7 @@
   import EditorSidebar from '$lib/components/editor/EditorSidebar.svelte';
   import {title} from '$lib/stores/title.js';
   import  EditorSidebarTagNCategory  from '$lib/components/editor/EditorSidebarTagNCategory.svelte';
-
+  let memoId;
   export let data; 
 
   import { currentMemo } from '$lib/stores/currentMemo.js';
@@ -14,6 +14,8 @@
 
   onMount(() => {
     if ($currentMemo.contents && $currentMemo.contents.length > 0) {
+      console.log("====================",$currentMemo)
+      memoId = $currentMemo.id
       // on boucle sur la fonction handleSelectItem pour ajouter les items du memo dans le store memoItems
       $currentMemo.contents.forEach(item => {
       
@@ -21,6 +23,7 @@
         handleSelectItem({detail : {...item.type, content : item.content}})
         
       })
+      currentMemo.set("")
 
     }
   });
@@ -59,7 +62,11 @@
         type_id: item.initialTypeId, 
       }
     })
-  
+  if(memoId){
+    console.log("update memo")
+  return  memos.mark({title : $title, contents : itemsToSave, categoryId , tagsIds}, memoId)
+  }else
+  console.log("create memo")
   memos.add({title : $title, contents : itemsToSave, categoryId , tagsIds})
 
 }

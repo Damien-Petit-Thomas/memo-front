@@ -20,7 +20,6 @@ export const memos = (() => {
   };
 
   const add = async (description) => {
-    console.log(JSON.stringify({ ...description }));
     try {
       // Envoyer la description à la BDD pour créer un nouveau memo
       const response = await fetch('http://localhost:3000/api/memo', {
@@ -62,24 +61,19 @@ export const memos = (() => {
     }
   };
 
-  const mark = async (memo) => {
-    const done = !memo.done;
-    const { description } = memo;
-
+  const mark = async (memo, id) => {
     try {
-      const response = await fetch(`http://localhost:3000/api/memo/${memo.id}`, {
-        method: 'PUT',
+      const response = await fetch(`http://localhost:3000/api/memo/${id}`, {
+        method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ done, description }),
+        body: JSON.stringify({ ...memo }),
       });
 
       if (response.ok) {
-        update(($memos) => [
-          ...$memos.filter((t) => t !== memo),
-          { ...memo, done },
-        ]);
+        const newmemo = await response.json();
+        update(($memos) => $memos.map((t) => (t.id === memo.id ? newmemo : t)));
       } else {
         console.error(`Error marking memo: ${response.status}`);
       }
