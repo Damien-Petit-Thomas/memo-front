@@ -8,6 +8,10 @@
   import { fullmemos } from '$lib/stores/fullmemos.js';
   import MainSidebar from '$lib/components/sidebar/MainSidebar.svelte';
   import ReadMemoSidebar from '$lib/components/sidebar/ReadMemoSidebar.svelte';
+  import  {currentMemo} from '$lib/stores/currentMemo.js';
+
+
+
 
   const components = {
     paragraphe: Paragraphe,
@@ -48,9 +52,17 @@
       });
     });
   }
+
+$: currentMemo.set(memo)
+$: console.log($currentMemo)
+
+
+
+
 </script>
 
 <div class="container">
+  
   <MainSidebar />
   <div class="content">
     {#if isDataReady}

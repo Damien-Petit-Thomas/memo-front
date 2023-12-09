@@ -17,6 +17,7 @@ export const fullmemos = (() => {
     }
   };
   return {
+    set,
     subscribe,
     get,
   };

@@ -6,10 +6,34 @@
   import EditorSidebar from '$lib/components/editor/EditorSidebar.svelte';
   import {title} from '$lib/stores/title.js';
   import  EditorSidebarTagNCategory  from '$lib/components/editor/EditorSidebarTagNCategory.svelte';
+
   export let data; 
+
+  import { currentMemo } from '$lib/stores/currentMemo.js';
+  import { onMount } from 'svelte';
+
+  onMount(() => {
+    if ($currentMemo.contents && $currentMemo.contents.length > 0) {
+      // on boucle sur la fonction handleSelectItem pour ajouter les items du memo dans le store memoItems
+      $currentMemo.contents.forEach(item => {
+      
+        // on en profite pour passer item.content 
+        handleSelectItem({detail : {...item.type, content : item.content}})
+        
+      })
+
+    }
+  });
+
+
+
+
   let categoryId;
   let tagsIds = [];
   const contentTypeElem = data.contents
+
+
+
   function handleSelectCategory(e) {
   
     categoryId = e.detail;
@@ -19,8 +43,10 @@
     tagsIds = e.detail;
   }
   function handleSelectItem(e) {
+
+    console.log(e.detail)
     const count = Math.random()
-    const newItem = { ...e.detail, id: count, initialTypeId: e.detail.id }
+    const newItem = { ...e.detail, id: count, initialTypeId: e.detail.id,  }
     memoItems.update(items => [...items, newItem]);
   }
 
@@ -53,7 +79,6 @@
     <EditorSidebarTagNCategory
     on:selectedCategory={handleSelectCategory}
     on:selectedTags={handleTags}
-    {data}
     />
     <Lexicon {categoryId} />
 

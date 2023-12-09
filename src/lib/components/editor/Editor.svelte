@@ -4,13 +4,18 @@
   import EditableItem from "$lib/components/editor/EditorEditableItem.svelte";
   import Toolbar from "./EditorToolBar.svelte";
   import { memoItems } from '$lib/stores/Editor.js';
-const title = {content : "Titre", css : "h1"};
+  import { currentMemo } from '$lib/stores/currentMemo.js';
+  
+
+
+const title = {content : $currentMemo.title ? $currentMemo.title : "titre", css : "h1"};
   const flipDurationMs = 200;
   let dragDisabled = true;
   let deletedItems = [];
 
   function handleConsider(e) {
     const { items: newItems, info: { source, trigger } } = e.detail;
+   
     memoItems.set(newItems); 
     if (source === SOURCES.KEYBOARD && trigger === TRIGGERS.DRAG_STOPPED) {
       dragDisabled = true;
@@ -43,6 +48,11 @@ const title = {content : "Titre", css : "h1"};
   function deleteItem({ id }) {
     memoItems.update(items => items.filter(item => item.id !== id));
   }
+
+
+  function handleValue(item) {
+  return  item.content !== undefined ? item.content : item.content = item.name
+  }
 </script>
 
 <Toolbar />
@@ -52,8 +62,7 @@ const title = {content : "Titre", css : "h1"};
           use:dndzone="{{ items: $memoItems, dragDisabled, flipDurationMs }}"
           on:consider="{handleConsider}"
           on:finalize="{handleFinalize}">
-  
-  
+
     {#each $memoItems as item (item.id)}
     <div animate:flip="{{ duration: flipDurationMs }}">
       {#if !deletedItems.includes(item)}
@@ -66,7 +75,8 @@ const title = {content : "Titre", css : "h1"};
               on:mousedown={startDrag}
               on:touchstart={startDrag}
               on:keydown={handleKeyDown} />
-          <EditableItem {item} value={item.name} placeholder={item.name} on:submit={submit(item.name)} on:deleteItem={deleteItem} />
+        {JSON.stringify(item)}
+          <EditableItem {item} value={handleValue(item)}  on:submit={submit(item.name)} on:deleteItem={deleteItem} />
           <button class="delete" on:click={() => deleteItem(item)}>X</button>
           {/if}
         </div>

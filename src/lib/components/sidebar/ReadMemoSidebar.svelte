@@ -1,9 +1,9 @@
 <script>
 
 
-function editMemo() {
-    window.location.href = "/editMemo";
-}
+
+
+
 
 </script>
 
@@ -11,12 +11,9 @@ function editMemo() {
 
 
 
-<div class="option"
-
-><button
-on:click={editMemo}
->modifier le memo
-</button></div>
+<div class="option">
+  <a href="/admin/create-memo"><button>modifier le memo</button></a>
+</div>
 
 
 

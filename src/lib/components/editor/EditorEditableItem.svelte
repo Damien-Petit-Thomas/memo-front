@@ -6,16 +6,20 @@
   export let item, value, required = true
 
   let editing = false, original
+  
 
-let content = value
+let content = item.content !== undefined ? item.content : item.name
+
+
 
   onMount(() => {
+
     original = value
   })
   
   function edit() {
     editing = true;
-    if(content === value){
+    if(!content || content === item.name){
       content = ""
     }
   }
