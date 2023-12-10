@@ -1,3 +1,5 @@
+import { link } from '../stores/link';
+
 export const textToMarkdown = (text) => {
   // on crée un tableau de lignes
   const lines = text.split('\n');
@@ -27,6 +29,8 @@ export const textToMarkdown = (text) => {
     if (linkMatch) {
       const linkText = linkMatch[1];
       const linkUrl = linkMatch[2];
+      // link.add({ name: linkText, url: linkUrl });
+      console.log(linkText, linkUrl);
       return `<a href="${linkUrl}">${linkText}</a>`;
     }
 
