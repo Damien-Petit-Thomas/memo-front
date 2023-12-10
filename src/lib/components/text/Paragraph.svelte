@@ -4,14 +4,14 @@
 
 
 <pre>
-  <p>{@html value}</p>
+  {@html value}
 </pre>
 
 
 
 <style>
-  p {
-    color: blue;
+  pre {
+    color: rgb(174, 174, 189);
   }
 
 </style>

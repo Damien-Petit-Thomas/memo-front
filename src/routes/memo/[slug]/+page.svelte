@@ -18,7 +18,7 @@
     subtitle: Subtitle,
     blockquote: Blockquote
   };
-
+  let copyMemo;
   let pageSlug;
   let memo;
   let lexicon;
@@ -37,8 +37,8 @@
     memo = $fullmemos.find((m) => m.slug === pageSlug);
 
     if (memo) {
-    originalMemo = JSON.parse(JSON.stringify(memo));
-    formatText(memo, linkList);
+    copyMemo = JSON.parse(JSON.stringify(memo));
+    formatText(copyMemo, linkList);
     isDataReady = true;
   }
 });
@@ -58,7 +58,7 @@
     });
   }
 
-$: currentMemo.set(originalMemo)
+$: currentMemo.set(memo)
 
 
 
@@ -70,9 +70,9 @@ $: currentMemo.set(originalMemo)
   <MainSidebar />
   <div class="content">
     {#if isDataReady}
-      <h2><strong>{memo.title}</strong></h2>
-      {#if memo}
-        {#each memo.contents as content (content.id)}
+      <h2><strong>{copyMemo.title}</strong></h2>
+      {#if copyMemo}
+        {#each copyMemo.contents as content (content.id)}
           {#if components[content.type.name]}
             <svelte:component this={components[content.type.name]} value={content.content} css={content.type.css}/>
           {/if}

@@ -1,10 +1,10 @@
 <script>
   export let value;
-  export let css;
+  export let css = null;
 </script>
 
 <pre>
-	<blockquote style={css} >{value}</blockquote>
+	<blockquote style={css} >{@html value}</blockquote>
 </pre>
 
 

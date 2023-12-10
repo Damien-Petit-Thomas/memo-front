@@ -40,6 +40,33 @@ h6 {
   overflow-wrap: break-word;
 }
 
+h1{
+  font-size: var(--font-size-heading-l);
+  line-height: var(--font-line-heading-l);
+}
+h2{
+  font-size: var(--font-size-heading-m);
+  line-height: var(--font-line-heading-m);
+}
+h3{
+  font-size: var(--font-size-heading-s);
+  line-height: var(--font-line-heading-s);
+}
+h4{
+  font-size: var(--font-size-heading-xs);
+  line-height: var(--font-line-heading-xs);
+}
+p{
+  font-size: var(--font-size-body);
+  line-height: var(--font-line-body);
+}
+
+h5{
+  font-size: var(--font-size-body);
+  line-height: var(--font-line-body);
+}
+
+
 a {
   text-decoration: none;
   color: inherit;
@@ -125,10 +152,10 @@ html[data-theme='dark'] {
   --color-modal-body: #c1c4cb;
 }
 
-blockquote p {
+blockquote {
   background: var(--color-preview-qoute-bg);
   border-left: 4px solid var(--color-orange);
-  font-family: 'Roboto Slab';
+  font-family: 'Roboto', sans-serif;
   padding: 2.4rem;
   border-radius: 0.4rem;
   color: var(--color-preview-qoute-body) !important;
@@ -150,10 +177,10 @@ main {
   width: 100vw;
 }
 
-ul,
+ ul,
 ol {
-  list-style: none;
-}
+  padding-left: 1.5rem;
+} 
 
 button {
   cursor: pointer;

@@ -20,7 +20,6 @@
       console.log($currentMemo)
       memoId = $currentMemo.id
       memoCategory = $currentMemo.category.id
-      console.log("oooooooooooooooooo",memoCategory)
     
   
       title.set($currentMemo.title)

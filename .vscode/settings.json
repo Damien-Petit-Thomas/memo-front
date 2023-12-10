@@ -18,5 +18,6 @@
     "titleBar.inactiveBackground": "#0ab08299",
     "titleBar.inactiveForeground": "#e7e7e799"
   },
-  "peacock.color": "#0ab082"
+  "peacock.color": "#0ab082",
+  "html-to-css-autocompletion.triggerCharacters": false
 }
