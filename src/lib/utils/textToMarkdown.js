@@ -77,6 +77,12 @@ export const textToMarkdown = (text, id, linkList) => {
       return `<span style="font-style: italic">${italicText}</span>`;
     }
 
+    const codeMatch = line.match(/`(.+?)`/);
+    if (codeMatch) {
+      const codeText = codeMatch[1];
+      return `<code>${codeText}</code>`;
+    }
+
     // sinon, on la laisse telle quelle
     return line;
   });

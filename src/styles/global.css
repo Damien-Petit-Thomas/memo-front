@@ -191,3 +191,10 @@ button {
   border: none;
   border-radius: 5%;
 }
+
+code {
+  background-color: var(--color-preview-code-bg);
+  padding: 0.2rem;
+  border-radius: 0.2rem;
+  color: greenyellow;
+}
