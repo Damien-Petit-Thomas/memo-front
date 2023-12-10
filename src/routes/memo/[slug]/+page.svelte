@@ -6,11 +6,11 @@
   import Blockquote from '$lib/components/text/Blockquote.svelte';
   import { page } from '$app/stores';
   import { fullmemos } from '$lib/stores/fullmemos.js';
+  import { link } from '$lib/stores/link.js';
   import MainSidebar from '$lib/components/sidebar/MainSidebar.svelte';
   import ReadMemoSidebar from '$lib/components/sidebar/ReadMemoSidebar.svelte';
   import  {currentMemo} from '$lib/stores/currentMemo.js';
   // import  
-
 
 
   const components = {
@@ -25,6 +25,10 @@
   let isDataReady = false;
   let originalMemo = null;
   page.subscribe(async ($page) => {
+    if (!$link) {
+      await link.get();
+    }
+    let linkList = $link;
     if ($fullmemos.length === 0) {
       await fullmemos.get();
     }
@@ -33,17 +37,18 @@
     memo = $fullmemos.find((m) => m.slug === pageSlug);
 
     if (memo) {
-    originalMemo = JSON.parse(JSON.stringify(memo)); // Create a deep copy
-    formatText(memo);
+    originalMemo = JSON.parse(JSON.stringify(memo));
+    formatText(memo, linkList);
     isDataReady = true;
   }
 });
 
-  function formatText(memo) {
+  function formatText(memo, linkList) {
     lexicon = $page.data.lexicon;
     memo.contents.forEach(item => {
-      item.content = textToMarkdown(item.content, memo.id);
-
+      item.content = textToMarkdown(item.content, memo.id, linkList);
+      
+      
       lexicon.forEach(wordObj => {
         const word = wordObj.word;
         if (item.content.includes(word)) {
@@ -53,7 +58,7 @@
     });
   }
 
- $: currentMemo.set(originalMemo)
+$: currentMemo.set(originalMemo)
 
 
 

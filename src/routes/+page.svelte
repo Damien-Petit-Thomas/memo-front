@@ -5,6 +5,7 @@
 	import {tags} from '$lib/stores/tag.js'
 	import { lexicon } from '$lib/stores/lexicon.js';
 	import Sidebar from '../lib/components/sidebar/MainSidebar.svelte';
+	import { link } from '$lib/stores/link.js'
 
 	import {onMount} from 'svelte';
   export let data;
@@ -16,9 +17,8 @@
 		memos.set(data.memos);
 		todos.set(data.todos);
 		lexicon.set(data.lexicon);
-
+		link.set(data.links);
 	});
-
 
 
 

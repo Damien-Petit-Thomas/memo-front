@@ -2,7 +2,7 @@ import { writable } from 'svelte/store';
 
 export const link = (() => {
   const { subscribe, update, set } = writable([]);
-
+  const linkList = [];
   // Méthode pour ajouter une nouvelle tâche
 
   const get = async () => {
@@ -10,6 +10,7 @@ export const link = (() => {
       const response = await fetch('http://localhost:3000/api/link');
       if (response.ok) {
         const data = await response.json();
+        linkList.push(...data);
         update(() => data);
       } else {
         console.error(`Error fetching words: ${response.status}`);
@@ -83,7 +84,9 @@ export const link = (() => {
       console.error('An unexpected error occurred:', error);
     }
   };
+
   return {
+
     set,
     update,
     subscribe,

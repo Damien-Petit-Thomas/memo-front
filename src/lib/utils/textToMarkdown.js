@@ -1,9 +1,9 @@
 import { link } from '../stores/link';
 
-export const textToMarkdown = (text ,id) => {
+export const textToMarkdown = (text, id, linkList) => {
   // on crée un tableau de lignes
   const lines = text.split('\n');
-
+  console.log(linkList);
   // on crée un tableau de lignes markdown
   const markdownLines = lines.map((line) => {
     // si la ligne commence par un #, on la transforme en titre
@@ -29,6 +29,9 @@ export const textToMarkdown = (text ,id) => {
     if (linkMatch) {
       const linkText = linkMatch[1];
       const linkUrl = linkMatch[2];
+      if (linkList.find((links) => links.url === linkUrl)) {
+        return `<a href="${linkUrl}">${linkText}</a>`;
+      }
       link.add({ name: linkText, url: linkUrl, memo_id: id });
       return `<a href="${linkUrl}">${linkText}</a>`;
     }
