@@ -61,7 +61,7 @@ let content = item.content !== undefined ? item.content : item.name
 {#if editing}
 <!-- svelte-ignore a11y-no-noninteractive-element-interctions -->
 
-  <textarea  id={item.name}   bind:value={content} on:blur={saveContent} {required} use:focus/>
+  <textarea  id={item.css}   bind:value={content} on:blur={saveContent} {required} use:focus/>
 
   
 
@@ -104,6 +104,19 @@ let content = item.content !== undefined ? item.content : item.name
     width: 100%;
   
   }
+
+  textarea#h1 {
+    color: rgb(255, 255, 255);
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 2.5rem;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+    text-align: center;
+    height: 5rem;
+}
+
+  
 
 
 h1 {

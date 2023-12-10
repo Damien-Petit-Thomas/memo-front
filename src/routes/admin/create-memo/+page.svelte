@@ -8,14 +8,23 @@
   import  EditorSidebarTagNCategory  from '$lib/components/editor/EditorSidebarTagNCategory.svelte';
   let memoId;
   export let data; 
-
+  
   import { currentMemo } from '$lib/stores/currentMemo.js';
   import { onMount } from 'svelte';
+  
+  let memoCategory;
+  let categoryId;
 
   onMount(() => {
     if ($currentMemo.contents && $currentMemo.contents.length > 0) {
+      console.log($currentMemo)
       memoId = $currentMemo.id
-      // on boucle sur la fonction handleSelectItem pour ajouter les items du memo dans le store memoItems
+      memoCategory = $currentMemo.category.id
+      console.log("oooooooooooooooooo",memoCategory)
+    
+  
+      title.set($currentMemo.title)
+     
       $currentMemo.contents.forEach(item => {
       
         // on en profite pour passer item.content 
@@ -26,18 +35,21 @@
 
     }
   });
+onMount(() => {
+  return () => {
+    memoItems.set([])
+  }
+})
 
 
 
-
-  let categoryId;
+  
   let tagsIds = [];
   const contentTypeElem = data.contents
 
 
 
   function handleSelectCategory(e) {
-  
     categoryId = e.detail;
   }
   function handleTags(e) {
@@ -54,6 +66,7 @@
 
 
   async function saveMemo() {
+    categoryId !== undefined ? categoryId : categoryId = memoCategory
     const itemsToSave = $memoItems.map(item => {
       return {
         content: item.content,
@@ -61,7 +74,7 @@
       }
     })
   if(memoId){
-  return  memos.mark({title : $title, contents : itemsToSave, categoryId , tagsIds}, memoId)
+  return  memos.mark({title : $title, contents : itemsToSave, categoryId  , tagsIds}, memoId)
   }else
   memos.add({title : $title, contents : itemsToSave, categoryId , tagsIds})
 
@@ -79,7 +92,7 @@
       on:saveMemo={saveMemo}
       />
       <Editor />
-    <EditorSidebarTagNCategory
+    <EditorSidebarTagNCategory  
     on:selectedCategory={handleSelectCategory}
     on:selectedTags={handleTags}
     />

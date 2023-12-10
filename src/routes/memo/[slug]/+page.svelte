@@ -23,7 +23,7 @@
   let memo;
   let lexicon;
   let isDataReady = false;
-
+  let originalMemo = null;
   page.subscribe(async ($page) => {
     if ($fullmemos.length === 0) {
       await fullmemos.get();
@@ -33,16 +33,16 @@
     memo = $fullmemos.find((m) => m.slug === pageSlug);
 
     if (memo) {
-      formatText(memo);
-      isDataReady = true;
-    }
+    originalMemo = JSON.parse(JSON.stringify(memo)); // Create a deep copy
+    formatText(memo);
+    isDataReady = true;
+  }
+});
 
-  });
-  
   function formatText(memo) {
     lexicon = $page.data.lexicon;
     memo.contents.forEach(item => {
-      item.content = textToMarkdown(item.content);
+      item.c = textToMarkdown(item.content);
 
       lexicon.forEach(wordObj => {
         const word = wordObj.word;
@@ -53,7 +53,7 @@
     });
   }
 
-$: currentMemo.set(memo)
+ $: currentMemo.set(originalMemo)
 
 
 

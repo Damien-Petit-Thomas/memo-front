@@ -4,6 +4,7 @@
   import {tags} from '$lib/stores/tag.js'
   import {onMount} from 'svelte';
   import {createEventDispatcher} from 'svelte';
+  export let originalCategoryId = null;
   const dispatch = createEventDispatcher();
 
   let tagsIds = [];
@@ -15,9 +16,15 @@ onMount(() => {
   if ($tags.length === 0) {
     tags.get()
   }
+
+  // si originalCategoryId est défini, on le met dans le store
 });
 
-	
+
+if (originalCategoryId !== null) {
+  console.log(originalCategoryId)
+  dispatch('selectedCategory', originalCategoryId)
+}
   
 
     function selecteCategory(e, id) {
