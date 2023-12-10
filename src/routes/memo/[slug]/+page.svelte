@@ -42,7 +42,7 @@
   function formatText(memo) {
     lexicon = $page.data.lexicon;
     memo.contents.forEach(item => {
-      item.content = textToMarkdown(item.content);
+      item.content = textToMarkdown(item.content, memo.id);
 
       lexicon.forEach(wordObj => {
         const word = wordObj.word;
