@@ -65,6 +65,17 @@ const components = {
       edit();
     
   }
+
+
+document.addEventListener('input', event => {
+  const element = event.target
+  if (element.tagName.toLowerCase() !== 'textarea') return
+  element.style.height = 'auto'
+  element.style.height = element.scrollHeight + 'px'
+})
+
+
+
 </script>
 
 {#if editing}
@@ -89,9 +100,9 @@ const components = {
 {/if}
 <style>
   textarea  {
-
-    height: 50vh;
-    outline: none;
+    resize: none;
+    overflow: hidden;
+    
     border: none;
     margin: 1rem 0 0 0; 
     padding-bottom: 2rem;
@@ -118,7 +129,7 @@ textarea#blockquote {
   font-weight: bold !important;
 }
 
-  textarea#h1 {
+  textarea#title {
     color: rgb(255, 255, 255);
     font-size: 2rem;
     font-weight: 700;
