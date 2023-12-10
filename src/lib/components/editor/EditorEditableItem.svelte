@@ -2,6 +2,10 @@
   import { memoItems} from '$lib/stores/Editor.js'
   import {title} from '$lib/stores/title.js'
   import { onMount } from 'svelte'
+  import Paragraphe from '$lib/components/text/Paragraph.svelte';
+  import Subtitle from '$lib/components/text/Subtitle.svelte';
+  import Title from '$lib/components/text/Title.svelte';
+  import Blockquote from '$lib/components/text/Blockquote.svelte';
   import DOMPurity from 'dompurify'
   export let item, value, required = true
 
@@ -10,7 +14,12 @@
 
 let content = item.content !== undefined ? item.content : item.name
 
-
+const components = {
+    title: Title,
+    paragraphe: Paragraphe,
+    subtitle: Subtitle,
+    blockquote: Blockquote
+  };
 
   onMount(() => {
 
@@ -31,7 +40,7 @@ let content = item.content !== undefined ? item.content : item.name
     }
     if (content !== original) {
       //si c'est le titre on update le store title
-      if(item.css === 'h1'){
+      if(item.name === 'title'){
         title.update(() => content);
       }
       memoItems.update(items => {
@@ -61,7 +70,7 @@ let content = item.content !== undefined ? item.content : item.name
 {#if editing}
 <!-- svelte-ignore a11y-no-noninteractive-element-interctions -->
 
-  <textarea  id={item.css}   bind:value={content} on:blur={saveContent} {required} use:focus/>
+  <textarea  id={item.name}   bind:value={content} on:blur={saveContent} {required} use:focus/>
 
   
 
@@ -69,19 +78,11 @@ let content = item.content !== undefined ? item.content : item.name
 
 {:else}
 <div on:click={edit} on:keydown={(event) => handleKeyDown(event)} role="button" tabindex="0">
-  {#if item.css === 'h1'}
-  <h1>{content}</h1>
-  {:else if item.name === 'subtitle'}
-  <h2>{content}</h2>
-  {:else if item.name === 'blockquote'}
-  <pre>
-    <blockquote><pre>{content}</pre></blockquote>
-  </pre>
-  {:else if item.name === 'paragraphe'}
-  <p>
-    <pre>
-      {content}
-    </pre>
+  {#if components[item.name]}
+    <svelte:component this={components[item.name]} value={content} css={item.css}/>
+ {:else }
+ <p>{content}</p>
+
   
   {/if}
 </div>
@@ -104,6 +105,18 @@ let content = item.content !== undefined ? item.content : item.name
     width: 100%;
   
   }
+
+textarea#blockquote {
+  background: rgb(158, 19, 19);
+  border-left: 4px solid var(--color-orange);
+  border-right: 4px solid var(--color-orange);
+  font-family: Roboto Slab;
+  padding: 2.4rem;
+  width: 100%;
+  border-radius: 0.4rem;
+  color: var(--color-preview-qoute-body) !important;
+  font-weight: bold !important;
+}
 
   textarea#h1 {
     color: rgb(255, 255, 255);

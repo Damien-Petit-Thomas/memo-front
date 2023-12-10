@@ -18,6 +18,7 @@
 
 
 blockquote {
+	/* background: rgb(116, 26, 26); */
 	background: rgb(53, 48, 48);
 
 	border-left: 4px solid var(--color-orange);
