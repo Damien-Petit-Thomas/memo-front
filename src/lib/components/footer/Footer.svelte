@@ -6,6 +6,7 @@
 <a href="/new-memo">new</a>
 <a href="/admin">home-admin</a>
 <a href="/lexicon">lexique</a>
+<a href="/links">liens utiles</a>
   </div>
 </footer>
 

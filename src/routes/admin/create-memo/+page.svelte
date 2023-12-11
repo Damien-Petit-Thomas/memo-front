@@ -42,6 +42,9 @@ onMount(() => {
 
 
 
+
+
+
   
   let tagsIds = [];
   const contentTypeElem = data.contents
@@ -71,6 +74,7 @@ onMount(() => {
 
   const itemsToSave = $memoItems.map(item => {
     const position = count++;
+    
     return {
       position,
       content: item.content,

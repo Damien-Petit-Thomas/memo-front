@@ -33,6 +33,7 @@ export const memos = (() => {
       if (response.ok) {
         const newmemo = await response.json();
         // Mettre à jour le store avec le nouveau memo de la BDD
+
         update(($memos) => [...$memos, newmemo]);
       } else {
         console.error(`Error adding memo: ${response.status}`);

@@ -6,7 +6,6 @@
   import { memoItems } from '$lib/stores/Editor.js';
   import { currentMemo } from '$lib/stores/currentMemo.js';
   
-console.log($currentMemo)
 
 const title = {content : $currentMemo.title ? $currentMemo.title : "titre", name : "title"};
   const flipDurationMs = 200;

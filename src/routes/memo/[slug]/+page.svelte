@@ -1,5 +1,5 @@
 <script>
-  import { textToMarkdown } from '$lib/utils/textToMarkdown.js';
+  import { detectLinks } from '$lib/utils/textToMarkdown.js';
   import { onMount } from 'svelte';
   import Paragraphe from '$lib/components/text/Paragraph.svelte';
   import Subtitle from '$lib/components/text/Subtitle.svelte';
@@ -10,7 +10,14 @@
   import MainSidebar from '$lib/components/sidebar/MainSidebar.svelte';
   import ReadMemoSidebar from '$lib/components/sidebar/ReadMemoSidebar.svelte';
   import  {currentMemo} from '$lib/stores/currentMemo.js';
-  // import  
+  import MarkdownIt from 'markdown-it';
+  const md = MarkdownIt()
+  let linkList = [];
+
+  $link.forEach((link) => linkList.push(link.url))
+  console.log(linkList)
+
+
 
 
   const components = {
@@ -25,10 +32,7 @@
   let isDataReady = false;
   let originalMemo = null;
   page.subscribe(async ($page) => {
-    if (!$link) {
-      await link.get();
-    }
-    let linkList = $link;
+   // on met dans un tableau linkList les differents url contenus dans $link
     if ($fullmemos.length === 0) {
       await fullmemos.get();
     }
@@ -37,17 +41,18 @@
     memo = $fullmemos.find((m) => m.slug === pageSlug);
 
     if (memo) {
-    copyMemo = JSON.parse(JSON.stringify(memo));
-    formatText(copyMemo, linkList);
+      copyMemo = JSON.parse(JSON.stringify(memo));
+   console.log(linkList)
+    parseText(copyMemo, linkList);
     isDataReady = true;
   }
 });
 
-  function formatText(memo, linkList) {
+  function parseText(copyMemo, linkList) {
     lexicon = $page.data.lexicon;
-    memo.contents.forEach(item => {
-      item.content = textToMarkdown(item.content, memo.id, linkList);
-      
+    copyMemo.contents.forEach(item => {
+       detectLinks(item.content, memo.id, linkList);
+      item.content = md.render(item.content)
       
       lexicon.forEach(wordObj => {
         const word = wordObj.word;
@@ -74,9 +79,10 @@ $: currentMemo.set(memo)
       {#if copyMemo}
 
         {#each copyMemo.contents as content (content.id)}
-          {#if components[content.type.name]}
+          <!-- {#if components[content.type.name]} -->
             <svelte:component this={components[content.type.name]} value={content.content} css={content.type.css}/>
-          {/if}
+            <!-- {@html content.content} -->
+          
         {/each}
       {/if}
     {/if}
@@ -97,6 +103,7 @@ $: currentMemo.set(memo)
     padding: 20px;
     min-width: 70%;
     widows: 15%;
+    height: 1000vh;
     background-color: rgb(29, 32, 32);
   }
 
