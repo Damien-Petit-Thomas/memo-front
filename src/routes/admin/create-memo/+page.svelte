@@ -65,19 +65,26 @@ onMount(() => {
 
 
   async function saveMemo() {
-    categoryId !== undefined ? categoryId : categoryId = memoCategory
-    const itemsToSave = $memoItems.map(item => {
-      return {
-        content: item.content,
-        type_id: item.initialTypeId, 
-      }
-    })
-  if(memoId){
-  return  memos.mark({title : $title, contents : itemsToSave, categoryId  , tagsIds}, memoId)
-  }else
-  memos.add({title : $title, contents : itemsToSave, categoryId , tagsIds})
+  console.log("save memo");
+  let count = 0;
+  categoryId = categoryId !== undefined ? categoryId : memoCategory;
 
+  const itemsToSave = $memoItems.map(item => {
+    const position = count++;
+    return {
+      position,
+      content: item.content,
+      type_id: item.initialTypeId,
+    };
+  });
+
+  if (memoId) {
+    return memos.mark({ title: $title, contents: itemsToSave, categoryId, tagsIds }, memoId);
+  } else {
+    memos.add({ title: $title, contents: itemsToSave, categoryId, tagsIds });
+  }
 }
+
 
 
 </script>

@@ -53,6 +53,11 @@ const title = {content : $currentMemo.title ? $currentMemo.title : "titre", name
   function handleValue(item) {
   return  item.content !== undefined ? item.content : item.content = item.name
   }
+
+
+
+
+  
 </script>
 
 <Toolbar />
@@ -87,18 +92,22 @@ const title = {content : $currentMemo.title ? $currentMemo.title : "titre", name
 <style>
 
     .wrapper {
-        display: flex;
+      /*  la hauteur doigt toujours laisser un bonne marge pour le scroll */
+      height: 150%;
+      display: flex;
         flex-direction: column;
         min-width: 70%;
-        widows: 15%;
         background-color: rgb(29, 32, 32);
+        overflow-y: auto; /* Ajout de cette propriété pour permettre le défilement vertical */
+        padding-bottom: 1rem;
     }
     .editor {
         display: flex;
         flex-direction: column;
         min-width: 70%;
-        widows: 15%;
+        overflow: scroll;
         background-color: rgb(29, 32, 32);
+        margin-bottom: 10rem;
     }
 
 

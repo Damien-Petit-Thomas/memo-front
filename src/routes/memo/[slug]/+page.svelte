@@ -72,6 +72,7 @@ $: currentMemo.set(memo)
     {#if isDataReady}
       <h2><strong>{copyMemo.title}</strong></h2>
       {#if copyMemo}
+
         {#each copyMemo.contents as content (content.id)}
           {#if components[content.type.name]}
             <svelte:component this={components[content.type.name]} value={content.content} css={content.type.css}/>

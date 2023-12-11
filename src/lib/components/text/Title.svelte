@@ -13,4 +13,3 @@
     color: var(--color-preview-title);
   }
 </style>
-```

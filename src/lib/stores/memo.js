@@ -68,7 +68,7 @@ export const memos = (() => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ ...memo }),
+        body: JSON.stringify(memo),
       });
 
       if (response.ok) {
