@@ -61,18 +61,19 @@ const components = {
     element.focus()
 	}
   function handleKeyDown(event) {
-  
-      edit();
-    
+  if (event.key === 'Escape')
+    saveContent()
   }
 
 
-// document.addEventListener('input', event => {
-//   const element = event.target
-//   if (element.tagName.toLowerCase() !== 'textarea') return
-//   element.style.height = 'auto'
-//   element.style.height = element.scrollHeight + 'px'
-// })
+
+
+document.addEventListener('input', event => {
+  const element = event.target
+  if (element.tagName.toLowerCase() !== 'textarea') return
+  element.style.height = 'auto'
+  element.style.height = element.scrollHeight + 'px'
+})
 
 
 
@@ -81,7 +82,7 @@ const components = {
 {#if editing}
 <!-- svelte-ignore a11y-no-noninteractive-element-interctions -->
 
-  <textarea  id={item.name}   bind:value={content} on:blur={saveContent} {required} use:focus/>
+  <textarea  id={item.name}  on:keydown={handleKeyDown} bind:value={content} on:blur={saveContent} {required} use:focus/>
 
   
 
@@ -102,8 +103,8 @@ const components = {
   textarea  {
     resize: none;
     overflow: hidden;
-    min-height: 90vh;
-    
+    min-height: 15vh;
+    outline-style: none;
     border: none;
     margin: 1rem 0 0 0; 
     padding-bottom: 2rem;

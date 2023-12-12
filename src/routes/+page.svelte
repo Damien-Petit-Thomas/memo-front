@@ -5,19 +5,24 @@
 	import {tags} from '$lib/stores/tag.js'
 	import { lexicon } from '$lib/stores/lexicon.js';
 	import Sidebar from '../lib/components/sidebar/MainSidebar.svelte';
+	import  { fullmemos } from '$lib/stores/fullmemos.js';
 	import { link } from '$lib/stores/link.js'
 
 	import {onMount} from 'svelte';
   export let data;
-
+	let linkList = [];
 	// on rempli les stores
 	onMount(() => {
+		fullmemos.set(data.fullmemos);
 		categories.set(data.categories);
 		tags.set(data.tags);
 		memos.set(data.memos);
 		todos.set(data.todos);
 		lexicon.set(data.lexicon);
 		link.set(data.links);
+		$link.forEach((link) => linkList.push(link.url))
+  console.log(linkList)
+
 	});
 
 

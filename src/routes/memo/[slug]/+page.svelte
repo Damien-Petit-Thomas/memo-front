@@ -1,67 +1,77 @@
 <script>
-  import { detectLinks } from '$lib/utils/textToMarkdown.js';
-  import { onMount } from 'svelte';
+  // import { detectLinks } from '$lib/utils/textToMarkdown.js';
+  // import { link } from '$lib/stores/link.js';
+  // import { onMount } from 'svelte';
+  // $link.forEach((link) => linkList.push(link.url))
+  // console.log(linkList)
+  // let linkList = [];
+  // let originalMemo = null;
+  
+  import MarkdownIt from 'markdown-it';
+  import MainSidebar from '$lib/components/sidebar/MainSidebar.svelte';
+  import ReadMemoSidebar from '$lib/components/sidebar/ReadMemoSidebar.svelte';
   import Paragraphe from '$lib/components/text/Paragraph.svelte';
   import Subtitle from '$lib/components/text/Subtitle.svelte';
   import Blockquote from '$lib/components/text/Blockquote.svelte';
+
   import { page } from '$app/stores';
   import { fullmemos } from '$lib/stores/fullmemos.js';
-  import MainSidebar from '$lib/components/sidebar/MainSidebar.svelte';
-  import ReadMemoSidebar from '$lib/components/sidebar/ReadMemoSidebar.svelte';
   import  {currentMemo} from '$lib/stores/currentMemo.js';
-  import MarkdownIt from 'markdown-it';
-  const md = MarkdownIt()
-  import { link } from '$lib/stores/link.js';
-  let linkList = [];
   
-  $link.forEach((link) => linkList.push(link.url))
-  console.log(linkList)
+  const md = MarkdownIt()
+  
+    const components = {
+      paragraphe: Paragraphe,
+      subtitle: Subtitle,
+      blockquote: Blockquote  
+    };
+  
+let copyMemo;
+let pageSlug;
+let memo;
+let lexicon;
+let isDataReady = false;
+ 
+page.subscribe(async ($page) => {
 
-
-
-
-  const components = {
-    paragraphe: Paragraphe,
-    subtitle: Subtitle,
-    blockquote: Blockquote
-  };
-  let copyMemo;
-  let pageSlug;
-  let memo;
-  let lexicon;
-  let isDataReady = false;
-  let originalMemo = null;
-  page.subscribe(async ($page) => {
-   // on met dans un tableau linkList les differents url contenus dans $link
     if ($fullmemos.length === 0) {
+      console.log("fetching")
       await fullmemos.get();
+     
     }
 
     pageSlug = $page.params.slug;
+    console.log(pageSlug)
     memo = $fullmemos.find((m) => m.slug === pageSlug);
-
+console.log(memo)
     if (memo) {
       copyMemo = JSON.parse(JSON.stringify(memo));
-   console.log(linkList)
-    parseText(copyMemo, linkList);
+      if (copyMemo.contents){
+        copyMemo.contents.forEach((item) => {
+          parseText(item);
+        });
     isDataReady = true;
   }
+} else {
+  console.log("no memo")
+}
 });
 
-  function parseText(copyMemo, linkList) {
-    lexicon = $page.data.lexicon;
-    copyMemo.contents.forEach(item => {
-       detectLinks(item.content, memo.id, linkList);
-      item.content = md.render(item.content)
-      
-      lexicon.forEach(wordObj => {
-        const word = wordObj.word;
-        if (item.content.includes(word)) {
-          item.content = item.content.replaceAll(word, `<span style="color:red">${word}</span>`);
-        }
-      });
-    });
-  }
+
+function parseText(item) {
+  lexicon = $page.data.lexicon;
+  item.content = md.render(item.content);
+
+  lexicon.forEach(wordObj => {
+    const word = wordObj.word;
+    const regex = new RegExp(`\\b${word}\\b`, 'g'); 
+    if (item.content.match(regex)) {
+      item.content = item.content.replace(regex, `<span style="color:red">${word}</span>`);
+    }
+  });
+}
+
+  
 
 $: currentMemo.set(memo)
 
@@ -75,17 +85,20 @@ $: currentMemo.set(memo)
   <MainSidebar />
   <div class="content">
     {#if isDataReady}
+
       <h2><strong>{copyMemo.title}</strong></h2>
       {#if copyMemo}
-
+      {#if copyMemo.contents}
         {#each copyMemo.contents as content (content.id)}
           {#if components[content.type.name]}
             <svelte:component this={components[content.type.name]} value={content.content} css={content.type.css}/>
           {:else}
+            {JSON.stringify(content.type.name)}
             <p>{content.content}</p>
           {/if}
           
         {/each}
+        {/if}
       {/if}
     {/if}
   </div>
@@ -93,6 +106,11 @@ $: currentMemo.set(memo)
 </div>
 
 <style>
+  a {
+    color: rgb(34, 33, 33);
+  }
+
+
   .container {
     display: flex;
     height: 100vh;

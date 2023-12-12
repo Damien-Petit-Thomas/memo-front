@@ -4,10 +4,11 @@
   export let title;
   export let store;
  
-
+  console.log($store)
+  
   let name = '';
   let color = '#ff0000';
-
+  
   const addCategory = () => {
     if (name && color) {
       const data = {
@@ -16,6 +17,7 @@
       };
     
       store.add(data);
+      console.log(store)
       name = '';
       color = '#ff0000';
     }
