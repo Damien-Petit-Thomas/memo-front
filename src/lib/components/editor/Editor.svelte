@@ -7,7 +7,7 @@
   import { currentMemo } from '$lib/stores/currentMemo.js';
   
 
-const title = {content : $currentMemo.title ? $currentMemo.title : "titre", name : "title"};
+const title = {content : $currentMemo.title !== undefined ? $currentMemo.title : "titre", name : "title"};
   const flipDurationMs = 200;
   let dragDisabled = true;
   let deletedItems = [];

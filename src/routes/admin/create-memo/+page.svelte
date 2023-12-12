@@ -8,12 +8,23 @@
   import  EditorSidebarTagNCategory  from '$lib/components/editor/EditorSidebarTagNCategory.svelte';
   let memoId;
   export let data; 
-  
   import { currentMemo } from '$lib/stores/currentMemo.js';
   import { onMount } from 'svelte';
-  
   let memoCategory;
   let categoryId;
+
+
+  import { link } from '$lib/stores/link.js';
+  let linkList = [];
+  
+  $link.forEach((link) => linkList.push(link.url))
+  console.log(linkList)
+
+
+
+
+
+
 
   onMount(() => {
     if ($currentMemo.contents && $currentMemo.contents.length > 0) {
@@ -83,9 +94,12 @@ onMount(() => {
   });
 
   if (memoId) {
-    return memos.mark({ title: $title, contents: itemsToSave, categoryId, tagsIds }, memoId);
+    memos.mark({ title: $title, contents: itemsToSave, categoryId, tagsIds }, memoId);
   } else {
     memos.add({ title: $title, contents: itemsToSave, categoryId, tagsIds });
+    // on recuper le memoId du dernier memo ajouté
+    const lastMemo = $memos[$memos.length - 1];
+    memoId = lastMemo.id;
   }
 }
 

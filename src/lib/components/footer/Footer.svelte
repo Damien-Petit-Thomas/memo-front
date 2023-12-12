@@ -1,13 +1,12 @@
 <footer>
-  <div>
-    <p> ceci est un magnifique footer</p>
+  <nav>
     <a href="/">retour à l'accueil</a>
     <a href="/test">test</a>
 <a href="/new-memo">new</a>
 <a href="/admin">home-admin</a>
 <a href="/lexicon">lexique</a>
 <a href="/links">liens utiles</a>
-  </div>
+  </nav>
 </footer>
 
 
@@ -34,6 +33,15 @@ a {
 a:hover {
   background-color: salmon;
   text-decoration: underline; /* Ajout du soulignement lors du survol */
+}
+nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+nav a {
+  margin: 0 1rem;
 }
 
 </style>

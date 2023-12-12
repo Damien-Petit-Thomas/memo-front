@@ -6,14 +6,14 @@
   import Blockquote from '$lib/components/text/Blockquote.svelte';
   import { page } from '$app/stores';
   import { fullmemos } from '$lib/stores/fullmemos.js';
-  import { link } from '$lib/stores/link.js';
   import MainSidebar from '$lib/components/sidebar/MainSidebar.svelte';
   import ReadMemoSidebar from '$lib/components/sidebar/ReadMemoSidebar.svelte';
   import  {currentMemo} from '$lib/stores/currentMemo.js';
   import MarkdownIt from 'markdown-it';
   const md = MarkdownIt()
+  import { link } from '$lib/stores/link.js';
   let linkList = [];
-
+  
   $link.forEach((link) => linkList.push(link.url))
   console.log(linkList)
 
@@ -79,9 +79,11 @@ $: currentMemo.set(memo)
       {#if copyMemo}
 
         {#each copyMemo.contents as content (content.id)}
-          <!-- {#if components[content.type.name]} -->
+          {#if components[content.type.name]}
             <svelte:component this={components[content.type.name]} value={content.content} css={content.type.css}/>
-            <!-- {@html content.content} -->
+          {:else}
+            <p>{content.content}</p>
+          {/if}
           
         {/each}
       {/if}
