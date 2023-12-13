@@ -1,10 +1,26 @@
 <script>
+ import { createEventDispatcher } from "svelte";
+const dispatch = createEventDispatcher();
+
+function handleKeyDown(e){
+const content = e.target.innerText
+if (e.ctrlKey && e.key === ' ') {
+  e.preventDefault()
+  dispatch('contentEdited', content)
+}
+
+}
+
+
   export let value;
   export let css = null;
+	export let isEditable = true;
 </script>
 
 <pre>
-	<blockquote style={css} >{@html value}</blockquote>
+	<blockquote 
+	style={css} contenteditable={isEditable} on:keydown={handleKeyDown}
+	>{@html value}</blockquote>
 </pre>
 
 

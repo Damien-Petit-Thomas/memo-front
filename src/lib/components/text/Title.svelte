@@ -1,9 +1,30 @@
 <script>
   export let value;
+  export let isEditable = true;
+  import { createEventDispatcher } from "svelte";
+const dispatch = createEventDispatcher();
+
+function handleKeyDown(e){
+const content = e.target.innerText
+if (e.ctrlKey && e.key === ' ') {
+  e.preventDefault()
+  dispatch('contentEdited', content)
+}
+
+}
+
+
+
+
+
+
 </script>
 
 <pre>
-  <h2>{value}</h2>
+  <h2 
+  on:keydown={handleKeyDown}
+  contenteditable={isEditable}
+  >{value}</h2>
 </pre>
 
 <style>

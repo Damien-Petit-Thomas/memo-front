@@ -2,7 +2,7 @@
   export let value;
 </script>
 
-<pre><code>{value}</code></pre>
+<pre><code contenteditable="true">{value}</code></pre>
 
 <style>
   code {

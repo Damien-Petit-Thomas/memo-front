@@ -17,7 +17,7 @@
   import { page } from '$app/stores';
   import { fullmemos } from '$lib/stores/fullmemos.js';
   import  {currentMemo} from '$lib/stores/currentMemo.js';
-  
+  let isEditable = false;
   const md = MarkdownIt()
   
     const components = {
@@ -105,7 +105,7 @@ $: currentMemo.set(memo)
 <div class="container">
   
   <MainSidebar />
-  <div class="content">
+  <div class="content"  contenteditable="false">
     {#if isDataReady}
 
       <h2><strong>{copyMemo.title}</strong></h2>
@@ -113,7 +113,7 @@ $: currentMemo.set(memo)
       {#if copyMemo.contents}
         {#each copyMemo.contents as content (content.id)}
           {#if components[content.type.name]}
-            <svelte:component this={components[content.type.name]} value={content.content} css={content.type.css}/>
+            <svelte:component {isEditable} this={components[content.type.name]} value={content.content} css={content.type.css}/>
           {:else}
             {JSON.stringify(content.type.name)}
             <p>{content.content}</p>

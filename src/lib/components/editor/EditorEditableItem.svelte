@@ -7,7 +7,7 @@
   import Title from '$lib/components/text/Title.svelte';
   import Blockquote from '$lib/components/text/Blockquote.svelte';
   import DOMPurity from 'dompurify'
-  export let item, value, required = true
+  export let item, value
 
   let editing = false, original
   
@@ -32,19 +32,21 @@ const components = {
       content = ""
     }
   }
-  function saveContent() {
-  
+  function saveContent(e) {
+    console.log(e)
+    // return console.log(e)
+  let content = e.detail
     content = DOMPurity.sanitize(content)
     if (content === '') {
       content = original
     }
     if (content !== original) {
       //si c'est le titre on update le store title
+      // console.log(content)
       if(item.name === 'title'){
         title.update(() => content);
       }
       memoItems.update(items => {
-     
         const index = items.findIndex(memItem => memItem.id === item.id)
         if (index !== -1) {
           items[index].content = content
@@ -57,21 +59,10 @@ const components = {
 
     editing = false;
   
-	function focus(element) {
-    element.focus()
-	}
-  function handleKeyDown(event) {
-  if (event.key === 'Escape')
-    saveContent()
-  // la touche tab ne doit pas faire sortir du textarea mais insérer un double 
-  if(event.key === 'Tab'){
-    event.preventDefault()
-    document.execCommand('insertText', false, '  ')
     
-
-    
-  }
-  }
+  
+  
+  
 
 
 
@@ -88,31 +79,39 @@ const components = {
 
 </script>
 
-{#if editing}
+<!-- {#if editing} -->
 <!-- svelte-ignore a11y-no-noninteractive-element-interctions -->
 
-  <textarea  id={item.name}  on:keydown={handleKeyDown} bind:value={content} on:blur={saveContent} {required} use:focus/>
+  <!-- <textarea  id={item.name}  on:keydown={handleKeyDown} bind:value={content} on:blur={saveContent} {required} use:focus/> -->
 
   
 
 
 
-{:else}
-<div on:click={edit} on:keydown={(event) => handleKeyDown(event)} role="button" tabindex="0">
+
+<div  role="button" tabindex="0">
   {#if components[item.name]}
-    <svelte:component this={components[item.name]} value={content} css={item.css}/>
+  <svelte:component 
+  this={components[item.name]} 
+  value={content}
+  css={item.css}
+  on:contentEdited={saveContent}
+ 
+  on:blur={saveContent}  
+/>
+
  {:else }
  <p>{content}</p>
 
   
   {/if}
 </div>
-{/if}
 <style>
   /*  on fait en  sorte que le textarea prenne toute la place disponible */
-  textarea  {
+  /* textarea  {
     resize: none;
     outline-style: none;
+    height: 100vh;
     border: none;
     margin: 1rem 0 0 0; 
     padding-bottom: 2rem;
@@ -125,9 +124,9 @@ const components = {
     box-shadow: none;
     width: 100%;
   
-  }
+  } */
 
-textarea#blockquote {
+/* #blockquote {
   background: rgb(158, 19, 19);
   border-left: 4px solid var(--color-orange);
   border-right: 4px solid var(--color-orange);
@@ -139,7 +138,7 @@ textarea#blockquote {
   font-weight: bold !important;
 }
 
-  textarea#title {
+  #title {
     color: rgb(255, 255, 255);
     font-size: 2rem;
     font-weight: 700;
@@ -165,7 +164,7 @@ h1 {
 
 
 
-
+ */
 
 p {
     color: rgb(255, 255, 255);

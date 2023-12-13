@@ -68,6 +68,7 @@ toc.push(generateToc(content.content))
 
 
 .wrapper {
+  min-width: 15%;
   display: flex;
   flex-direction: column;
   border-left : 1px solid #818181;
