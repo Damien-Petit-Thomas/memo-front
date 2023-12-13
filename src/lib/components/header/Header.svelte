@@ -13,7 +13,7 @@
             <a href="/">Memo Devop</a>
         </h1>
     </div>
-    <nav class="header-right">
+    <nav data-sveltekit-reload class="header-right">
         <a href="/">formation</a>
         <a href="/">blog</a>
         <a href="/">Tags</a>

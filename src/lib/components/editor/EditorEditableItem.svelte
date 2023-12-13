@@ -63,18 +63,27 @@ const components = {
   function handleKeyDown(event) {
   if (event.key === 'Escape')
     saveContent()
+  // la touche tab ne doit pas faire sortir du textarea mais insérer un double 
+  if(event.key === 'Tab'){
+    event.preventDefault()
+    document.execCommand('insertText', false, '  ')
+    
+
+    
+  }
   }
 
 
 
 
-document.addEventListener('input', event => {
-  const element = event.target
-  if (element.tagName.toLowerCase() !== 'textarea') return
-  element.style.height = 'auto'
-  element.style.height = element.scrollHeight + 'px'
-})
+  document.addEventListener('input', event => {
+    const element = event.target;
+    if (element.tagName.toLowerCase() !== 'textarea') return;
 
+    element.style.height = 'auto'; 
+    const newHeight = Math.min(window.innerHeight / 2, element.scrollHeight);
+    element.style.height = newHeight + 'px';
+  });
 
 
 </script>
@@ -100,10 +109,9 @@ document.addEventListener('input', event => {
 </div>
 {/if}
 <style>
+  /*  on fait en  sorte que le textarea prenne toute la place disponible */
   textarea  {
     resize: none;
-    overflow: hidden;
-    min-height: 15vh;
     outline-style: none;
     border: none;
     margin: 1rem 0 0 0; 

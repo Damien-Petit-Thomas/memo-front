@@ -156,7 +156,7 @@ blockquote {
   background: var(--color-preview-qoute-bg);
   border-left: 4px solid var(--color-orange);
   font-family: 'Roboto', sans-serif;
-  padding: 2.4rem;
+  padding: 1rem;
   border-radius: 0.4rem;
   color: var(--color-preview-qoute-body) !important;
   font-weight: bold !important;

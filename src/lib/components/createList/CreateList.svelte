@@ -7,7 +7,7 @@
   console.log($store)
   
   let name = '';
-  let color = '#ff0000';
+  let color = '#413779';
   
   const addCategory = () => {
     if (name && color) {
