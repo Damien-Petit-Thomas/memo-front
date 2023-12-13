@@ -28,36 +28,51 @@
     categoryStates[categoryId] = !categoryStates[categoryId];
   }
 </script>
+<section class="sidebar">
+  {#each $categories as category (category.id)}
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
+    <!-- svelte-ignore a11y-no-static-element-interactions -->
+    <div class="category" on:click={() => toggleMemo(category.id)} style="border-left: {category.color} solid 6px;">
+      <h2>
+        {category.name}
+        <button
+          class:expanded={categoryStates[category.id]}
+        >
+          ▶
+        </button>
+      </h2>
+      {#if categoryStates[category.id]}
+        <div class="memo">
+          {#each $memos.filter(memo => memo.category_id === category.id) as memo}
+            <div>
+              <a href="/memo/{memo.slug}">{memo.title}</a>
+            </div>
+          {/each}
+        </div>
+      {/if}
+    </div>
+  {/each}
+</section>
 
-  <section class="sidebar">
-    {#each $categories as category (category.id)}
-      <div class="category" style="border-left: {category.color} solid 6px;">
-        <h2>{category.name} 
-          <button on:click={() => toggleMemo(category.id)}> {categoryStates[category.id] ? '<<' : '>>'}</button>
-        </h2>
-        {#if categoryStates[category.id]}
-          <div class="memo">
-            {#each $memos.filter(memo => memo.category_id === category.id) as memo}
-              <div>
-                <a href="/memo/{memo.slug}"
-                >{memo.title}</a></div>
-            {/each}
-          </div>
-        {/if}
-      </div>
-    {/each}
-  </section>
+
+
+
 
 
 <style>
-
+  button.expanded {
+    transform: rotate(90deg);
+    transition: transform 0.4s ease-in-out;
+  }
   .sidebar {
-    min-width: 15%;
+    width: 15%;
     padding-top: 20px;
     overflow-x: hidden;
+    border-right : 1px solid #818181;
   }
 
   .category {
+    cursor: pointer;
     padding: 6px 8px 6px 16px;
     text-decoration: none;
     font-size: 1.2rem;
@@ -69,7 +84,7 @@
     float: right;
     background-color: transparent;
     border: none;
-    font-size: 1.2rem;
+    font-size: 2rem;
     cursor: pointer;
   }
 

@@ -9,7 +9,7 @@
   
   import MarkdownIt from 'markdown-it';
   import MainSidebar from '$lib/components/sidebar/MainSidebar.svelte';
-  import ReadMemoSidebar from '$lib/components/sidebar/ReadMemoSidebar.svelte';
+  import Toc from '$lib/components/sidebar/Toc.svelte';
   import Paragraphe from '$lib/components/text/Paragraph.svelte';
   import Subtitle from '$lib/components/text/Subtitle.svelte';
   import Blockquote from '$lib/components/text/Blockquote.svelte';
@@ -41,9 +41,7 @@ page.subscribe(async ($page) => {
     }
 
     pageSlug = $page.params.slug;
-    console.log(pageSlug)
     memo = $fullmemos.find((m) => m.slug === pageSlug);
-console.log(memo)
     if (memo) {
       copyMemo = JSON.parse(JSON.stringify(memo));
       if (copyMemo.contents){
@@ -57,19 +55,43 @@ console.log(memo)
 }
 });
 
-
 function parseText(item) {
+  // Apply markdown rendering to the entire content
+  const markdownRenderedContent = md.render(item.content);
+
+  // Extract headers and add anchors
+  const tocRegex = /<(h[1-6])>(.*?)<\/\1>/g;
+  const modifiedLines = [];
+
+  let match;
+  let lastIndex = 0;
+
+  while ((match = tocRegex.exec(markdownRenderedContent)) !== null) {
+    const headerTag = match[1];
+    const headerContent = match[2];
+    const id = `${headerContent.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
+    const anchor = `<a name="${id}"></a>`;
+    modifiedLines.push(markdownRenderedContent.substring(lastIndex, match.index) + `<${headerTag} id="${id}">${anchor}${headerContent}</${headerTag}>`);
+    lastIndex = match.index + match[0].length;
+  }
+
+  // Add the remaining content after the last match
+  modifiedLines.push(markdownRenderedContent.substring(lastIndex));
+
+  // Join modified lines without applying markdown rendering
+  item.content = modifiedLines.join('');
+
   lexicon = $page.data.lexicon;
-  item.content = md.render(item.content);
 
   lexicon.forEach(wordObj => {
     const word = wordObj.word;
-    const regex = new RegExp(`\\b${word}\\b`, 'g'); 
+    const regex = new RegExp(`\\b${word}\\b`, 'g');
     if (item.content.match(regex)) {
       item.content = item.content.replace(regex, `<span style="color:red">${word}</span>`);
     }
   });
 }
+
 
   
 
@@ -102,7 +124,7 @@ $: currentMemo.set(memo)
       {/if}
     {/if}
   </div>
-  <ReadMemoSidebar />
+  <Toc doc={memo.contents}/>
 </div>
 
 <style>

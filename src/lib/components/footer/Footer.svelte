@@ -1,6 +1,5 @@
 <footer>
   <nav>
-    <a href="/">retour à l'accueil</a>
     <a href="/test">test</a>
 <a href="/new-memo">new</a>
 <a href="/admin">home-admin</a>
@@ -12,7 +11,7 @@
 
 <style>
 footer {
-  background-color: red;
+  background-color: rgb(30, 35, 48);
   color: black;
   font-weight: 700;
   text-align: center;
@@ -23,25 +22,23 @@ footer {
   width: 100%;
 }
 
-a {
-  text-decoration: none; /* Suppression du soulignement par défaut */
-  color: inherit;
-  cursor: pointer;
-  background-color: royalblue;
-}
 
-a:hover {
-  background-color: salmon;
-  text-decoration: underline; /* Ajout du soulignement lors du survol */
-}
+
+
 nav {
   display: flex;
-  justify-content: center;
-  align-items: center;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 1rem;
 }
 
-nav a {
-  margin: 0 1rem;
-}
+a {
+        color: black;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 1.2rem;
+        margin: 0 1rem;
+    }
 
 </style>
