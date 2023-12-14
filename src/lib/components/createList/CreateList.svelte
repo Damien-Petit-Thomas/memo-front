@@ -33,21 +33,58 @@
     <button type="submit">Valider</button>
   </form>
 
-  <ul class="categories">
+  <div class="categories">
     {#each $store as item (item.id)}
-      <li
-        class="categorie"
+      <div
+        class="item"
         in:receive={{ key: item.id }}
         out:send={{ key: item.id }}
       >
         <CategoryBtn {item} />
         <button class="remove" on:click={() => store.remove(item)} aria-label="Remove" />
-      </li>
+        </div>
     {/each}
-  </ul>
+      </div>
 </div>
 
 <style>
+
+  .board {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .categories {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+  }
+.item{
+  display: flex;
+}
+
+
+form{
+  border : 1px solid #818181;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+  .remove {
+    background-image: url($lib/assets/remove.svg);
+    background-repeat: no-repeat;
+    width: 20px;
+    height: 20px;
+  }
+
+
   .remove {
     background-image: url($lib/assets/remove.svg);
     background-repeat: no-repeat;

@@ -7,7 +7,7 @@ export const memos = (() => {
 
   const get = async () => {
     try {
-      const response = await fetch('http://localhost:3000/api/memo');
+      const response = await fetch('http://127.0.0.1:3000/api/memo');
       if (response.ok) {
         const data = await response.json();
         update(() => data);
@@ -18,11 +18,10 @@ export const memos = (() => {
       console.error('An unexpected error occurred:', error);
     }
   };
-
   const add = async (description) => {
     try {
       // Envoyer la description à la BDD pour créer un nouveau memo
-      const response = await fetch('http://localhost:3000/api/memo', {
+      const response = await fetch('http://127.0.0.1:3000/api/memo', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -31,9 +30,8 @@ export const memos = (() => {
       });
 
       if (response.ok) {
-        const newmemo = await response.json();
+        const newmemo = response.json();
         // Mettre à jour le store avec le nouveau memo de la BDD
-
         update(($memos) => [...$memos, newmemo]);
 
         if (newmemo) {
@@ -44,6 +42,9 @@ export const memos = (() => {
     } catch (error) {
       console.error('An unexpected error occurred:', error);
     }
+
+    // Add a default return statement indicating no value
+    return null; // or undefined, depending on your preference
   };
 
   // Méthode pour supprimer une tâche
@@ -78,12 +79,13 @@ export const memos = (() => {
       if (response.ok) {
         const newmemo = await response.json();
         update(($memos) => $memos.map((t) => (t.id === memo.id ? newmemo : t)));
-      } else {
-        console.error(`Error marking memo: ${response.status}`);
+        return newmemo;
       }
+      console.error(`Error marking memo: ${response.status}`);
     } catch (error) {
       console.error('An unexpected error occurred:', error);
     }
+    return null;
   };
 
   return {

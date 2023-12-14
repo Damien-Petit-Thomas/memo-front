@@ -3,7 +3,6 @@
   import { memos} from '$lib/stores/memo.js';
   import { memoItems } from '$lib/stores/Editor.js';
   import Editor from '$lib/components/editor/Editor.svelte';
-  import Lexicon from '$lib/components/editor/Lexicon.svelte'
   import EditorSidebar from '$lib/components/editor/EditorSidebar.svelte';
   import {title} from '$lib/stores/title.js';
   import  EditorSidebarTagNCategory  from '$lib/components/editor/EditorSidebarTagNCategory.svelte';
@@ -99,21 +98,30 @@ onMount(() => {
     }if(tagsIds.length === 0){
       tagsIds = memotags
     }
-  await memos.mark({ title: $title, contents: itemsToSave, categoryId, tagsIds }, memoId);
-  } else {
-  const newMemo = await memos.add({ title: $title, contents: itemsToSave, categoryId, tagsIds });
-  console.log(newMemo)
-    memoId = newMemo.id;
-    memoCategory = newMemo.category.id;
-    memotags = newMemo.tags.map(tag => tag.id);
+  const newMemo = await memos.mark({ title: $title, contents: itemsToSave, categoryId, tagsIds }, memoId);
+  if (newMemo) { 
+  alert(`update${JSON.stringify(newMemo)}`);
+  memoCategory = newMemo.category_id;
+  memotags = newMemo.tags;
   }
-  await  fullmemos.get();
-
-  itemsToSave.forEach(item => {
-    saveLinks(item.content, linkList, memoId, categoryId)
-  })
+  } else{
+    if(categoryId === undefined) return alert('choose a category') 
+  const newMemo = await memos.add({ title: $title, contents: itemsToSave, categoryId, tagsIds });
+  if (newMemo) {
+    alert(`create${JSON.stringify(newMemo)}`);
+    memoId = newMemo.id;
+    memoCategory = newMemo.category_id;
+    memotags = newMemo.tags;
+  }
+  
   
 }
+await  fullmemos.get();
+itemsToSave.forEach(item => {
+  console.log('coucou')
+  saveLinks(item.content, linkList, memoId, categoryId)
+})
+  }
 
 
 

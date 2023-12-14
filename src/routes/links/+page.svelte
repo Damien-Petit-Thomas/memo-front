@@ -4,10 +4,11 @@
 
   let sortedLink = [];
   let groupeLink = {};
-
+  let links = null;
   onMount(async () => {
-    if ($link.length === 0) {
-      await link.get();
+    if (!$link == []) {
+  
+  links =  await link.get();
     }
 
     sortedLink = $link.slice().sort((a, b) => a.name.localeCompare(b.name));
@@ -21,7 +22,8 @@
 </script>
 
 <div class="lexicon">
-  {#if $link.length === 0}
+  {#if $link.length === 0 && links === null }
+    
     <p>Loading...</p>
   {:else}
     {#each Object.keys(groupeLink).sort() as firstLetter}
@@ -29,9 +31,9 @@
       {#each groupeLink[firstLetter] as link (link.id)}
         <div class="word">
           <div class="word-word"><a href="{link.url}">{link.name}</a></div>
-          <div class="word-word">{link.category_name}</div>
+          <div class="word-word"><a href="/category{link.category_slug}">{link.category_name}</a></div>
           <div class="word-word">{link.group}</div>
-          <div class="word-word">{link.memo_title}</div>
+          <div class="word-word"><a href="/memo/{link.memo_slug}">{link.memo_title}</a></div>
 
 
         </div>
@@ -68,9 +70,7 @@
       border-left: 3px solid black;
        }
 
-    .definition {
-      font-size: 1.2rem;
-    }
+ 
 
     h2 {
       display: inline-block;

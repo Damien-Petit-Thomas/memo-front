@@ -15,6 +15,7 @@ function generateToc(content)  {
   lines.forEach((line) => {
     const match = line.match(tocRegex);
     if (match) {
+      match[1] = match[1].trim();
       const title = match[1];
       console.log(title)
       const level = match[0].match(/#/g).length;

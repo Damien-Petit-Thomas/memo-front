@@ -42,17 +42,16 @@
 			<h2>EN COURS</h2>
 			<TodoList 
 			store={todos}
-			 done={true}
-	
-			 />
+			done={true}
+			/>
 		</div>
 	</div>
 	<div class="list-container">
 		
 		<Categorielist
-		 store={categories}
-		 title="creer une catégorie"
-		 />
+    store={categories}
+		title="creer une catégorie"
+		/>
 		<Categorielist 
 		title="creer un tag"
 		store={tags} />
