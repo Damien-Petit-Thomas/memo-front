@@ -2,7 +2,7 @@
 
 
 export let doc;
-
+export let title;
 let toc = [];
 
 
@@ -15,12 +15,9 @@ function generateToc(content)  {
   lines.forEach((line) => {
     const match = line.match(tocRegex);
     if (match) {
-      match[1] = match[1].trim();
-      const title = match[1];
-      console.log(title)
+      const link = `#${slugiFy(match[1])}`;
       const level = match[0].match(/#/g).length;
-      const link = `#${title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
-      toc.push({ title, level, link });
+      toc.push({ title: match[1], level, link });
     }
   });
   return toc;
@@ -31,8 +28,11 @@ doc.forEach((content) => {
 toc.push(generateToc(content.content))
 })
 
+function  slugiFy(data){
+  return data.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-');
+}
 
-
+const slugTitle = slugiFy(title);
 
 </script>
 
@@ -42,7 +42,7 @@ toc.push(generateToc(content.content))
   
   <nav>
     <a href="/admin/create-memo"><button>éditer</button></a>
-    <h3>Dans ce memo</h3>
+    <a href={slugTitle}><h3>{title}</h3></a>
     <ul>
       {#each toc[0] as { title, level, link }}
         <li class="level-{level}">

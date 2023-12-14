@@ -101,7 +101,7 @@ $: currentMemo.set(memo)
   <div class="content"  contenteditable="false">
     {#if isDataReady}
 
-      <h2><strong>{copyMemo.title}</strong></h2>
+      <h2 id="memo-title">{copyMemo.title}</h2>
       {#if copyMemo}
       {#if copyMemo.contents}
         {#each copyMemo.contents as content (content.id)}
@@ -117,7 +117,9 @@ $: currentMemo.set(memo)
       {/if}
     {/if}
   </div>
-  <Toc doc={memo.contents}/>
+  <Toc 
+  title={copyMemo.title}
+  doc={memo.contents}/>
 </div>
 
 <style>

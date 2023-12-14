@@ -31,18 +31,11 @@
     if ($currentMemo.contents && $currentMemo.contents.length > 0) {
       memoId = $currentMemo.id
       memoCategory = $currentMemo.category.id
-    
-  
-      title.set($currentMemo.title)
-     
+      if($currentMemo.tags) memotags = $currentMemo.tags.forEach(tag => memotags.push(tag.id))
       $currentMemo.contents.forEach(item => {
-      
-
         handleSelectItem({detail : {...item.type, content : item.content}})
-        
       })
       currentMemo.set({})
-
     }
   });
 onMount(() => {
