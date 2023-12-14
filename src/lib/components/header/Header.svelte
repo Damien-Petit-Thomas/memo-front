@@ -1,4 +1,5 @@
 <script>
+    import { reloadNeeded } from '$lib/stores/reloadNeeded.js';
     import  hackEffect  from '$lib/utils/hackEffect.js';
     import { onMount } from 'svelte';
     onMount(() => {
@@ -10,10 +11,16 @@
     
     <div class="header-left">
         <h1 id="title">
+            {#if $reloadNeeded === true}
+            <a  
+            data-sveltekit-reload
+            href="/">Memo <span id="hack">Devops</span></a>
+            {:else}
             <a href="/">Memo <span id="hack">Devops</span></a>
+            {/if}
         </h1>
     </div>
-    <nav data-sveltekit-reload class="header-right">
+    <nav  class="header-right">
         <a href="/">formation</a>
         <a href="/">blog</a>
         <a href="/">Tags</a>

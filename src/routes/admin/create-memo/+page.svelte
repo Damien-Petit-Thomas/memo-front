@@ -1,4 +1,5 @@
 <script>
+  import { reloadNeeded } from '$lib/stores/reloadNeeded.js';
   import { fullmemos } from '$lib/stores/fullmemos.js';
   import { memos} from '$lib/stores/memo.js';
   import { memoItems } from '$lib/stores/Editor.js';
@@ -14,6 +15,7 @@
   let memoCategory;
   let categoryId;
   let memotags = [];
+  let memotitle = "";
 
   import { link } from '$lib/stores/link.js';
   let linkList = [];
@@ -29,6 +31,7 @@
 
   onMount(() => {
     if ($currentMemo.contents && $currentMemo.contents.length > 0) {
+      memotitle = $currentMemo.title
       memoId = $currentMemo.id
       memoCategory = $currentMemo.category.id
       if($currentMemo.tags) memotags = $currentMemo.tags.forEach(tag => memotags.push(tag.id))
@@ -85,13 +88,18 @@ onMount(() => {
     };
   });
   
+
+  if (itemsToSave.length === 0) return alert('add some content')
+
   if (memoId) {
     if(categoryId === undefined){
       categoryId = memoCategory
     }if(tagsIds.length === 0){
       tagsIds = memotags
+    }if($title === ""){
+      $title = memotitle
     }
-  const newMemo = await memos.mark({ title: $title, contents: itemsToSave, categoryId, tagsIds }, memoId);
+  const newMemo = await memos.mark({ title : $title , contents: itemsToSave, categoryId, tagsIds }, memoId);
   if (newMemo) { 
   alert(`update${JSON.stringify(newMemo)}`);
   memoCategory = newMemo.category_id;
@@ -111,15 +119,17 @@ onMount(() => {
 }
 await  fullmemos.get();
 itemsToSave.forEach(item => {
-  console.log('coucou')
   saveLinks(item.content, linkList, memoId, categoryId)
 })
+
+reloadNeeded.set(true)
   }
 
 
 
 </script>
-
+{JSON.stringify($title)}
+{JSON.stringify(memotitle)}
 <div class="container">
 
     <EditorSidebar 

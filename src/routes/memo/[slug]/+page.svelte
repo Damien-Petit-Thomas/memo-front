@@ -108,7 +108,6 @@ $: currentMemo.set(memo)
           {#if components[content.type.name]}
             <svelte:component {isEditable} this={components[content.type.name]} value={content.content} css={content.type.css}/>
           {:else}
-            {JSON.stringify(content.type.name)}
             <p>{content.content}</p>
           {/if}
           
