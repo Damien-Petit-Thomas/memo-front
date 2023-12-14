@@ -26,7 +26,7 @@ const dispatch = createEventDispatcher();
 section{
     display: flex;
     flex-direction: column;;
-    width: 15%;
+    width: 100%;
     height: 100vh;
     gap: 5rem;
     border-right : 1px solid #818181;

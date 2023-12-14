@@ -1,31 +1,45 @@
 <script>
   import { link } from '$lib/stores/link.js';
+  import { onMount } from 'svelte';
 
-  // Tri du lexicon par ordre alphabétique
-  let sortedLink = $link.slice().sort((a, b) => a.name.localeCompare(b.name));
-
-  // Grouper les mots par la première lettre
+  let sortedLink = [];
   let groupeLink = {};
-  sortedLink.forEach(({ name, url }) => {
-    const firstLetter = name.charAt(0).toUpperCase();
-    groupeLink[firstLetter] = groupeLink[firstLetter] || [];
-    groupeLink[firstLetter].push({ name, url });
+
+  onMount(async () => {
+    if ($link.length === 0) {
+      await link.get();
+    }
+
+    sortedLink = $link.slice().sort((a, b) => a.name.localeCompare(b.name));
+
+    sortedLink.forEach(( link ) => {
+      const firstLetter = link.name.charAt(0).toUpperCase();
+      groupeLink[firstLetter] = groupeLink[firstLetter] || [];
+      groupeLink[firstLetter].push(link);
+    });
   });
 </script>
 
 <div class="lexicon">
-  
+  {#if $link.length === 0}
+    <p>Loading...</p>
+  {:else}
     {#each Object.keys(groupeLink).sort() as firstLetter}
-          <h2>{firstLetter}</h2>
-        {#each groupeLink[firstLetter] as { name, url }}
-            <div class="word">
-              <div class="word-word">{name}</div>
-              <div class="definition">{url}</div>
-            </div>
-        {/each}
+      <h2>{firstLetter}</h2>
+      {#each groupeLink[firstLetter] as link (link.id)}
+        <div class="word">
+          <div class="word-word"><a href="{link.url}">{link.name}</a></div>
+          <div class="word-word">{link.category_name}</div>
+          <div class="word-word">{link.group}</div>
+          <div class="word-word">{link.memo_title}</div>
+
+
+        </div>
+      {/each}
     {/each}
-</div>  
-  
+  {/if}
+</div>
+
 
 
 
