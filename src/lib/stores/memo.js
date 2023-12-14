@@ -35,9 +35,12 @@ export const memos = (() => {
         // Mettre à jour le store avec le nouveau memo de la BDD
 
         update(($memos) => [...$memos, newmemo]);
-      } else {
-        console.error(`Error adding memo: ${response.status}`);
+
+        if (newmemo) {
+          return newmemo;
+        }
       }
+      console.error(`Error adding memo: ${response.status}`);
     } catch (error) {
       console.error('An unexpected error occurred:', error);
     }

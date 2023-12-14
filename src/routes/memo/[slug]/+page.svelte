@@ -1,12 +1,4 @@
 <script>
-  // import { detectLinks } from '$lib/utils/textToMarkdown.js';
-  // import { link } from '$lib/stores/link.js';
-  // import { onMount } from 'svelte';
-  // $link.forEach((link) => linkList.push(link.url))
-  // console.log(linkList)
-  // let linkList = [];
-  // let originalMemo = null;
-  
   import MarkdownIt from 'markdown-it';
   import MainSidebar from '$lib/components/sidebar/MainSidebar.svelte';
   import Toc from '$lib/components/sidebar/Toc.svelte';
@@ -42,6 +34,7 @@ page.subscribe(async ($page) => {
 
     pageSlug = $page.params.slug;
     memo = $fullmemos.find((m) => m.slug === pageSlug);
+    console.log(memo)
     if (memo) {
       copyMemo = JSON.parse(JSON.stringify(memo));
       if (copyMemo.contents){

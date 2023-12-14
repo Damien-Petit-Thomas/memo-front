@@ -40,6 +40,7 @@ toc.push(generateToc(content.content))
 <div class="wrapper">
   
   <nav>
+    <a href="/admin/create-memo"><button>éditer</button></a>
     <h3>Dans ce memo</h3>
     <ul>
       {#each toc[0] as { title, level, link }}
@@ -50,13 +51,6 @@ toc.push(generateToc(content.content))
     </ul>
   </nav>
   
-  
-  
-  
-  
-  <div class="option">
-    <a href="/admin/create-memo"><button>modifier le memo</button></a>
-  </div>
 </div>
 
 
@@ -80,23 +74,23 @@ toc.push(generateToc(content.content))
 
 .level-2 {
   margin-left: 1rem;
-}
+}  
 
 .level-3 {
   margin-left: 2rem;
-}
+}  
 
 .level-4 {
   margin-left: 3rem;
-}
+}  
 
 .level-5 {
   margin-left: 4rem;
-}
+}  
 
 .level-6 {
   margin-left: 5rem;
-}
+}  
 
 nav {
   color: #ddd;
@@ -105,39 +99,49 @@ nav {
   height: 100vh;
   overflow-y: auto;
   padding: 1rem;
+  
+}  
+a{
+  color: #ddd;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 400;
 
 }
 
-nav h3 {
+nav h3{
   font-size: 1rem;
   font-weight: 700;
   margin-bottom: 1rem;
+}  
+button{
+  margin: 0 0 2rem 0;
+  padding: .2rem 5rem;
 }
+
+button:hover{
+  text-transform: uppercase;
+  background-color: #6b3939;
+  color: #ddd;
+}
+
 
 ul {
   list-style: none;
   padding-left: 1rem;
   border-left: 1px solid #ddd;
-}
+}  
 
 li {
   padding: .2rem;
   margin-bottom: 0.5rem;
-}
+}  
 
 
 li:hover {
+  border-radius: 0.5rem 0  0  0.5rem;
   background-color: #6b3939;
-}
-
-.option {
-        
-        align-self: flex-end;
-        justify-content: center;
-        align-items: center;
-        min-width: 15%;
-        widows: 15%;
-  }
+}  
 
 
 

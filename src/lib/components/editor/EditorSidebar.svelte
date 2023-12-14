@@ -6,31 +6,51 @@ const dispatch = createEventDispatcher();
 
 <section  >
   <button id="saveMemo"
-  on:click={() => dispatch('saveMemo', "test")}
+  on:click={() => dispatch('saveMemo')}
   >sauvagarder</button>
-  {#each items as item(item.id)}
-          <button
-          on:click={() => dispatch('selectItem', item)}
-          >{item.name}</button>
-  
-  {/each}
+  <div class="content-type-container">
+    {#each items as item(item.id)}
+            <button
+            on:click={() => dispatch('selectItem', item)}
+            >{item.name}</button>
+    
+    {/each}
+  </div>
 </section>
 
 
 <style>
-    section{
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        width: 15%;
-        widows: 15%;
-    }
+
+
+
+section{
+    display: flex;
+    flex-direction: column;;
+    width: 15%;
+    height: 100vh;
+    gap: 5rem;
+    border-right : 1px solid #818181;
+
+}
+
+.content-type-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    widows: 100%;
+}
+
 
     button#saveMemo{
         margin-bottom: 1rem;
     }
 
+
+    button:hover {
+        background-color: rgb(203, 232, 219); ;
+        color : #4a535f;
+    }
   
 
 </style>

@@ -29,3 +29,13 @@
     <button type="submit"  on:click|preventDefault={handleSubmit}>Valider</button>
   </form>
   </div>
+
+
+<style>
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+</style>

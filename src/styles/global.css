@@ -196,14 +196,22 @@ ol {
 } 
 
 button {
+  margin: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  color: rgb(203, 232, 219);
+  font-weight: bold;
+  transition: all 0.2s ease-in-out;
+
   cursor: pointer;
-  background-color: #2a405a;
+  background-color: #4a535f;
   display: flex;
   align-items: center;
   justify-content: center;
   border: none;
   border-radius: 5%;
 }
+
 
 code {
   background-color: var(--color-preview-code-bg);
@@ -241,3 +249,26 @@ table tr:nth-child(even) td {
   background-color: #f2f2f2;
 }
 
+@keyframes notSave {
+	0% {
+	border-left: 4px solid var(--color-orange);
+	}
+	50% {
+	border-left: 4px solid rgb(116, 26, 26);
+	}
+	100% {
+	border-left: 4px solid var(--color-orange);
+	}
+}
+
+@keyframes save {
+	0% {
+	border-left: 4px solid var(--color-orange);
+	}
+	50% {
+	border-left: 4px solid rgb(26, 116, 26);
+	}
+	100% {
+	border-left: 4px solid var(--color-orange);
+	}
+}

@@ -1,25 +1,41 @@
 <script>
-  export let value;
-  export let isEditable=true;
-  import { createEventDispatcher } from "svelte";
+	import { createEventDispatcher } from "svelte";
+	export let value;
+	export let isEditable = true;
+	let isSave = false;
+	let original = value;
+	export let css = null;
 const dispatch = createEventDispatcher();
 
-function handleKeyDown(e){
-const content = e.target.innerText
-if (e.ctrlKey && e.key === ' ') {
-  e.preventDefault()
-  dispatch('contentEdited', content)
+function handleKeyDown(e) {
+  const trimmedInnerText = e.target.innerText.trim();
+  const trimmedOriginal = 'paragraphe'
+
+  if (trimmedInnerText === trimmedOriginal) {
+    e.target.innerText = '';
+  }
+
+  if (e.ctrlKey && e.key === ' ') {
+    e.preventDefault();
+    dispatch('contentEdited', trimmedInnerText);
+    isSave = true;
+  } else {
+    isSave = false;
+  }
 }
 
-}
 
 
 </script>
 
 
+
 <pre
-  contenteditable={isEditable}
-  on:keydown={handleKeyDown}
+style={css} 
+contenteditable={isEditable}
+on:keydown={handleKeyDown}
+class:isSave={isSave}
+class:isEditable={isEditable}
   >
   {@html value}
 </pre>
@@ -27,8 +43,18 @@ if (e.ctrlKey && e.key === ' ') {
 
 
 <style>
-  pre {
+  pre.isEditable {
+    border-left: 4px solid var(--color-orange);
     color: rgb(174, 174, 189);
+	animation: notSave 3s infinite; 
+
   }
+
+  pre.isSave {
+    animation: save .5s 3;
+  }
+
+
+
 
 </style>

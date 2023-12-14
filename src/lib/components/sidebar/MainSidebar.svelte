@@ -73,6 +73,8 @@
     font-size: 2rem;
     cursor: pointer;
     transition: transform 0.4s ease-in-out;
+    margin: 0;
+    padding: 0;
   }
 
   button.expanded {

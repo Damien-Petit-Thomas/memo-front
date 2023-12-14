@@ -30,7 +30,6 @@
 
   onMount(() => {
     if ($currentMemo.contents && $currentMemo.contents.length > 0) {
-      console.log($currentMemo)
       memoId = $currentMemo.id
       memoCategory = $currentMemo.category.id
     
@@ -39,11 +38,11 @@
      
       $currentMemo.contents.forEach(item => {
       
-        // on en profite pour passer item.content 
+
         handleSelectItem({detail : {...item.type, content : item.content}})
         
       })
-      currentMemo.set("")
+      currentMemo.set({})
 
     }
   });
@@ -81,7 +80,7 @@ onMount(() => {
 
 
   async function saveMemo() {
-  console.log("save memo");
+
   let count = 0;
   categoryId = categoryId !== undefined ? categoryId : memoCategory;
 
@@ -102,15 +101,14 @@ onMount(() => {
     }
   await memos.mark({ title: $title, contents: itemsToSave, categoryId, tagsIds }, memoId);
   } else {
-  await memos.add({ title: $title, contents: itemsToSave, categoryId, tagsIds });
-    const lastMemo = $memos[$memos.length - 1];
-    memoId = lastMemo.id;
-    memoCategory = lastMemo.category.id;
-    memotags = lastMemo.tags.map(tag => tag.id);
+  const newMemo = await memos.add({ title: $title, contents: itemsToSave, categoryId, tagsIds });
+  console.log(newMemo)
+    memoId = newMemo.id;
+    memoCategory = newMemo.category.id;
+    memotags = newMemo.tags.map(tag => tag.id);
   }
   await  fullmemos.get();
-  console.log($fullmemos.find(memo => memo.id === memoId))
-// le console.log me montre bien que le store est mis à jour pourtant le memo n'est pas mis à jour dans la page d'acceuil
+
   itemsToSave.forEach(item => {
     saveLinks(item.content, linkList, memoId, categoryId)
   })
@@ -130,11 +128,13 @@ onMount(() => {
       on:saveMemo={saveMemo}
       />
       <Editor />
-    <EditorSidebarTagNCategory  
-    on:selectedCategory={handleSelectCategory}
-    on:selectedTags={handleTags}
-    />
-    <Lexicon {categoryId} />
+    <div class="wrapper">
+      <EditorSidebarTagNCategory
+      on:selectedCategory={handleSelectCategory}
+      on:selectedTags={handleTags}
+      />
+      <!-- <Lexicon {categoryId} /> -->
+    </div>
 
 </div>
 
@@ -142,12 +142,27 @@ onMount(() => {
 
 
 <style>
+
+
+
+
   .container {
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: 1fr 4fr 1fr;
+
+
+
+    /* display: flex;
+    flex-direction: row; */
     height: 100vh;
     max-width: 100vw;
   }
- 
+
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    min-width: 15%;
+  }
+
 
 </style>

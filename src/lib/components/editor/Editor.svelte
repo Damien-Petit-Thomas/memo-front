@@ -5,9 +5,11 @@
   import Toolbar from "./EditorToolBar.svelte";
   import { memoItems } from '$lib/stores/Editor.js';
   import { currentMemo } from '$lib/stores/currentMemo.js';
-  
+  $: title = {
+    content: $currentMemo?.title || "titre",
+    name: "title",
+  };
 
-const title = {content : $currentMemo.title !== undefined ? $currentMemo.title : "titre", name : "title"};
   const flipDurationMs = 200;
   let dragDisabled = true;
   let deletedItems = [];
@@ -38,11 +40,7 @@ const title = {content : $currentMemo.title !== undefined ? $currentMemo.title :
     if ((e.key === "Enter" || e.key === " ") && dragDisabled) dragDisabled = false;
   }
 
-  function submit(field) {
-    return ({ detail: newValue }) => {
-      console.log(`updated ${field}, new value is: "${newValue}"`);
-    };
-  }
+
 
   function deleteItem({ id }) {
     memoItems.update(items => items.filter(item => item.id !== id));
@@ -61,7 +59,7 @@ const title = {content : $currentMemo.title !== undefined ? $currentMemo.title :
 
 <Toolbar />
 <div class="wrapper">
-  <EditableItem item={title} value={title.content} on:submit={submit(title.content)} on:deleteItem={deleteItem} />
+  <EditableItem item={title} value={handleValue(title)}  on:deleteItem={deleteItem} />
   <section class="editor"
           use:dndzone="{{ items: $memoItems, dragDisabled, flipDurationMs }}"
           on:consider="{handleConsider}"
@@ -80,7 +78,7 @@ const title = {content : $currentMemo.title !== undefined ? $currentMemo.title :
               on:touchstart={startDrag}
               on:keydown={handleKeyDown} />
         
-          <EditableItem {item} value={handleValue(item)}  on:submit={submit(item.name)} on:deleteItem={deleteItem} />
+          <EditableItem {item} value={handleValue(item)}   on:deleteItem={deleteItem} />
           <button class="delete" on:click={() => deleteItem(item)}>X</button>
           {/if}
         </div>
