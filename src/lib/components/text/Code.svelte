@@ -24,9 +24,18 @@
     hljs.highlightBlock(hljsElement);
   };
 
+  document.addEventListener("paste", handlePaste);
+
+  function handlePaste(e) {
+    e.preventDefault();
+    const text = e.clipboardData.getData("text/plain");
+    document.execCommand("insertHTML", false, text);
+  }
+
+
   function handleKeyDown(e) {
     const plainTextContent = stripHtmlTags(e.target.innerHTML.trim());
-    console.log(plainTextContent)
+ 
     trimmedInnerText = plainTextContent;
     const trimmedOriginal = "code";
 
