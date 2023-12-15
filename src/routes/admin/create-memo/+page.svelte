@@ -128,8 +128,6 @@ reloadNeeded.set(true)
 
 
 </script>
-{JSON.stringify($title)}
-{JSON.stringify(memotitle)}
 <div class="container">
 
     <EditorSidebar 

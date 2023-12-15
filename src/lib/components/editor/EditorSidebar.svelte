@@ -10,6 +10,7 @@ const dispatch = createEventDispatcher();
   >sauvagarder</button>
   <div class="content-type-container">
     {#each items as item(item.id)}
+
             <button
             on:click={() => dispatch('selectItem', item)}
             >{item.name}</button>

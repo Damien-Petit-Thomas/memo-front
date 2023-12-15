@@ -106,7 +106,7 @@ function saveContent() {
 
 
 </script>
-{JSON.stringify($preview)}
+
 <h2>preview est {$preview.title}</h2>
     
 <a href="/new-memo/previsualisation" >preview</a>

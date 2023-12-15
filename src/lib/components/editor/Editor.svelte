@@ -59,14 +59,18 @@
 
 <Toolbar />
 <div class="wrapper">
-  <EditableItem item={title} value={handleValue(title)}  on:deleteItem={deleteItem} />
+  <EditableItem item={title} value={handleValue(title)}   />
   <section class="editor"
-          use:dndzone="{{ items: $memoItems, dragDisabled, flipDurationMs }}"
-          on:consider="{handleConsider}"
-          on:finalize="{handleFinalize}">
-
-    {#each $memoItems as item (item.id)}
-    <div animate:flip="{{ duration: flipDurationMs }}">
+  use:dndzone="{{ items: $memoItems, dragDisabled, flipDurationMs }}"
+  on:consider="{handleConsider}"
+  on:finalize="{handleFinalize}">
+  
+  {#each $memoItems as item (item.id)}
+  <div animate:flip="{{ duration: flipDurationMs }}">
+    <button 
+    class="delete" 
+    on:click={() => deleteItem(item)}>
+    </button>
       {#if !deletedItems.includes(item)}
           <!-- svelte-ignore a11y-no-static-element-interactions -->
           <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
@@ -78,8 +82,11 @@
               on:touchstart={startDrag}
               on:keydown={handleKeyDown} />
         
-          <EditableItem {item} value={handleValue(item)}   on:deleteItem={deleteItem} />
-          <button class="delete" on:click={() => deleteItem(item)}>X</button>
+          <EditableItem 
+          {item} 
+          value={handleValue(item)}
+          />
+        
           {/if}
         </div>
     {/each}
@@ -89,13 +96,11 @@
 <style>
 
     .wrapper {
-      /*  la hauteur doigt toujours laisser un bonne marge pour le scroll */
-      height: 150%;
       display: flex;
         flex-direction: column;
         min-width: 70%;
         background-color: rgb(29, 32, 32);
-        overflow-y: auto; /* Ajout de cette propriété pour permettre le défilement vertical */
+        overflow-y: auto; 
         padding-bottom: 1rem;
     }
     .editor {
@@ -106,11 +111,6 @@
         background-color: rgb(29, 32, 32);
         margin-bottom: 10rem;
     }
-
-
-	div {
-		position: relative;
-	}
 	.handle {
 		position: absolute;
 		left: 50%;
@@ -124,17 +124,18 @@
 	}
 
 	button.delete {
-		background-color: grey;
+    position: relative;
+    background-color: transparent;
+    background-image: url($lib/assets/remove.svg);
+    background-repeat: no-repeat;
 		border : none;
 		border-radius: 5%;
-		position: absolute;
 		font-size: 0.5em;
-		right: 0;
-		top: 0;
 	}
 
 	button.delete:hover {
-		background-color: red;
+		background-color:rgb(153, 75, 75);
+
 	}
 
 

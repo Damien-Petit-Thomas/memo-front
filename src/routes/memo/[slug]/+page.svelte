@@ -1,20 +1,22 @@
 <script>
-  import MarkdownIt from 'markdown-it';
+  import markdownit from 'markdown-it';
   import MainSidebar from '$lib/components/sidebar/MainSidebar.svelte';
+  import Code from '$lib/components/text/Code.svelte';
   import Toc from '$lib/components/sidebar/Toc.svelte';
   import Paragraphe from '$lib/components/text/Paragraph.svelte';
-  import Subtitle from '$lib/components/text/Subtitle.svelte';
   import Blockquote from '$lib/components/text/Blockquote.svelte';
 
   import { page } from '$app/stores';
   import { fullmemos } from '$lib/stores/fullmemos.js';
   import  {currentMemo} from '$lib/stores/currentMemo.js';
   let isEditable = false;
-  const md = MarkdownIt()
+  // Actual default values
+const md = markdownit();
   
     const components = {
+      code: Code,
       paragraphe: Paragraphe,
-      subtitle: Subtitle,
+    
       blockquote: Blockquote  
     };
   
@@ -47,6 +49,10 @@ page.subscribe(async ($page) => {
   console.log("no memo")
 }
 });
+
+
+
+
 
 function parseText(item) {
   // Apply markdown rendering to the entire content
@@ -95,6 +101,8 @@ $: currentMemo.set(memo)
 
 </script>
 
+
+
 <div class="container">
   
   <MainSidebar />
@@ -106,6 +114,7 @@ $: currentMemo.set(memo)
       {#if copyMemo.contents}
         {#each copyMemo.contents as content (content.id)}
           {#if components[content.type.name]}
+        
             <svelte:component {isEditable} this={components[content.type.name]} value={content.content} css={content.type.css}/>
           {:else}
             <p>{content.content}</p>

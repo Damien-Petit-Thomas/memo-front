@@ -1,9 +1,9 @@
 <script>
+  import Code from '$lib/components/text/Code.svelte';
   import { memoItems} from '$lib/stores/Editor.js'
   import {title} from '$lib/stores/title.js'
   import { onMount } from 'svelte'
   import Paragraphe from '$lib/components/text/Paragraph.svelte';
-  import Subtitle from '$lib/components/text/Subtitle.svelte';
   import Title from '$lib/components/text/Title.svelte';
   import Blockquote from '$lib/components/text/Blockquote.svelte';
   import DOMPurity from 'dompurify'
@@ -16,8 +16,8 @@ let content = item.content !== undefined ? item.content : item.name
 const components = {
     title: Title,
     paragraphe: Paragraphe,
-    subtitle: Subtitle,
-    blockquote: Blockquote
+    blockquote: Blockquote,
+    code: Code
   };
 
   onMount(() => {
@@ -25,7 +25,6 @@ const components = {
     original = value
   })
   
- 
   function saveContent(e) {
   let content = e.detail
 
@@ -68,12 +67,11 @@ const components = {
   value={content}
   css={item.css}
   on:contentEdited={saveContent}
- 
 
 />
 
- {:else }
- <p>{content}</p>
+  {:else }
+  <p>{content}</p>
 
   
   {/if}
@@ -92,17 +90,7 @@ p {
 
 
 
-#blockquote {
-	background: rgb(53, 48, 48);
-	border-left: 4px solid var(--color-orange);
-	border-right: 4px solid var(--color-orange);
-	font-family: Roboto Slab;
-	padding: 2.4rem;
-  width: 100%;
-	border-radius: 0.4rem;
-	color: var(--color-preview-qoute-body) !important;
-	font-weight: bold !important;
-}
+
 
 
 
