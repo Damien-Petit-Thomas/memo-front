@@ -4,7 +4,6 @@
   export let title;
   export let store;
  
-  console.log($store)
   
   let name = '';
   let color = '#413779';
@@ -17,7 +16,6 @@
       };
     
       store.add(data);
-      console.log(store)
       name = '';
       color = '#ff0000';
     }

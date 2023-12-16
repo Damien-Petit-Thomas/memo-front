@@ -2,6 +2,8 @@
   import { reloadNeeded } from '$lib/stores/reloadNeeded.js';
   import { fullmemos } from '$lib/stores/fullmemos.js';
   import { memos} from '$lib/stores/memo.js';
+  import { lexicon } from '$lib/stores/lexicon.js';
+  import Lexicon from '$lib/components/editor/Lexicon.svelte';
   import { memoItems } from '$lib/stores/Editor.js';
   import Editor from '$lib/components/editor/Editor.svelte';
   import EditorSidebar from '$lib/components/editor/EditorSidebar.svelte';
@@ -21,7 +23,6 @@
   let linkList = [];
   
   $link.forEach((link) => linkList.push(link.url))
-  console.log(linkList)
 
 
 
@@ -36,7 +37,9 @@
       memoCategory = $currentMemo.category.id
       if($currentMemo.tags) memotags = $currentMemo.tags.forEach(tag => memotags.push(tag.id))
       $currentMemo.contents.forEach(item => {
-        handleSelectItem({detail : {...item.type, content : item.content}})
+     
+let newItem = {...item.type, content : item.content, id : item.id, initialTypeId : item.type.id}
+        memoItems.update(items => [...items, newItem]);        
       })
       currentMemo.set({})
     }
@@ -48,6 +51,14 @@ onMount(() => {
 })
 
 
+function handleSelectItem(e) {
+
+for (let i= 0; i < e.detail.length; i++){
+  const count = Math.random()
+  const newItem = { ...e.detail[i], id: count, initialTypeId: e.detail[i].id,  }
+  memoItems.update(items => [...items, newItem]);
+}
+}
 
 
 
@@ -65,12 +76,6 @@ onMount(() => {
 
     tagsIds = e.detail;
   }
-  function handleSelectItem(e) {
-
-    const count = Math.random()
-    const newItem = { ...e.detail, id: count, initialTypeId: e.detail.id,  }
-    memoItems.update(items => [...items, newItem]);
-  }
 
 
 
@@ -87,6 +92,7 @@ onMount(() => {
       type_id: item.initialTypeId,
     };
   });
+  console.log(itemsToSave)
   
 
   if (itemsToSave.length === 0) return alert('add some content')
@@ -130,19 +136,19 @@ reloadNeeded.set(true)
 </script>
 <div class="container">
 
-    <EditorSidebar 
-      items={contentTypeElem}
-      on:selectItem={handleSelectItem}
-
-      on:saveMemo={saveMemo}
-      />
-      <Editor />
-    <div class="wrapper">
-      <EditorSidebarTagNCategory
-      on:selectedCategory={handleSelectCategory}
-      on:selectedTags={handleTags}
-      />
-      <!-- <Lexicon {categoryId} /> -->
+  <EditorSidebar 
+  items={contentTypeElem}
+  on:selectItem={handleSelectItem}
+  
+  on:saveMemo={saveMemo}
+  />
+  <Editor />
+  <div class="wrapper">
+    <EditorSidebarTagNCategory
+    on:selectedCategory={handleSelectCategory}
+    on:selectedTags={handleTags}
+    />
+    <Lexicon {categoryId} />
     </div>
 
 </div>

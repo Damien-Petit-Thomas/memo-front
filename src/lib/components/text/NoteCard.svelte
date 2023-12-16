@@ -40,14 +40,19 @@ function handleBlur(e) {
 </script>
 
 <pre>
-	<blockquote 
+	<!-- svelte-ignore a11y-no-static-element-interactions -->
+	<div class="note-card"
+  aria-label='note card  '
 	style={css} 
 	contenteditable={isEditable}
 	on:keydown={handleKeyDown}
 	on:blur={handleBlur}
 	class:isSave={isSave}
 	class:isEditable={isEditable}
-	>{@html value}</blockquote>
+	>
+	<div class ='img'></div>
+	{@html value}
+</div>
 </pre>
 
 
@@ -56,19 +61,26 @@ function handleBlur(e) {
 <style>
 
 
+.img{
+	min-width: 20px;
+	min-height: 20px;
+	background-repeat: no-repeat;
+	background-image: url($lib/assets/warning.svg);
+}
 
 
 
-
-blockquote.isEditable {
-	background: rgb(53, 48, 48);
-	border-left: 4px solid var(--color-orange);
-	border-right: 4px solid var(--color-orange);
+div.isEditable.note-card {
+	color:white;
+	background: #679ac2;
+	background-color: transparent;
+  border: 1px solid #696969;
+	border-left: 4px solid #5E9EFF;
+	border-radius: .25rem;
 	font-family: Roboto Slab;
-	padding: 2.4rem;
-	margin: 0 auto;
+	padding: 1rem 1rem 1rem 3rem;
+	margin: 0 auto; 
   width: 90%;
-	border-radius: 0.4rem;
 	font-weight: bold !important;
 	color: var(--color-preview-qoute-body) !important;     
 	animation: notSave 3s infinite; 
@@ -76,7 +88,7 @@ blockquote.isEditable {
 
 
 
-blockquote.isSave {
+div.isSave {
 animation: save .5s 3;
 }
 

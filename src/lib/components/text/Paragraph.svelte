@@ -2,7 +2,7 @@
 	import { createEventDispatcher } from "svelte";
 	export let value;
 	export let isEditable = true;
-	let isSave = false;
+	let isSave = true;
 	let original = value;
 	export let css = null;
 const dispatch = createEventDispatcher();
@@ -25,6 +25,21 @@ function handleKeyDown(e) {
 }
 
 
+function handleBlur(e) {
+  const trimmedInnerText = e.target.innerText.trim();
+  const trimmedOriginal = 'paragraphe'
+
+  if (trimmedInnerText === '') {
+  return e.target.innerText = trimmedOriginal;
+  }
+  dispatch('contentEdited', trimmedInnerText);
+  isSave = true;
+}
+
+
+
+
+
 
 </script>
 
@@ -34,6 +49,7 @@ function handleKeyDown(e) {
 style={css} 
 contenteditable={isEditable}
 on:keydown={handleKeyDown}
+on:blur={handleBlur}
 class:isSave={isSave}
 class:isEditable={isEditable}
   >
@@ -44,7 +60,7 @@ class:isEditable={isEditable}
 
 <style>
   pre.isEditable {
-    border-left: 4px solid var(--color-orange);
+    border-left: 1px solid lightskyblue;
     color: rgb(174, 174, 189);
 	animation: notSave 3s infinite; 
 

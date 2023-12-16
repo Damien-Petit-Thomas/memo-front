@@ -2,17 +2,16 @@
 	import { createEventDispatcher } from "svelte";
 	export let value;
 	export let isEditable = true;
-	let isSave =  true;
+	let isSave = true;
 	let original = value;
 	export let css = null;
 const dispatch = createEventDispatcher();
 
-
 function handleKeyDown(e) {
   const trimmedInnerText = e.target.innerText.trim();
-  const original = 'titre'
+  const trimmedOriginal = 'detail'
 
-  if (trimmedInnerText === original) {
+  if (trimmedInnerText === trimmedOriginal) {
     e.target.innerText = '';
   }
 
@@ -24,10 +23,9 @@ function handleKeyDown(e) {
     isSave = false;
   }
 }
-
 function handleBlur(e) {
   const trimmedInnerText = e.target.innerText.trim();
-  const trimmedOriginal = 'titre'
+  const trimmedOriginal = 'paragraphe'
 
   if (trimmedInnerText === '') {
   return e.target.innerText = trimmedOriginal;
@@ -36,33 +34,39 @@ function handleBlur(e) {
   isSave = true;
 }
 
+
+
 </script>
 
-<pre>
-  <h2 
-  style={css} 
-	contenteditable={isEditable}
-	on:keydown={handleKeyDown}
-  on:blur={handleBlur}
-  class:isSave={isSave}
-  class:isEditable={isEditable}
-  >{value}
-</h2>
+
+
+<pre
+style={css} 
+contenteditable={isEditable}
+on:keydown={handleKeyDown}
+on:blur={handleBlur}
+class:isSave={isSave}
+class:isEditable={isEditable}
+  >
+  {@html value}
 </pre>
 
+
+
 <style>
-  h2.isEditable {
-      text-align: center;
-      font-weight: bold;
-      color: var(--color-preview-title);
-      animation: notSave 3s infinite; 
-      border-left: 1px solid lightskyblue;
+  pre.isEditable {
+    border-left: 1px solid lightskyblue;
+
+    color: rgb(174, 174, 189);
+	animation: notSave 3s infinite; 
 
   }
 
-
-
-  h2.isSave {
+  pre.isSave {
     animation: save .5s 3;
   }
+
+
+
+
 </style>

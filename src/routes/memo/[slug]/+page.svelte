@@ -5,10 +5,14 @@
   import Toc from '$lib/components/sidebar/Toc.svelte';
   import Paragraphe from '$lib/components/text/Paragraph.svelte';
   import Blockquote from '$lib/components/text/Blockquote.svelte';
+  import Detail from '$lib/components/text/Detail.svelte';
+  import Summary from '../../../lib/components/text/Summary.svelte';
+  import DetailFormat from '../../../lib/components/text/DetailFormat.svelte';
 
   import { page } from '$app/stores';
   import { fullmemos } from '$lib/stores/fullmemos.js';
   import  {currentMemo} from '$lib/stores/currentMemo.js';
+    import { parse } from 'svelte/compiler';
   let isEditable = false;
   // Actual default values
 const md = markdownit();
@@ -16,7 +20,8 @@ const md = markdownit();
     const components = {
       code: Code,
       paragraphe: Paragraphe,
-    
+      detailFormat: DetailFormat,
+      summary: Summary,
       blockquote: Blockquote  
     };
   
@@ -29,27 +34,45 @@ let isDataReady = false;
 page.subscribe(async ($page) => {
 
     if ($fullmemos.length === 0) {
-      console.log("fetching")
       await fullmemos.get();
      
     }
 
     pageSlug = $page.params.slug;
     memo = $fullmemos.find((m) => m.slug === pageSlug);
-    console.log(memo)
     if (memo) {
       copyMemo = JSON.parse(JSON.stringify(memo));
       if (copyMemo.contents){
         copyMemo.contents.forEach((item) => {
           parseText(item);
         });
+      
+        console.log(copyMemo.contents)
+        // on classe les items par position
+        copyMemo.contents.sort((a, b) => a.position - b.position);
+        const detail = copyMemo.contents.find((item) => item.type.name === 'detail');
+        const summary = copyMemo.contents.find((item) => item.type.name === 'summary');
+        if (detail && summary) {
+          const detailFormated = {
+            id: detail.id,
+            content: [detail.content, summary.content],
+            position: detail.position,
+            type: {
+              name: 'detailFormat',
+              css: 'detail-format',
+            },
+          };
+          copyMemo.contents = copyMemo.contents.filter((item) => item.type.name !== 'detail' && item.type.name !== 'summary');
+          copyMemo.contents = [...copyMemo.contents, detailFormated];
+          }
+          console.log(copyMemo.contents)
+        
     isDataReady = true;
   }
 } else {
   console.log("no memo")
 }
 });
-
 
 
 
@@ -92,6 +115,7 @@ function parseText(item) {
 }
 
 
+
   
 
 $: currentMemo.set(memo)
@@ -105,7 +129,7 @@ $: currentMemo.set(memo)
 
 <div class="container">
   
-  <MainSidebar />
+  <MainSidebar /> 
   <div class="content"  contenteditable="false">
     {#if isDataReady}
 
@@ -124,7 +148,7 @@ $: currentMemo.set(memo)
         {/if}
       {/if}
     {/if}
-  </div>
+  </div> 
   <Toc 
   title={copyMemo.title}
   doc={memo.contents}/>

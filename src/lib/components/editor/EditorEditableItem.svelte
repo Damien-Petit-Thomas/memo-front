@@ -2,11 +2,14 @@
   import Code from '$lib/components/text/Code.svelte';
   import { memoItems} from '$lib/stores/Editor.js'
   import {title} from '$lib/stores/title.js'
+  import Detail from '$lib/components/text/Detail.svelte';
   import { onMount } from 'svelte'
   import Paragraphe from '$lib/components/text/Paragraph.svelte';
   import Title from '$lib/components/text/Title.svelte';
   import Blockquote from '$lib/components/text/Blockquote.svelte';
   import DOMPurity from 'dompurify'
+    import Summary from '$lib/components/text/Summary.svelte';
+    import NoteCard from '$lib/components/text/NoteCard.svelte';
   export let item, value
   let original
   
@@ -14,7 +17,10 @@
 let content = item.content !== undefined ? item.content : item.name
 
 const components = {
+  noteCard : NoteCard,
+    summary: Summary,
     title: Title,
+    detail: Detail,
     paragraphe: Paragraphe,
     blockquote: Blockquote,
     code: Code
@@ -25,29 +31,35 @@ const components = {
     original = value
   })
   
+
+
+
   function saveContent(e) {
   let content = e.detail
 
-    content = DOMPurity.sanitize(content)
+
+
 
     if (content === '') {
+ 
       content = original
     }
     if (content !== original) {
       if(item.name === 'title'){
         title.update(() => content);
-      }else{
+      }
+      else{
       memoItems.update(items => {
         const index = items.findIndex(memItem => memItem.id === item.id)
         if (index !== -1) {
-          items[index].content = content
+          items[index].content = DOMPurity.sanitize(content)
         }
         return items
       })
     }}
   }
 
-   
+
   
     
   
@@ -61,6 +73,7 @@ const components = {
 
 
 <div  role="button" tabindex="0">
+  {JSON.stringify(item.name )}
   {#if components[item.name]}
   <svelte:component 
   this={components[item.name]} 

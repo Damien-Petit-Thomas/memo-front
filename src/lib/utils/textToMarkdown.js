@@ -133,7 +133,6 @@ import { link } from '../stores/link';
 function saveLink(linkText, linkUrl, id, linkList = []) {
   if (!linkList.includes(linkUrl)) {
     linkList.push(linkUrl);
-    console.log('link does not exist');
     link.add({ name: linkText, url: linkUrl, memo_id: id });
   } else {
     console.log('link already exists');

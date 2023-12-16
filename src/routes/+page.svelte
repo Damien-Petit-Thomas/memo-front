@@ -21,7 +21,6 @@
 		lexicon.set(data.lexicon);
 		link.set(data.links);
 		$link.forEach((link) => linkList.push(link.url))
-  console.log(linkList)
 
 	});
 

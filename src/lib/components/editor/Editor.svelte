@@ -81,12 +81,18 @@
               on:mousedown={startDrag}
               on:touchstart={startDrag}
               on:keydown={handleKeyDown} />
+     
         
+         
+
+
+
+
           <EditableItem 
           {item} 
           value={handleValue(item)}
           />
-        
+ 
           {/if}
         </div>
     {/each}
@@ -104,6 +110,7 @@
         padding-bottom: 1rem;
     }
     .editor {
+        height: 100%;
         display: flex;
         flex-direction: column;
         min-width: 70%;

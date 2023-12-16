@@ -10,7 +10,7 @@
   import { createEventDispatcher } from "svelte";
   export let value;
   export let isEditable = true;
-  let isSave = false;
+  let isSave = true;
   export let css = null;
   const dispatch = createEventDispatcher();
   let trimmedInnerText = value;
@@ -131,7 +131,8 @@
   }
 
   pre.isEditable {
-    border-left: 4px solid var(--color-orange);
+    border-left: 1px solid lightskyblue;
+
     color: rgb(174, 174, 189);
     animation: notSave 3s infinite;
   }
