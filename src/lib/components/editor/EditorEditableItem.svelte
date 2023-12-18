@@ -8,12 +8,14 @@
   import Title from '$lib/components/text/Title.svelte';
   import Blockquote from '$lib/components/text/Blockquote.svelte';
   import DOMPurity from 'dompurify'
-    import Summary from '$lib/components/text/Summary.svelte';
-    import NoteCard from '$lib/components/text/NoteCard.svelte';
+  import Summary from '$lib/components/text/Summary.svelte';
+  import NoteCard from '$lib/components/text/NoteCard.svelte';
   export let item, value
   let original
   
 
+console.log(item.style)
+const css = item.style !== undefined ? item.style : ''
 let content = item.content !== undefined ? item.content : item.name
 
 const components = {
@@ -73,12 +75,11 @@ const components = {
 
 
 <div  role="button" tabindex="0">
-  {JSON.stringify(item.name )}
   {#if components[item.name]}
   <svelte:component 
   this={components[item.name]} 
   value={content}
-  css={item.css}
+  {css}
   on:contentEdited={saveContent}
 
 />

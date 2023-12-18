@@ -47,7 +47,6 @@ page.subscribe(async ($page) => {
           parseText(item);
         });
       
-        console.log(copyMemo.contents)
         // on classe les items par position
         copyMemo.contents.sort((a, b) => a.position - b.position);
         const detail = copyMemo.contents.find((item) => item.type.name === 'detail');
@@ -65,7 +64,6 @@ page.subscribe(async ($page) => {
           copyMemo.contents = copyMemo.contents.filter((item) => item.type.name !== 'detail' && item.type.name !== 'summary');
           copyMemo.contents = [...copyMemo.contents, detailFormated];
           }
-          console.log(copyMemo.contents)
         
     isDataReady = true;
   }

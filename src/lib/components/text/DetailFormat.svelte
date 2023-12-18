@@ -1,6 +1,5 @@
 <script>
 export let value;
-console.log(value)
 </script>
 <details><summary>{@html value[0]}</summary>
   {@html value[1]}

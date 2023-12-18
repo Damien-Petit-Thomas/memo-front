@@ -51,7 +51,7 @@ onMount(() => {
 })
 
 
-function handleSelectItem(e) {
+function handleSelectItem(e, id) {
 
 for (let i= 0; i < e.detail.length; i++){
   const count = Math.random()
@@ -66,7 +66,7 @@ for (let i= 0; i < e.detail.length; i++){
   
   let tagsIds = [];
   const contentTypeElem = data.contents
-
+  const styles = data.styles
 
 
   function handleSelectCategory(e) {
@@ -92,7 +92,6 @@ for (let i= 0; i < e.detail.length; i++){
       type_id: item.initialTypeId,
     };
   });
-  console.log(itemsToSave)
   
 
   if (itemsToSave.length === 0) return alert('add some content')
@@ -137,12 +136,15 @@ reloadNeeded.set(true)
 <div class="container">
 
   <EditorSidebar 
+  {styles}
   items={contentTypeElem}
   on:selectItem={handleSelectItem}
   
   on:saveMemo={saveMemo}
   />
-  <Editor />
+  <Editor 
+  {styles}
+  />
   <div class="wrapper">
     <EditorSidebarTagNCategory
     on:selectedCategory={handleSelectCategory}

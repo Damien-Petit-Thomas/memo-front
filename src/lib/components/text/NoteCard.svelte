@@ -11,7 +11,7 @@ const dispatch = createEventDispatcher();
 
 function handleKeyDown(e) {
   const trimmedInnerText = e.target.innerText.trim();
-  const trimmedOriginal = "blockquote"
+  const trimmedOriginal = "noteCard"
 
   if (trimmedInnerText === trimmedOriginal) {
     e.target.innerText = '';
@@ -27,7 +27,7 @@ function handleKeyDown(e) {
 }
 function handleBlur(e) {
   const trimmedInnerText = e.target.innerText.trim();
-  const trimmedOriginal = 'summary'
+  const trimmedOriginal = 'noteCard'
 
   if (trimmedInnerText === '') {
   return e.target.innerText = trimmedOriginal;
@@ -39,20 +39,23 @@ function handleBlur(e) {
 
 </script>
 
+<!-- svelte-ignore a11y-no-static-element-interactions -->
 <pre>
-	<!-- svelte-ignore a11y-no-static-element-interactions -->
-	<div class="note-card"
-  aria-label='note card  '
-	style={css} 
-	contenteditable={isEditable}
-	on:keydown={handleKeyDown}
-	on:blur={handleBlur}
-	class:isSave={isSave}
-	class:isEditable={isEditable}
-	>
-	<div class ='img'></div>
-	{@html value}
-</div>
+  <div class="note-card"
+    class:isSave={isSave}
+    style={css} 
+  >
+    <img class="img" title="warning" alt='exclamation point' src="/src/lib/assets/warning.svg" />
+    <div  aria-label='note card'
+      class="note-text"
+      contenteditable={isEditable}
+      on:keydown={handleKeyDown}
+      on:blur={handleBlur}
+      class:isEditable={isEditable}
+    >
+      {@html value}
+    </div>
+  </div>
 </pre>
 
 
@@ -61,34 +64,32 @@ function handleBlur(e) {
 <style>
 
 
-.img{
-	min-width: 20px;
-	min-height: 20px;
-	background-repeat: no-repeat;
-	background-image: url($lib/assets/warning.svg);
-}
 
 
 
-div.isEditable.note-card {
+
+div.note-card {
+	display:flex ;
+	align-items: center;
+	justify-content: flex-start;
 	color:white;
-	background: #679ac2;
-	background-color: transparent;
+	background: #09273d;
   border: 1px solid #696969;
 	border-left: 4px solid #5E9EFF;
 	border-radius: .25rem;
 	font-family: Roboto Slab;
-	padding: 1rem 1rem 1rem 3rem;
+	padding: 1rem 1rem 1rem 1.5rem;
 	margin: 0 auto; 
   width: 90%;
-	font-weight: bold !important;
-	color: var(--color-preview-qoute-body) !important;     
 	animation: notSave 3s infinite; 
 }
 
+.note-text {
+	margin-left: 1rem;
+	max-width: 95%;
+}	
 
-
-div.isSave {
+div.note-card.isSave {
 animation: save .5s 3;
 }
 

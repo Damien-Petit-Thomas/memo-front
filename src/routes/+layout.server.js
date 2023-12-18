@@ -8,6 +8,7 @@ export const load = async ({ fetch }) => {
       allMemmo,
       lexicons,
       linksResponse,
+      styleResponse,
     ] = await Promise.all([
       fetch(
         'http://localhost:3000/api/category',
@@ -29,6 +30,9 @@ export const load = async ({ fetch }) => {
       ),
       fetch(
         'http://localhost:3000/api/link',
+      ),
+      fetch(
+        'http://localhost:3000/api/style',
       ),
     ]);
     if (!cateoriesResponse.ok) {
@@ -52,6 +56,9 @@ export const load = async ({ fetch }) => {
     if (!linksResponse.ok) {
       throw new Error(`HHTP error ${tagResponse.status}`);
     }
+    if (!styleResponse.ok) {
+      throw new Error(`HHTP error ${tagResponse.status}`);
+    }
     const tags = await tagResponse.json();
     const memos = await memoResponse.json();
     const categories = await cateoriesResponse.json();
@@ -59,8 +66,9 @@ export const load = async ({ fetch }) => {
     const fullmemos = await allMemmo.json();
     const lexicon = await lexicons.json();
     const links = await linksResponse.json();
+    const styles = await styleResponse.json();
     return {
-      tags, categories, todos, memos, fullmemos, lexicon, links,
+      tags, categories, todos, memos, fullmemos, lexicon, links, styles,
     };
   } catch (error) {
     return { error: 'Unable to fetch currencies' };

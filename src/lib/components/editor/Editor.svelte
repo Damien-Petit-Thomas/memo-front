@@ -81,18 +81,10 @@
               on:mousedown={startDrag}
               on:touchstart={startDrag}
               on:keydown={handleKeyDown} />
-     
-        
-         
-
-
-
-
           <EditableItem 
           {item} 
           value={handleValue(item)}
           />
- 
           {/if}
         </div>
     {/each}
@@ -116,7 +108,7 @@
         min-width: 70%;
         overflow: scroll;
         background-color: rgb(29, 32, 32);
-        margin-bottom: 10rem;
+      
     }
 	.handle {
 		position: absolute;

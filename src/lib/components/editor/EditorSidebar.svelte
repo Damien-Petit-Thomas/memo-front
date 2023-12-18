@@ -1,73 +1,105 @@
 <script>
-import  {createEventDispatcher} from 'svelte';
-const dispatch = createEventDispatcher();
+  import { createEventDispatcher } from 'svelte';
+
+  const dispatch = createEventDispatcher();
   export let items;
+  export let styles;
+  let showStylesSelection = false;
+  let availableStyle = [];
+ let currentItem; 
+  function showStyles(item) {
+    availableStyle = styles.filter(style => item.available_style.includes(style.id));
+    showStylesSelection = true;
+  }
 
-const detail = items.find(item => item.name === 'detail' );
-const summary = items.find(item => item.name === 'summary' );
+  function handleCLick(item) {
+    if (item.available_style !== null) {
+      currentItem = item;
+      showStyles(item);
+    }
+    else dispatch('selectItem', [item]);
+  }
 
+  function handleStyleClick(e) {
+    console.log(e)
+    currentItem.style = e.css;
+     dispatch('selectItem', [currentItem] );
+  }
 
 
 
 </script>
 
-<section  >
-  <button id="saveMemo"
-  on:click={() => dispatch('saveMemo')}
-  >sauvagarder</button>
+<section>
+  <button id="saveMemo" on:click={() => dispatch('saveMemo')}>Sauvegarder</button>
   <div class="content-type-container">
-    {#each items as item(item.id)}
-    {#if item.name !== 'detail' && item.name !== 'summary'}
-            <button
-            on:click={() => dispatch('selectItem', [item])}
-            >{item.name}</button>
-    {/if}
-  <!--  on fait un bouton commun pour detail et summary -->
-  {/each}
-  {#if detail && summary}
+    {#each items as item (item.id)}
+      {#if item.name !== 'detail' && item.name !== 'summary'}
+        <button on:click={() => handleCLick(item)}>
+          {item.name}
+        </button>
+      {/if}
+    {/each}
+  </div>
 
-  <button
-  on:click={() => dispatch('selectItem',  [detail, summary])}
-  >{detail.name}</button>
+{#if showStylesSelection}
+  <div 
+  class="card">
+    {#if availableStyle.length > 0}
+      <h3>choix du style</h3>
+      {#each availableStyle as style}
+        <div class="style-item">
+          <button
+          on:click={handleStyleClick(style)} 
+          >{style.name}</button>
+        </div>
+      {/each}
+    {:else}
+      <p class="no-styles">No styles available</p>
+    {/if}
+  </div>
 
 {/if}
-    
-  </div>
+  
 </section>
 
-
 <style>
-
-
-
-section{
+  section {
     display: flex;
-    flex-direction: column;;
+    flex-direction: column;
     width: 100%;
     height: 100vh;
     gap: 5rem;
-    border-right : 1px solid #818181;
+    border-right: 1px solid #818181;
+  }
 
-}
-
-.content-type-container{
+  .content-type-container {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     width: 100%;
     widows: 100%;
-}
+  }
 
+  button#saveMemo {
+    margin-bottom: 1rem;
+  }
 
-    button#saveMemo{
-        margin-bottom: 1rem;
-    }
+  button:hover {
+    background-color: rgb(203, 232, 219);
+    color: #4a535f;
+  }
 
+  .selected-styles {
+    margin-top: 1rem;
+  }
 
-    button:hover {
-        background-color: rgb(203, 232, 219); ;
-        color : #4a535f;
-    }
-  
+  .style-item {
+    margin-bottom: 0.5rem;
+  }
 
+  .no-styles {
+    margin-top: 1rem;
+    color: gray;
+  }
 </style>
