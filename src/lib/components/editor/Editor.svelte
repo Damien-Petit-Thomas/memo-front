@@ -97,6 +97,8 @@
 
    
     .wrapper {
+       border-left: 1px solid #818181;
+       border-right: 1px solid #818181;
         height: 1000vh;
       display: flex;
         flex-direction: column;

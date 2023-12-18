@@ -54,6 +54,11 @@ class:isEditable={isEditable}
 
 
 <style>
+
+
+  pre {
+    margin: 0 1rem 0 1rem;
+  }
   pre.isEditable {
     border-left: 1px solid lightskyblue;
 

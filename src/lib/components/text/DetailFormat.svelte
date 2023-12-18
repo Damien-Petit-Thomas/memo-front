@@ -9,6 +9,7 @@ export let value;
   details {
   border: 1px solid #aaa;
   border-radius: 4px;
+  margin : 0.5em 0.5em 0;
   padding: 0.5em 0.5em 0;
 }
 

@@ -55,7 +55,9 @@ function handleBlur(e) {
 
 <style>
 
-
+pre {
+	margin: 0 1rem 0 1rem;
+}
 
 
 

@@ -70,7 +70,6 @@
     width: 100%;
     height: 100vh;
     gap: 5rem;
-    border-right: 1px solid #818181;
   }
 
   .content-type-container {

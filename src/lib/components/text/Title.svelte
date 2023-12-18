@@ -51,6 +51,10 @@ function handleBlur(e) {
 </pre>
 
 <style>
+
+  pre {
+    margin: 0 1rem 0 1rem;
+  }
   h2.isEditable {
       text-align: center;
       font-weight: bold;

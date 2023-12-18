@@ -165,6 +165,8 @@ $: currentMemo.set(memo)
   }
 
   .content {
+    border-left : 1px solid #818181;
+    border-right : 1px solid #818181;
     display: flex;
     flex-direction: column;
     padding: 20px;

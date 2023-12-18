@@ -86,7 +86,6 @@
     min-width: 15%;
     padding-top: 20px;
     overflow-x: hidden;
-    border-right : 1px solid #818181;
   }
 
   .category {
