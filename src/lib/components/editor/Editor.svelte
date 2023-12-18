@@ -74,17 +74,19 @@
       {#if !deletedItems.includes(item)}
           <!-- svelte-ignore a11y-no-static-element-interactions -->
           <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
-          <div tabindex={dragDisabled ? 0 : -1}
-              aria-label="drag-handle"
-              class="handle"
-              style={dragDisabled ? 'cursor: grab' : 'cursor: grabbing'}
-              on:mousedown={startDrag}
-              on:touchstart={startDrag}
-              on:keydown={handleKeyDown} />
-          <EditableItem 
-          {item} 
-          value={handleValue(item)}
-          />
+          <div class="container">
+            <div tabindex={dragDisabled ? 0 : -1}
+                aria-label="drag-handle"
+                class="handle"
+                style={dragDisabled ? 'cursor: grab' : 'cursor: grabbing'}
+                on:mousedown={startDrag}
+                on:touchstart={startDrag}
+                on:keydown={handleKeyDown} />
+            <EditableItem
+            {item}
+            value={handleValue(item)}
+            />
+          </div>
           {/if}
         </div>
     {/each}
@@ -93,7 +95,9 @@
 
 <style>
 
+   
     .wrapper {
+        height: 1000vh;
       display: flex;
         flex-direction: column;
         min-width: 70%;
@@ -102,7 +106,7 @@
         padding-bottom: 1rem;
     }
     .editor {
-        height: 100%;
+        height: 1000vh;
         display: flex;
         flex-direction: column;
         min-width: 70%;
@@ -111,11 +115,12 @@
       
     }
 	.handle {
-		position: absolute;
+		/* position: absolute; */
 		left: 50%;
 		width: 1em;
 		height: 0.25em;
-		background-color: grey;
+    margin : 0  auto ;
+		background-color: rgba(211, 211, 211, 0.144);
 		transition: cubic-bezier(0.165, 0.84, 0.44, 1) 0.2s;
 	}
 	.handle:hover {

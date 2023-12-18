@@ -82,6 +82,7 @@
 
 <style>
   .container {
+    height: 5%;
     position: relative;
   }
 
