@@ -74,7 +74,9 @@ class:isEditable={isEditable}
     animation: save .5s 3;
   }
 
-
+  ul , ol {
+    list-style:lower-latin;
+  }
 
 
 </style>

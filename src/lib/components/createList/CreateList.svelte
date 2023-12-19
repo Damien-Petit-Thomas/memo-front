@@ -67,7 +67,8 @@
 
 
 form{
-  border : 1px solid #818181;
+  border: 1px solid #4CAF50;
+	box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
   display: flex;
   flex-direction: column;
   align-items: center;

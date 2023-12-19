@@ -93,9 +93,6 @@
     color: #4a535f;
   }
 
-  .selected-styles {
-    margin-top: 1rem;
-  }
 
   .style-item {
     margin-bottom: 0.5rem;

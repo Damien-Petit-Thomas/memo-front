@@ -106,7 +106,7 @@
       const word = wordObj.word;
       const regex = new RegExp(`\\b${word}\\b`, 'g');
       if (item.content.match(regex)) {
-        item.content = item.content.replace(regex, `<span style="color:red">${word}</span>`);
+        item.content = item.content.replace(regex, `<span class="lexical" style="color:gold">${word}</span>`);
       }
     });
   }
@@ -156,11 +156,7 @@
 </div>
 
 <style>
-  a {
-    color: rgb(34, 33, 33);
-  }
-  
-  
+
   .container {
     display: flex;
     height: 100vh;
