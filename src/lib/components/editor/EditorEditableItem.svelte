@@ -37,6 +37,7 @@ const components = {
 
 
   function saveContent(e) {
+    console.log("saveContent", e)
   let content = e.detail
 
 
@@ -56,6 +57,7 @@ const components = {
         if (index !== -1) {
           items[index].content = DOMPurity.sanitize(content)
         }
+        console.log(items)
         return items
       })
     }}

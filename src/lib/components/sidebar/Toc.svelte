@@ -23,10 +23,10 @@ function generateToc(content)  {
   return toc;
 
 }
-
-doc.forEach((content) => {
-toc.push(generateToc(content.content))
-})
+console.log(doc)
+// doc.forEach((content) => {
+// toc.push(generateToc(content.content))
+// })
 
 function  slugiFy(data){
   return data.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-');
@@ -43,13 +43,13 @@ const slugTitle = slugiFy(title);
   <nav>
     <a href="/admin/create-memo"><button>éditer</button></a>
     <a href={slugTitle}><h3>{title}</h3></a>
-    <ul>
+    <!-- <ul>
       {#each toc[0] as { title, level, link }}
         <li class="level-{level}">
           <a href={link}>{title}</a>
         </li>
       {/each}
-    </ul>
+    </ul> -->
   </nav>
   
 </div>

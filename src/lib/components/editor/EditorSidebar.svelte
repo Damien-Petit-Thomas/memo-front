@@ -23,6 +23,7 @@
   function handleStyleClick(e) {
     console.log(e)
     currentItem.style = e.css;
+    currentItem.style_id = e.id;
      dispatch('selectItem', [currentItem] );
   }
 

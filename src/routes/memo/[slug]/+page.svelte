@@ -5,48 +5,48 @@
   import Toc from '$lib/components/sidebar/Toc.svelte';
   import Paragraphe from '$lib/components/text/Paragraph.svelte';
   import Blockquote from '$lib/components/text/Blockquote.svelte';
-  import Detail from '$lib/components/text/Detail.svelte';
   import Summary from '../../../lib/components/text/Summary.svelte';
   import DetailFormat from '../../../lib/components/text/DetailFormat.svelte';
-
+  import NoteCard from '../../../lib/components/text/NoteCard.svelte';
   import { page } from '$app/stores';
   import { fullmemos } from '$lib/stores/fullmemos.js';
   import  {currentMemo} from '$lib/stores/currentMemo.js';
-    import { parse } from 'svelte/compiler';
   let isEditable = false;
   // Actual default values
-const md = markdownit();
+  const md = markdownit();
   
-    const components = {
-      code: Code,
-      paragraphe: Paragraphe,
-      detailFormat: DetailFormat,
-      summary: Summary,
-      blockquote: Blockquote  
-    };
+  const components = {
+    noteCard: NoteCard,
+    code: Code,
+    paragraphe: Paragraphe,
+    detailFormat: DetailFormat,
+    summary: Summary,
+    blockquote: Blockquote  
+  };
   
-let copyMemo;
-let pageSlug;
-let memo;
-let lexicon;
-let isDataReady = false;
- 
-page.subscribe(async ($page) => {
-
+  let copyMemo;
+  let pageSlug;
+  let memo;
+  let lexicon;
+  let isDataReady = false;
+  
+  page.subscribe(async ($page) => {
+    
     if ($fullmemos.length === 0) {
       await fullmemos.get();
-     
+      
     }
-
+    
     pageSlug = $page.params.slug;
     memo = $fullmemos.find((m) => m.slug === pageSlug);
     if (memo) {
+      console.log("memo", memo)
       copyMemo = JSON.parse(JSON.stringify(memo));
       if (copyMemo.contents){
         copyMemo.contents.forEach((item) => {
           parseText(item);
         });
-      
+        
         // on classe les items par position
         copyMemo.contents.sort((a, b) => a.position - b.position);
         const detail = copyMemo.contents.find((item) => item.type.name === 'detail');
@@ -63,64 +63,64 @@ page.subscribe(async ($page) => {
           };
           copyMemo.contents = copyMemo.contents.filter((item) => item.type.name !== 'detail' && item.type.name !== 'summary');
           copyMemo.contents = [...copyMemo.contents, detailFormated];
-          }
+        }
         
-    isDataReady = true;
-  }
-} else {
-  console.log("no memo")
-}
-});
-
-
-
-
-function parseText(item) {
-  // Apply markdown rendering to the entire content
-  const markdownRenderedContent = md.render(item.content);
-
-  // Extract headers and add anchors
-  const tocRegex = /<(h[1-6])>(.*?)<\/\1>/g;
-  const modifiedLines = [];
-
-  let match;
-  let lastIndex = 0;
-
-  while ((match = tocRegex.exec(markdownRenderedContent)) !== null) {
-    const headerTag = match[1];
-    const headerContent = match[2];
-    const id = `${headerContent.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
-    const anchor = `<a name="${id}"></a>`;
-    modifiedLines.push(markdownRenderedContent.substring(lastIndex, match.index) + `<${headerTag} id="${id}">${anchor}${headerContent}</${headerTag}>`);
-    lastIndex = match.index + match[0].length;
-  }
-
-  // Add the remaining content after the last match
-  modifiedLines.push(markdownRenderedContent.substring(lastIndex));
-
-  // Join modified lines without applying markdown rendering
-  item.content = modifiedLines.join('');
-
-  lexicon = $page.data.lexicon;
-
-  lexicon.forEach(wordObj => {
-    const word = wordObj.word;
-    const regex = new RegExp(`\\b${word}\\b`, 'g');
-    if (item.content.match(regex)) {
-      item.content = item.content.replace(regex, `<span style="color:red">${word}</span>`);
+        isDataReady = true;
+      }
+    } else {
+      console.log("no memo")
     }
   });
-}
-
-
-
   
-
-$: currentMemo.set(memo)
-
-
-
-
+  
+  
+  
+  function parseText(item) {
+    // Apply markdown rendering to the entire content
+    const markdownRenderedContent = md.render(item.content);
+    
+    // Extract headers and add anchors
+    const tocRegex = /<(h[1-6])>(.*?)<\/\1>/g;
+    const modifiedLines = [];
+    
+    let match;
+    let lastIndex = 0;
+    
+    while ((match = tocRegex.exec(markdownRenderedContent)) !== null) {
+      const headerTag = match[1];
+      const headerContent = match[2];
+      const id = `${headerContent.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
+      const anchor = `<a name="${id}"></a>`;
+      modifiedLines.push(markdownRenderedContent.substring(lastIndex, match.index) + `<${headerTag} id="${id}">${anchor}${headerContent}</${headerTag}>`);
+      lastIndex = match.index + match[0].length;
+    }
+    
+    // Add the remaining content after the last match
+    modifiedLines.push(markdownRenderedContent.substring(lastIndex));
+    
+    // Join modified lines without applying markdown rendering
+    item.content = modifiedLines.join('');
+    
+    lexicon = $page.data.lexicon;
+    
+    lexicon.forEach(wordObj => {
+      const word = wordObj.word;
+      const regex = new RegExp(`\\b${word}\\b`, 'g');
+      if (item.content.match(regex)) {
+        item.content = item.content.replace(regex, `<span style="color:red">${word}</span>`);
+      }
+    });
+  }
+  
+  
+  
+  
+  
+  $: currentMemo.set(memo)
+  
+  
+  
+  
 </script>
 
 
@@ -130,21 +130,21 @@ $: currentMemo.set(memo)
   <MainSidebar /> 
   <div class="content"  contenteditable="false">
     {#if isDataReady}
-
-      <h2 id="memo-title">{copyMemo.title}</h2>
-      {#if copyMemo}
-      {#if copyMemo.contents}
-        {#each copyMemo.contents as content (content.id)}
-          {#if components[content.type.name]}
-        
-            <svelte:component {isEditable} this={components[content.type.name]} value={content.content} css={content.type.css}/>
-          {:else}
-            <p>{content.content}</p>
-          {/if}
-          
-        {/each}
-        {/if}
-      {/if}
+    
+    <h2 id="memo-title">{copyMemo.title}</h2>
+    {#if copyMemo}
+    {#if copyMemo.contents}
+    {#each copyMemo.contents as content (content.id)}
+    {#if components[content.type.name]}
+    
+    <svelte:component {isEditable} this={components[content.type.name]} value={content.content} css={content.style.css}/>
+    {:else}
+    <p>{content.content}</p>
+    {/if}
+    
+    {/each}
+    {/if}
+    {/if}
     {/if}
   </div> 
   <Toc 
@@ -156,14 +156,14 @@ $: currentMemo.set(memo)
   a {
     color: rgb(34, 33, 33);
   }
-
-
+  
+  
   .container {
     display: flex;
     height: 100vh;
     min-width: 100vw;
   }
-
+  
   .content {
     border-left : 1px solid #818181;
     border-right : 1px solid #818181;
@@ -175,7 +175,7 @@ $: currentMemo.set(memo)
     height: 1000vh;
     background-color: rgb(29, 32, 32);
   }
-
+  
   h2 {
     text-align: center;
   }
