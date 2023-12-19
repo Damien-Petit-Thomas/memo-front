@@ -40,7 +40,6 @@
     pageSlug = $page.params.slug;
     memo = $fullmemos.find((m) => m.slug === pageSlug);
     if (memo) {
-      console.log("memo", memo)
       copyMemo = JSON.parse(JSON.stringify(memo));
       if (copyMemo.contents){
         copyMemo.contents.forEach((item) => {
@@ -137,7 +136,11 @@
     {#each copyMemo.contents as content (content.id)}
     {#if components[content.type.name]}
     
-    <svelte:component {isEditable} this={components[content.type.name]} value={content.content} css={content.style.css}/>
+    <svelte:component 
+    {isEditable} 
+    this={components[content.type.name]} 
+    value={content.content}
+    css={content.style.css}/>
     {:else}
     <p>{content.content}</p>
     {/if}

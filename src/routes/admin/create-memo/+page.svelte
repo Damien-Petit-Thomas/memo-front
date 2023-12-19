@@ -18,18 +18,18 @@
   let categoryId;
   let memotags = [];
   let memotitle = "";
-
+  
   import { link } from '$lib/stores/link.js';
   let linkList = [];
   
   $link.forEach((link) => linkList.push(link.url))
-
-
-
-
-
-
-
+  
+  
+  
+  
+  
+  
+  
   onMount(() => {
     if ($currentMemo.contents && $currentMemo.contents.length > 0) {
       memotitle = $currentMemo.title
@@ -38,108 +38,119 @@
       if($currentMemo.tags) memotags = $currentMemo.tags.forEach(tag => memotags.push(tag.id))
       $currentMemo.contents.sort((a, b) => a.position -b.position);
       $currentMemo.contents.forEach(item => {
-     
-let newItem = {...item.type, content : item.content, id : item.id, initialTypeId : item.type.id, style_id : item.style_id}
-        memoItems.update(items => [...items, newItem]);       
-        console.log($memoItems) 
+        memoItems.update(items => [...items, item]);       
+        console.log("on mount item", item) 
       })
       currentMemo.set({})
     }
   });
-onMount(() => {
-  return () => {
-    memoItems.set([])
+  onMount(() => {
+    return () => {
+      memoItems.set([])
+    }
+  })
+  
+  
+  function handleSelectItem(e) {
+    for (let i= 0; i < e.detail.length; i++){
+      const count = Math.random()
+      console.log("nouvel item canva", e.detail)
+      
+      const newItem = {
+        content : e.detail[i].name,
+        id : count,
+        style : {
+          id: e.detail[i].style_id,
+          css: e.detail[i].style,
+          name: e.detail[i].name
+        },
+        type : {
+          id : e.detail[i].id,
+          name : e.detail[i].name
+        }
+      }
+      console.log("nouvel item ",newItem)
+      memoItems.update(items => [...items, newItem]);
+    }
   }
-})
-
-
-function handleSelectItem(e, id) {
-console.log(e.detail)
-for (let i= 0; i < e.detail.length; i++){
-  const count = Math.random()
-  const newItem = { ...e.detail[i], id: count, initialTypeId: e.detail[i].id,  }
-  console.log(newItem)
-  memoItems.update(items => [...items, newItem]);
-}
-}
-
-
-
-
+  
+  
+  
+  
   
   let tagsIds = [];
   const contentTypeElem = data.contents
   const styles = data.styles
-
-
+  
+  
   function handleSelectCategory(e) {
     categoryId = e.detail;
   }
   function handleTags(e) {
-
+    
     tagsIds = e.detail;
   }
-
-
-
+  
+  
+  
   async function saveMemo() {
-
-  let count = 0;
-  categoryId = categoryId !== undefined ? categoryId : memoCategory;
-
-  const itemsToSave = $memoItems.map(item => {
-    console.log(item)
-    const position = count++;
-    return {
-      position,
-      content: item.content,
-      type_id: item.initialTypeId,
-      styleId: item.style_id,
-    };
-  });
-  
-console.log(itemsToSave)
-  if (itemsToSave.length === 0) return alert('add some content')
-
-  if (memoId) {
-    if(categoryId === undefined){
-      categoryId = memoCategory
-    }if(tagsIds.length === 0){
-      tagsIds = memotags
-    }if($title === ""){
-      $title = memotitle
+    
+    let count = 0;
+    categoryId = categoryId !== undefined ? categoryId : memoCategory;
+    
+    const itemsToSave = $memoItems.map(item => {
+      console.log("saveMemo", item)
+      const position = count++;
+      return {
+        position,
+        content: item.content,
+        type_id: item.type.id,
+        styleId: item.style.id,
+      };
+    });
+    
+    console.log( "itemToSave", itemsToSave)
+    if (itemsToSave.length === 0) return alert('add some content')
+    
+    if (memoId) {
+      if(categoryId === undefined){
+        categoryId = memoCategory
+      }if(tagsIds.length === 0){
+        tagsIds = memotags
+      }if($title === ""){
+        $title = memotitle
+      }
+      const newMemo = await memos.mark({ title : $title , contents: itemsToSave, categoryId, tagsIds }, memoId);
+      if (newMemo) { 
+        alert(`le memo a été bien été modifié`);
+        memoCategory = newMemo.category_id;
+        memotags = newMemo.tags;
+      }
+    } else{
+      if(categoryId === undefined) return alert('choose a category') 
+      const newMemo = await memos.add({ title: $title, contents: itemsToSave, categoryId, tagsIds });
+      if (newMemo) {
+        alert(`create${JSON.stringify(newMemo)}`);
+        memoId = newMemo.id;
+        memoCategory = newMemo.category_id;
+        memotags = newMemo.tags;
+      }
+      
+      
     }
-  const newMemo = await memos.mark({ title : $title , contents: itemsToSave, categoryId, tagsIds }, memoId);
-  if (newMemo) { 
-  alert(`le memo a été bien été modifié`);
-  memoCategory = newMemo.category_id;
-  memotags = newMemo.tags;
-  }
-  } else{
-    if(categoryId === undefined) return alert('choose a category') 
-  const newMemo = await memos.add({ title: $title, contents: itemsToSave, categoryId, tagsIds });
-  if (newMemo) {
-    alert(`create${JSON.stringify(newMemo)}`);
-    memoId = newMemo.id;
-    memoCategory = newMemo.category_id;
-    memotags = newMemo.tags;
+    await  fullmemos.get();
+    itemsToSave.forEach(item => {
+      saveLinks(item.content, linkList, memoId, categoryId)
+    })
+    
+    reloadNeeded.set(true)
   }
   
   
-}
-await  fullmemos.get();
-itemsToSave.forEach(item => {
-  saveLinks(item.content, linkList, memoId, categoryId)
-})
-
-reloadNeeded.set(true)
-  }
-
-
-
+  
 </script>
 <div class="container">
-
+  
   <EditorSidebar 
   {styles}
   items={contentTypeElem}
@@ -156,35 +167,35 @@ reloadNeeded.set(true)
     on:selectedTags={handleTags}
     />
     <Lexicon {categoryId} />
-    </div>
-
+  </div>
+  
 </div>
 
 
 
 
 <style>
-
-
-
-
+  
+  
+  
+  
   .container {
     display: grid;
     grid-template-columns: 1fr 4fr 1fr;
-
-
-
+    
+    
+    
     /* display: flex;
     flex-direction: row; */
     height: 100vh;
     max-width: 100vw;
   }
-
+  
   .wrapper {
     display: flex;
     flex-direction: column;
     min-width: 15%;
   }
-
-
+  
+  
 </style>

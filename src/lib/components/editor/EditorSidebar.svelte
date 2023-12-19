@@ -17,13 +17,16 @@
       currentItem = item;
       showStyles(item);
     }
-    else dispatch('selectItem', [item]);
+    else {
+      console.log("handleClick", item)
+      dispatch('selectItem', [item]);}
   }
 
   function handleStyleClick(e) {
-    console.log(e)
     currentItem.style = e.css;
     currentItem.style_id = e.id;
+    console.log("handleStyleCick(e)", currentItem)
+
      dispatch('selectItem', [currentItem] );
   }
 
