@@ -20,20 +20,32 @@ function generateToc(content)  {
       toc.push({ title: match[1], level, link });
     }
   });
+  
   return toc;
 
 }
 
 doc.forEach((content) => {
 toc.push(generateToc(content.content))
+toc = toc.flat()
+console.log(toc)
 })
 
 function  slugiFy(data){
   return data.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-');
 }
-
 const slugTitle = slugiFy(title);
 
+function scrollToMiddle(id) {
+    // on retire le   # de l'id
+    id = id.substring(1);
+    const element = document.getElementById(id);
+    console.log(id)
+    if (element) {
+      const offset = element.offsetTop - (window.innerHeight * 0.1) + (element.offsetHeight / 2);
+      window.scrollTo({ top: offset, behavior: 'smooth' });
+    }
+  }
 </script>
 
 
@@ -44,10 +56,10 @@ const slugTitle = slugiFy(title);
     <a href="/admin/create-memo"><button>éditer</button></a>
     <a href={slugTitle}><h3>{title}</h3></a>
     <ul>
-      {#each toc[0] as { title, level, link }}
+      {#each toc as { title, level, link }}
         <li class="level-{level}">
-          <a href={link}>{title}</a>
-        </li>
+          <!-- <a href={link}>{title}</a> -->
+          <a href={link} on:click|preventDefault={() => scrollToMiddle(link)}>{title}</a>
       {/each}
     </ul>
   </nav>
@@ -69,27 +81,27 @@ const slugTitle = slugiFy(title);
 
 }
 .level-1 {
-  margin-left: 0;
+  font-size : 1.5rem;
 }
 
 .level-2 {
-  margin-left: 1rem;
+  font-size : 1rem;
 }  
 
 .level-3 {
-  margin-left: 2rem;
+  font-size : 0.8rem;
 }  
 
 .level-4 {
-  margin-left: 3rem;
+  margin-left: .6rem;
 }  
 
 .level-5 {
-  margin-left: 4rem;
+  font-size: .4rem;
 }  
 
 .level-6 {
-  margin-left: 5rem;
+  font-size: .2rem;
 }  
 
 nav {
@@ -106,7 +118,6 @@ a{
   text-decoration: none;
   font-size: 1rem;
   font-weight: 400;
-
 }
 
 nav h3{

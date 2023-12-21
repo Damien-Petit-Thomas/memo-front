@@ -11,28 +11,28 @@ export const load = async ({ fetch }) => {
       styleResponse,
     ] = await Promise.all([
       fetch(
-        'http://localhost:3000/api/category',
+        'http://localhost:3001/api/category',
       ),
       fetch(
-        'http://localhost:3000/api/todo',
+        'http://localhost:3001/api/todo',
       ),
       fetch(
-        'http://localhost:3000/api/tag',
+        'http://localhost:3001/api/tag',
       ),
       fetch(
-        'http://localhost:3000/api/memo',
+        'http://localhost:3001/api/memo',
       ),
       fetch(
-        'http://localhost:3000/api/memo/all',
+        'http://localhost:3001/api/memo/all',
       ),
       fetch(
-        'http://localhost:3000/api/lexicon',
+        'http://localhost:3001/api/lexicon',
       ),
       fetch(
-        'http://localhost:3000/api/link',
+        'http://localhost:3001/api/link',
       ),
       fetch(
-        'http://localhost:3000/api/style',
+        'http://localhost:3001/api/style',
       ),
     ]);
     if (!cateoriesResponse.ok) {

@@ -48,6 +48,7 @@
         
         // on classe les items par position
         copyMemo.contents.sort((a, b) => a.position - b.position);
+        memo.contents.sort((a, b) => a.position - b.position);
         const detail = copyMemo.contents.find((item) => item.type.name === 'detail');
         const summary = copyMemo.contents.find((item) => item.type.name === 'summary');
         if (detail && summary) {
@@ -75,10 +76,8 @@
   
   
   function parseText(item) {
-    // Apply markdown rendering to the entire content
     const markdownRenderedContent = md.render(item.content);
     
-    // Extract headers and add anchors
     const tocRegex = /<(h[1-6])>(.*?)<\/\1>/g;
     const modifiedLines = [];
     
@@ -162,6 +161,8 @@
     height: 100vh;
     min-width: 100vw;
   }
+
+
   
   .content {
     border-left : 1px solid #818181;
@@ -171,8 +172,9 @@
     padding: 20px;
     min-width: 70%;
     widows: 15%;
-    height: 1000vh;
+    height: fit-content;
     background-color: rgb(29, 32, 32);
+
   }
   
   h2 {

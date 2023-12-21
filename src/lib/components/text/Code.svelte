@@ -24,7 +24,6 @@
     hljs.highlightBlock(hljsElement);
   };
 
-  document.addEventListener("paste", handlePaste);
 
   function handlePaste(e) {
     e.preventDefault();
@@ -58,6 +57,9 @@
   }
 
 </script>
+
+<svelte:document on:paste={handlePaste} />
+
 
 {#if value}
   <div class="container">

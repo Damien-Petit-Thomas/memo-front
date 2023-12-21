@@ -7,7 +7,7 @@ export const tags = (() => {
 
   const get = async () => {
     try {
-      const response = await fetch('http://localhost:3000/api/tag');
+      const response = await fetch('http://localhost:3001/api/tag');
       if (response.ok) {
         const data = await response.json();
         update(() => data);
@@ -22,7 +22,7 @@ export const tags = (() => {
   const add = async (description) => {
     try {
       // Envoyer la description à la BDD pour créer un nouveau tag
-      const response = await fetch('http://localhost:3000/api/tag', {
+      const response = await fetch('http://localhost:3001/api/tag', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -46,7 +46,7 @@ export const tags = (() => {
   const remove = async (tag) => {
     try {
       // Envoyer la demande de suppression à la BDD
-      const response = await fetch(`http://localhost:3000/api/tag/${tag.id}`, {
+      const response = await fetch(`http://localhost:3001/api/tag/${tag.id}`, {
         method: 'DELETE',
       });
 
@@ -67,7 +67,7 @@ export const tags = (() => {
     const data = { done, description };
 
     try {
-      const response = await fetch(`http://localhost:3000/api/tag/${tag.id}`, {
+      const response = await fetch(`http://localhost:3001/api/tag/${tag.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

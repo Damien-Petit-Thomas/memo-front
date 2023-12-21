@@ -5,7 +5,7 @@ export const todos = (() => {
   // si le store est vide, on va chercher les données dans la BDD
   const get = async () => {
     try {
-      const response = await fetch('http://localhost:3000/api/todo');
+      const response = await fetch('http://localhost:3001/api/todo');
       if (response.ok) {
         const data = await response.json();
         update(() => data);
@@ -19,7 +19,7 @@ export const todos = (() => {
 
   const add = async (description) => {
     try {
-      const response = await fetch('http://localhost:3000/api/todo', {
+      const response = await fetch('http://localhost:3001/api/todo', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -40,7 +40,7 @@ export const todos = (() => {
 
   const remove = async (todo) => {
     try {
-      const response = await fetch(`http://localhost:3000/api/todo/${todo.id}`, {
+      const response = await fetch(`http://localhost:3001/api/todo/${todo.id}`, {
         method: 'DELETE',
       });
 
@@ -60,7 +60,7 @@ export const todos = (() => {
     const data = { done, description };
 
     try {
-      const response = await fetch(`http://localhost:3000/api/todo/${todo.id}`, {
+      const response = await fetch(`http://localhost:3001/api/todo/${todo.id}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',

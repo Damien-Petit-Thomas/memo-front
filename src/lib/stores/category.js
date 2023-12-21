@@ -7,7 +7,7 @@ export const categories = (() => {
 
   const get = async () => {
     try {
-      const response = await fetch('http://localhost:3000/api/category');
+      const response = await fetch('http://localhost:3001/api/category');
       if (response.ok) {
         const data = await response.json();
         update(() => data);
@@ -22,7 +22,7 @@ export const categories = (() => {
   const add = async (description) => {
     try {
       // Envoyer la description à la BDD pour créer un nouveau category
-      const response = await fetch('http://localhost:3000/api/category', {
+      const response = await fetch('http://localhost:3001/api/category', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -46,7 +46,7 @@ export const categories = (() => {
   const remove = async (category) => {
     try {
       // Envoyer la demande de suppression à la BDD
-      const response = await fetch(`http://localhost:3000/api/category/${category.id}`, {
+      const response = await fetch(`http://localhost:3001/api/category/${category.id}`, {
         method: 'DELETE',
       });
 
@@ -66,7 +66,7 @@ export const categories = (() => {
     const data = { description };
 
     try {
-      const response = await fetch(`http://localhost:3000/api/category/${category.id}`, {
+      const response = await fetch(`http://localhost:3001/api/category/${category.id}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
