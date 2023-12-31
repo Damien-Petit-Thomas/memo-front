@@ -1,0 +1,12 @@
+# docker-compose.yml
+
+version: "3"
+
+services:
+  app-node:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: deploy-node
+    ports:
+      - "3555:3000"

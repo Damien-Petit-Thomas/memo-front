@@ -1,11 +1,10 @@
-import { vitePreprocess } from "@sveltejs/kit/vite";
-import adapter from "@sveltejs/adapter-static";
+import adapter from '@sveltejs/adapter-node';
 
 export default {
   kit: {
-    adapter: adapter({ strict: false }),
-    // other config options
+    adapter: adapter({
+      out: 'build',
+      precompress: false,
+    }),
   },
-
-  preprocess: [vitePreprocess({})],
 };
