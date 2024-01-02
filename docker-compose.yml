@@ -7,6 +7,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      target: deploy-node
+      target: run
     ports:
       - "3555:3000"

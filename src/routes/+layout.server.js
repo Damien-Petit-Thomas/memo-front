@@ -71,6 +71,7 @@ export const load = async ({ fetch }) => {
       tags, categories, todos, memos, fullmemos, lexicon, links, styles,
     };
   } catch (error) {
+    console.log(error)
     return { error: 'Unable to fetch currencies' };
   }
 };

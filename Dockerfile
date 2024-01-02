@@ -20,8 +20,10 @@ FROM node:lts-slim as run
 WORKDIR /app
 
 RUN rm -rf ./*
-COPY --from=build /app/package.json .
-COPY --from=build /app/build .
+COPY --from=build /app/build ./build
+COPY --from=build /app/package.json ./package.json
 RUN npm install --production
 
-CMD ["node", "index.js"]
+EXPOSE 8088
+
+CMD ["npm", "run", "start"]
