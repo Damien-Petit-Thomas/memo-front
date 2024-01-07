@@ -7,7 +7,7 @@ export const memos = (() => {
 
   const get = async () => {
     try {
-      const response = await fetch('http://127.0.0.1:3001/api/memo');
+      const response = await fetch('http://localhost/api/memo');
       if (response.ok) {
         const data = await response.json();
         update(() => data);
@@ -22,7 +22,7 @@ export const memos = (() => {
     console.log('description', description);
     try {
       // Envoyer la description à la BDD pour créer un nouveau memo
-      const response = await fetch('http://127.0.0.1:3001/api/memo', {
+      const response = await fetch('http://localhost/api/memo', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -52,7 +52,7 @@ export const memos = (() => {
   const remove = async (memo) => {
     try {
       // Envoyer la demande de suppression à la BDD
-      const response = await fetch(`http://localhost:3001/api/memo/${memo.id}`, {
+      const response = await fetch(`http://localhost/api/memo/${memo.id}`, {
         method: 'DELETE',
       });
 
@@ -69,7 +69,7 @@ export const memos = (() => {
 
   const mark = async (memo, id) => {
     try {
-      const response = await fetch(`http://localhost:3001/api/memo/${id}`, {
+      const response = await fetch(`http://localhost/api/memo/${id}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',

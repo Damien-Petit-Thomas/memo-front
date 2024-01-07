@@ -33,7 +33,7 @@
           <div class="word-word"><a href="{link.url}">{link.name}</a></div>
           <div class="word-word"><a href="/category{link.category_slug}">{link.category_name}</a></div>
           <div class="word-word">{link.group}</div>
-          <div class="word-word"><a href="/memo/{link.memo_slug}">{link.memo_title}</a></div>
+          <div class="word-word"><a href="/{link.memo_slug}">{link.memo_title}</a></div>
 
 
         </div>

@@ -5,7 +5,7 @@ export const fullmemos = (() => {
 
   const get = async () => {
     try {
-      const response = await fetch('http://localhost:3001/api/memo/all');
+      const response = await fetch('http://localhost/api/memo/all');
       if (response.ok) {
         const data = await response.json();
         update(() => data);
