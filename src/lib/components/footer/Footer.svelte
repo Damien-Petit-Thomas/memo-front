@@ -1,9 +1,8 @@
 <footer>
   <nav>
-    <a href="/test">test</a>
-<a href="/new-memo">new</a>
-<a href="/admin">home-admin</a>
-<a href="/lexicon">lexique</a>
+
+    <a href="/lexicon">lexique</a>
+<a href="/admin">backOffice</a>
 <a href="/links">liens utiles</a>
   </nav>
 </footer>

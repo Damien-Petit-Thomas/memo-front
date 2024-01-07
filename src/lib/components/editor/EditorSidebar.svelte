@@ -28,6 +28,7 @@
     console.log("handleStyleCick(e)", currentItem)
 
      dispatch('selectItem', [currentItem] );
+     showStylesSelection = false;
   }
 
 
@@ -50,7 +51,7 @@
   <div 
   class="card">
     {#if availableStyle.length > 0}
-      <h3>choix du style</h3>
+      <h3>choix du style </h3>
       {#each availableStyle as style}
         <div class="style-item">
           <button

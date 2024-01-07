@@ -22,7 +22,10 @@ WORKDIR /app
 RUN rm -rf ./*
 COPY --from=build /app/build ./build
 COPY --from=build /app/package.json ./package.json
-RUN npm install --production
+COPY --from=build /app/my-server.js ./my-server.js
+
+ENV NODE_ENV=production
+RUN npm install --omit=dev
 
 EXPOSE 8088
 

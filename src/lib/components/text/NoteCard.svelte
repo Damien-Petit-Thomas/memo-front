@@ -6,7 +6,7 @@
   let original = value;
   export let css = null;
   const dispatch = createEventDispatcher();
-  
+  import warning from '$lib/assets/warning.svg'
   
   
   function handleKeyDown(e) {
@@ -45,7 +45,7 @@
   class:isSave={isSave}
   style={css} 
   >
-  <img class="img" title="warning" alt='exclamation point' src="/src/lib/assets/warning.svg" />
+  <img class="img" title="warning" alt='exclamation point' src={warning} />
   <div  aria-label='note card'
   class="note-text"
   contenteditable={isEditable}

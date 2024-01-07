@@ -76,17 +76,19 @@ form{
   gap: 1rem;
 }
 
-  .remove {
-    background-image: url($lib/assets/remove.svg);
-    background-repeat: no-repeat;
-    width: 20px;
-    height: 20px;
+  input[type="text"] {
+    padding: 0.5rem;
+    margin-top: 1rem;
+    border: 1px solid #098f09;
+    color: #4CAF50;
+    width: 80%;
   }
 
 
   .remove {
     background-image: url($lib/assets/remove.svg);
     background-repeat: no-repeat;
+    background-color: transparent;
     width: 20px;
     height: 20px;
   }
