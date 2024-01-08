@@ -3,10 +3,21 @@
 
 code source de mon application de prise de note
 
+il en existe plein d'autres... mais ça me tentais de me lancer à mon tour !
+
+fonctionalités de base :
+ > prise en charge syntaxe markdown
+ > création automatisée d'une barre laterale de navigation
+> creation de catégorie 
+> creation de tag
 
 
-
-
+ fonctionalités en plus! :
+ > tout lien  internet dans une note est automatiquement détecté et apparaitront de maniere ordonné dans l'onglet lien utiles
+ > possibilité d'ajouts de mots dans un lexique   chaque occurence d'un mot appartenat au lexique est automatiquement détectée et un affichage spécifique est appliqué
+ > presence d'une mini todo liste
+ > aide à mise en page avec des composants automatiquement crées et déplaçable / suprimable d'un click
+ 
 
 ## Dockerfile 
 
@@ -63,21 +74,12 @@ CMD ["npm", "run", "start"]
 pour fonctionner l'application necessite
 
  - un container sveltkit (architecture backend hybride puisque j'utilise également un container node pour le back)
- - un container de BDD
- - un container backend
- - un container apache : reverse proxy offloading
+ - un container de BDD : postgresql
+ - un container backend : Node.js
+ - un container server : apche : reverse proxy offloading
 
 
-
-
-
-
-
-
-
-
-
-
+pour utiliser l'application : aller au répo [memo_db_compose](https://github.com/Damien-Petit-Thomas/memo_db_compose) qui contient les dockerfiles pour le container de la bdd , du serveur apache et donc le fichier docker-compose
 
 
 
