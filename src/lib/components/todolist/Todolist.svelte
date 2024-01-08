@@ -58,6 +58,7 @@
 	button {
 		background-image: url($lib/assets/remove.svg);
 		background-repeat: no-repeat;
+		background-color: transparent;
 		width: 20px;
 		height: 20px;
 	}
