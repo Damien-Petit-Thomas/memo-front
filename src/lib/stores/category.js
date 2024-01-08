@@ -2,12 +2,10 @@ import { writable } from 'svelte/store';
 
 export const categories = (() => {
   const { subscribe, update, set } = writable([]);
-
-  // Méthode pour ajouter une nouvelle tâche
-
+  const url = import.meta.env.VITE_URL;
   const get = async () => {
     try {
-      const response = await fetch('http://localhost/api/category');
+      const response = await fetch(`http://${url}/api/category`);
       if (response.ok) {
         const data = await response.json();
         update(() => data);
@@ -22,7 +20,7 @@ export const categories = (() => {
   const add = async (description) => {
     try {
       // Envoyer la description à la BDD pour créer un nouveau category
-      const response = await fetch('http://localhost/api/category', {
+      const response = await fetch(`http://${url}/api/category`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -45,8 +43,8 @@ export const categories = (() => {
   // Méthode pour supprimer une tâche
   const remove = async (category) => {
     try {
-      // Envoyer la demande de suppression à la BDD
-      const response = await fetch(`http://localhost/api/category/${category.id}`, {
+    // Envoyer la demande de suppression à la BDD
+      const response = await fetch(`http://${url}/api/category/${category.id}`, {
         method: 'DELETE',
       });
 
@@ -66,7 +64,7 @@ export const categories = (() => {
     const data = { description };
 
     try {
-      const response = await fetch(`http://localhost/api/category/${category.id}`, {
+      const response = await fetch(`http://${url}/api/category/${category.id}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',

@@ -4,10 +4,11 @@ export const lexicon = (() => {
   const { subscribe, update, set } = writable([]);
 
   // Méthode pour ajouter une nouvelle tâche
+  const url = import.meta.env.VITE_URL;
 
   const get = async () => {
     try {
-      const response = await fetch('http://localhost/api/lexicon');
+      const response = await fetch(`http://${url}/api/lexicon`);
       if (response.ok) {
         const data = await response.json();
         update(() => data);
@@ -22,7 +23,7 @@ export const lexicon = (() => {
   const add = async (description) => {
     try {
       // Envoyer la description à la BDD pour créer un nouveau lexicon
-      const response = await fetch('http://localhost/api/lexicon', {
+      const response = await fetch(`http://${url}/api/lexicon`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -46,7 +47,7 @@ export const lexicon = (() => {
   const remove = async (lexical) => {
     try {
       // Envoyer la demande de suppression à la BDD
-      const response = await fetch(`http://localhost/api/lexicon/${lexical.id}`, {
+      const response = await fetch(`http://${url}/api/lexicon/${lexical.id}`, {
         method: 'DELETE',
       });
 
@@ -63,7 +64,7 @@ export const lexicon = (() => {
 
   const mark = async (lexical) => {
     try {
-      const response = await fetch(`http://localhost/api/lexicon/${lexical.id}`, {
+      const response = await fetch(`http://${url}/api/lexicon/${lexical.id}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',

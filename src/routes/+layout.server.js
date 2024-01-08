@@ -1,4 +1,5 @@
 export const load = async ({ fetch }) => {
+  const url = import.meta.env.VITE_URL_API;
   try {
     const [
       cateoriesResponse,
@@ -11,28 +12,29 @@ export const load = async ({ fetch }) => {
       styleResponse,
     ] = await Promise.all([
       fetch(
-        'http://memo_back:3001/api/category',
+        `http://${url}/api/category`,
       ),
       fetch(
-        'http://memo_back:3001/api/todo',
+        `http://${url}/api/todo`,
       ),
       fetch(
-        'http://memo_back:3001/api/tag',
+        `http://${url}/api/tag`,
       ),
       fetch(
-        'http://memo_back:3001/api/memo',
+        `http://${url}/api/memo`,
       ),
       fetch(
-        'http://memo_back:3001/api/memo/all',
+        `http://${url}/api/memo/all`,
+      ),
+
+      fetch(
+        `http://${url}/api/lexicon`,
       ),
       fetch(
-        'http://memo_back:3001/api/lexicon',
+        `http://${url}/api/link`,
       ),
       fetch(
-        'http://memo_back:3001/api/link',
-      ),
-      fetch(
-        'http://memo_back:3001/api/style',
+        `http://${url}/api/style`,
       ),
     ]);
     if (!cateoriesResponse.ok) {
@@ -71,7 +73,7 @@ export const load = async ({ fetch }) => {
       tags, categories, todos, memos, fullmemos, lexicon, links, styles,
     };
   } catch (error) {
-    console.log(error)
+    console.log(error);
     return { error: 'Unable to fetch currencies' };
   }
 };

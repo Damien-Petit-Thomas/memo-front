@@ -1,6 +1,7 @@
 export const memoData = async (id) => {
   try {
-    const response = await fetch('http://localhost/api/memo/56');
+    const url = import.meta.env.VITE_URL;
+    const response = await fetch(`http://${url}/api/memo/${id}`);
     const data = await response.json();
     return data;
   } catch (error) {

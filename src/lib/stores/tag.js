@@ -2,12 +2,14 @@ import { writable } from 'svelte/store';
 
 export const tags = (() => {
   const { subscribe, set, update } = writable([]);
+  const url = import.meta.env.VITE_URL;
+
 
   // Méthode pour ajouter une nouvelle tâche
 
   const get = async () => {
     try {
-      const response = await fetch('http://localhost/api/tag');
+      const response = await fetch(`http://${url}/api/tag`);
       if (response.ok) {
         const data = await response.json();
         update(() => data);
@@ -22,7 +24,7 @@ export const tags = (() => {
   const add = async (description) => {
     try {
       // Envoyer la description à la BDD pour créer un nouveau tag
-      const response = await fetch('http://memo_back:3001/api/tag', {
+      const response = await fetch(`http://${url}/api/tag`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -46,7 +48,7 @@ export const tags = (() => {
   const remove = async (tag) => {
     try {
       // Envoyer la demande de suppression à la BDD
-      const response = await fetch(`http://memo_back:3001/api/tag/${tag.id}`, {
+      const response = await fetch(`http://${url}/api/tag/${tag.id}`, {
         method: 'DELETE',
       });
 
@@ -67,7 +69,7 @@ export const tags = (() => {
     const data = { done, description };
 
     try {
-      const response = await fetch(`http://memo_back:3001/api/tag/${tag.id}`, {
+      const response = await fetch(`http://${url}/api/tag/${tag.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

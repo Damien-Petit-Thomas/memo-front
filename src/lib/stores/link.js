@@ -4,10 +4,11 @@ export const link = (() => {
   const { subscribe, update, set } = writable([]);
   const linkList = [];
   // Méthode pour ajouter une nouvelle tâche
+  const url = import.meta.env.VITE_URL;
 
   const get = async () => {
     try {
-      const response = await fetch('http://localhost/api/link');
+      const response = await fetch(`http://${url}/api/link`);
       if (response.ok) {
         const data = await response.json();
         linkList.push(...data);
@@ -23,7 +24,7 @@ export const link = (() => {
   const add = async (description) => {
     try {
       // Envoyer la description à la BDD pour créer un nouveau link
-      const response = await fetch('http://localhost/api/link', {
+      const response = await fetch(`http://${url}/api/link`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -47,7 +48,7 @@ export const link = (() => {
   const remove = async (lexical) => {
     try {
       // Envoyer la demande de suppression à la BDD
-      const response = await fetch(`http://localhost/api/link/${lexical.id}`, {
+      const response = await fetch(`http://${url}/api/link/${lexical.id}`, {
         method: 'DELETE',
       });
 
@@ -64,7 +65,7 @@ export const link = (() => {
 
   const mark = async (lexical) => {
     try {
-      const response = await fetch(`http://localhost/api/link/${lexical.id}`, {
+      const response = await fetch(`http://${url}/api/link/${lexical.id}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',

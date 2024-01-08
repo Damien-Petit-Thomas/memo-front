@@ -4,10 +4,11 @@ export const memos = (() => {
   const { subscribe, set, update } = writable([]);
 
   // Méthode pour ajouter une nouvelle tâche
+  const url = import.meta.env.VITE_URL;
 
   const get = async () => {
     try {
-      const response = await fetch('http://localhost/api/memo');
+      const response = await fetch(`http://${url}/api/memo`);
       if (response.ok) {
         const data = await response.json();
         update(() => data);
@@ -19,10 +20,9 @@ export const memos = (() => {
     }
   };
   const add = async (description) => {
-    console.log('description', description);
     try {
       // Envoyer la description à la BDD pour créer un nouveau memo
-      const response = await fetch('http://localhost/api/memo', {
+      const response = await fetch(`http://${url}/api/memo`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -52,7 +52,7 @@ export const memos = (() => {
   const remove = async (memo) => {
     try {
       // Envoyer la demande de suppression à la BDD
-      const response = await fetch(`http://localhost/api/memo/${memo.id}`, {
+      const response = await fetch(`http://${url}/api/memo/${memo.id}`, {
         method: 'DELETE',
       });
 
@@ -69,7 +69,7 @@ export const memos = (() => {
 
   const mark = async (memo, id) => {
     try {
-      const response = await fetch(`http://localhost/api/memo/${id}`, {
+      const response = await fetch(`http://${url}/api/memo/${id}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
