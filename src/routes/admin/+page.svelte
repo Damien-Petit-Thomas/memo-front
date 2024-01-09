@@ -57,10 +57,10 @@
 		
 		<Categorielist
 		store={categories}
-		title="creer une catégorie"
+		title="créer une catégorie"
 		/>
 		<Categorielist 
-		title="creer un tag"
+		title="créer un tag"
 		store={tags} />
 	</div>
 	
@@ -69,18 +69,16 @@
 
 
 <button class='btn btn-create-memo'>
-	<a href="/admin/create-memo" >creer un memo</a>
+	<a href="/admin/create-memo" >créer un memo</a>
 </button>
 <style>
 	
 	.btn {
+		border-radius: 0;
 		align-self: center;
 		background: none;
 		width: 15rem;
-		border: 2px solid #4CAF50;
-		border-radius: 0;
-		color: #4CAF50;
-		text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+		border: 1px solid rgb(151, 135, 135);
 		padding: 1rem;
 		text-align: center;
 		text-decoration: none;
@@ -99,24 +97,22 @@
 
 	a:hover {
 		text-decoration: none;
-		color: #4CAF50;
 	}
 
 
 	.container-form {
 		padding: 1rem;
-
 		display: flex;
 		justify-content: space-between;
 		align-items: flex-start;
 	}
 	
 	.container_todo {
+		border: 1px solid rgb(151, 135, 135);
+
 		padding: 1rem;
 		width : 50%;
 		gap:2rem;
-		border: 1px solid #4CAF50;
-		box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
 		display: flex;
 		flex-direction: column;
 	}
@@ -124,12 +120,11 @@
 	.container_todo input[type="text"] {
 		padding: 0.5rem;
 		margin-top: 1rem;
-		border: 1px solid #098f09;
-		color: #4CAF50;
-		width: 80%;
+		width: 100%;
 	}
 	
 	.wrapper {
+		
 		display: flex;
 		flex-direction: row;
 		
@@ -137,8 +132,8 @@
 	}
 	
 	.container_main {
-		color: #4CAF50;
-		text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+
+		
 		gap: 3rem;
 		justify-content: space-between;
 		display: flex;

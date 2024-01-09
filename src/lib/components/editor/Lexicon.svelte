@@ -18,17 +18,18 @@
 
 </script>
 
-
-<div class="container">
+<details>
+  <summary>  ajouter un mot au lexique   </summary>
+  <div class="container">
   <form action="">
-    <label for="lexicon">ajouter un mot au lexique</label>
     <input type="text" id="lexicon" placeholder="ajouter un mot" bind:value={word} >
     <label for="defintition">entrer une définitioin</label>
     <input type="text" id="definition" placeholder="ajouter une définition" bind:value={definition} >
     <input type="hidden" name="id" value="{categoryId}">
     <button type="submit"  on:click|preventDefault={handleSubmit}>Valider</button>
   </form>
-  </div>
+</div>
+</details>
 
 
 <style>

@@ -1,11 +1,15 @@
 <!-- Sidebar.svelte -->
 
 <script>
+  import { createEventDispatcher } from 'svelte';
   import { fade } from 'svelte/transition';
   import { categories } from '$lib/stores/category.js';
   import { memos} from '$lib/stores/memo.js';
   import { onMount } from 'svelte';
   let categoryStates = {};
+
+  const dispatch = new createEventDispatcher();
+
 
 
 
@@ -22,20 +26,21 @@
       categoryStates[category.id] = false;
     });
   });
-
-
-
-  function toggleMemo(categoryId) {
-    categoryStates[categoryId] = !categoryStates[categoryId];
+  
+  
+  
+  function toggleMemo(category) {
+    categoryStates[category.id] = !categoryStates[category.id];
+    dispatch('showMemos', category  );
   }
 </script>
 <section class="sidebar">
-  {#each $categories as category (category.id)}
+  {#each $categories as category (category)}
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <!-- svelte-ignore a11y-no-static-element-interactions -->
     <div 
     class="category" 
-    on:click={() => toggleMemo(category.id)} 
+    on:click={() => toggleMemo(category)} 
     style="border-left: {category.color} solid 6px;"
     >
       <h2>
@@ -83,6 +88,7 @@
 
 
   .sidebar {
+    border-right: 1px solid #565656;
     min-width: 15%;
     padding-top: 20px;
     overflow-x: hidden;

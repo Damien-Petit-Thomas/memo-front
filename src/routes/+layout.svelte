@@ -1,8 +1,24 @@
 <script>
+  import { onNavigate } from '$app/navigation';
+
   import "../app.pcss";
   import Header from "$lib/components/header/Header.svelte";
   import Footer from "$lib/components/footer/Footer.svelte";
 
+onNavigate((navigation) => {
+  console.log("onNavigate");
+	if (!document.startViewTransition) {
+   console.log("no transition")
+    return;
+  }
+
+	return new Promise((resolve) => {
+		document.startViewTransition(async () => {
+			resolve();
+			await navigation.complete;
+		});
+	});
+});
  
   import "../styles/global.css";
 </script>
@@ -18,5 +34,5 @@
 
 
 <style>
-
+  
 </style>

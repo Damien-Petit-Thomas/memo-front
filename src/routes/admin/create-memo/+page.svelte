@@ -109,7 +109,6 @@
       };
     });
     
-    console.log( "itemToSave", itemsToSave)
     if (itemsToSave.length === 0) return alert('add some content')
     
     if (memoId) {
@@ -182,11 +181,6 @@
   .container {
     display: grid;
     grid-template-columns: 1fr 4fr 1fr;
-    
-    
-    
-    /* display: flex;
-    flex-direction: row; */
     height: 100vh;
     max-width: 100vw;
   }

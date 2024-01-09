@@ -14,39 +14,42 @@
     import { tags } from '$lib/stores/tag.js';
     import { onMount } from 'svelte';
     import { createEventDispatcher } from 'svelte';
-  
+    let selected = false;
+    let selectedCategoryId;
     let tagsIds = [];
+    let nbTags;
+    $tags.length < 10 ? nbTags = $tags.length : nbTags = 10;
     const dispatch = createEventDispatcher();
   
-    // Fetch categories and tags if not already loaded
-    onMount(() => {
-      if ($categories.length === 0) {
-        categories.get();
-      }
-      if ($tags.length === 0) {
-        tags.get();
-      }
-    });
-  
-    let selectedCategoryId = null;
-  
-    if (selectedCategoryId !== null) {
+    onMount(async () => {
+  if ($categories.length === 0) {
+    console.log("categories onmount");
+
+    await categories.get();
+
+    if ($categories.length > 0) {
+        selectedCategoryId = $categories[0].id;
       dispatch('selectedCategory', selectedCategoryId);
     }
+  }  if ($tags.length === 0) {
+    tags.get();
+  } else {
+        selectedCategoryId = $categories[0].id;
+    dispatch('selectedCategory', selectedCategoryId);
+  }
+});
+
   
-    function selectCategory(e, id) {
-      const categories = document.querySelectorAll(".category-button");
-      categories.forEach(category => {
-        category.classList.remove("selected");
-      });
-      e.target.classList.add("selected");
-      selectedCategoryId = id;
-      dispatch('selectedCategory', id);
+  function  handleCategoryChange(e) {
+    selectedCategoryId = e.target.value;
+      dispatch('selectedCategory', e.target.value);
     }
+
+
   
-    function toggleTags(e, id) {
-      e.target.classList.toggle("selected");
-  
+    function handleTagChange(e) {
+      console.log("toggle tags", e.target)
+      const id = parseInt(e.target.value);
       $tags = $tags.map(tag => {
         if (tag.id === id) {
           return { ...tag, selected: !tag.selected };
@@ -60,35 +63,89 @@
   </script>
   
   <section>
+    
+  
     <div class="category-section">
-      <h2>Choisir une catégorie</h2>
-      <div class="container category">
-        {#each $categories as category (category.id)}
-          <button
-            class:selected={selectedCategoryId === category.id}
-            on:click={(e) => selectCategory(e, category.id)}
-            style="background-color: {category.color};">{category.name}</button>
-        {/each}
-      </div>
+<details>
+  <summary>choisir une catégorie</summary>
+  <select name="categories" 
+  id="categories"  
+  on:change={handleCategoryChange} 
+  > 
+
+    {#each $categories as item (item.id)}
+    <option 
+      value={item.id} 
+      style={`background-color: ${item.color};`}
+    >
+      {item.name}
+    </option>
+    {/each}
+  </select>
+</details>
     </div>
+
     <div class="tag-section">
-      <h2>Choisir les tags</h2>
-      <div class="container tag">
-        {#each $tags as tag (tag.id)}
-          <button
-            class:selected={tag.selected}
-            on:click={(e) => toggleTags(e, tag.id)}
-            style="background-color: {tag.color};">{tag.name}</button>
-        {/each}
-      </div>
+<details>
+  <summary>ajouter des tags</summary>
+
+  <select 
+    multiple 
+    name="tags" 
+    id="tags" 
+    size={nbTags}  
+    on:change={handleTagChange}
+  >
+  {#each $tags as item (item.id)}
+    <option 
+        class:selected
+        value={item.id}
+        style={`background-color: ${item.color};`}
+        >
+          {item.name}
+    </option>
+      {/each}
+    </select>
+</details>
     </div>
+
+
+
+   
+
+
+
   </section>
+
+
+
+
+
+
   
   <style>
     /* Your existing styles remain unchanged */
   
+
+
+    select{
+      width: 90%;
+      height: 100%;
+      border: none;
+      border-radius: 5px;
+      padding: 2px;
+      margin: 2px;
+      font-weight: bold;
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: inline;
+    }
+
+  
     .selected {
-      border: 1px solid white;
+      text-decoration: underline;
+      font-size: 3rem;
+      border: 10px solid rgb(5, 190, 51);
     }
   </style>
   

@@ -40,7 +40,7 @@
         text-align: center;
         margin-right: 1.5rem;
         padding: 0;
-        position: sticky;
+        position:sticky;
     }
 
         h1 > a:hover {

@@ -19,8 +19,8 @@ on:click|preventDefault={() => dispatch("click", item.id)}
     button{
         border: none;
         border-radius: 5px;
-        padding: 5px;
-        margin: 5px;
+        padding:2px;
+        margin: 2px;
         color: rgb(151, 135, 135);
         font-weight: bold;
         font-size: 1.2rem;
