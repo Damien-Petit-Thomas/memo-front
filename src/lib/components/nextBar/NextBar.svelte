@@ -10,7 +10,7 @@
       <Card
         --color={$fullmemos[currentMemoIdx].category.color}
         --width="20%"
-        --pading=".8rem"
+        --padding=".8rem"
 
         memo={$fullmemos[currentMemoIdx]}
       >
@@ -20,7 +20,8 @@
         memo={$fullmemos[currentMemoIdx + 1]}
         --color={$fullmemos[currentMemoIdx + 1].category.color}
         --width="20%"
-        --pading="0"
+        --padding=".8rem"
+        
       >
         <div>suivant</div>
       </Card>
@@ -29,23 +30,28 @@
         memo={$fullmemos[currentMemoIdx - 1]}
         --width="20%"
         --color={$fullmemos[currentMemoIdx - 1].category.color}
+        --padding=".8rem"
+
       >
         <div>précedent</div>
       </Card>
       <div>suivant</div>
-      --width="20%"
+        --padding=".8rem"
+        --width="20%" 
       <Card memo={$fullmemos[0]} --color={$fullmemos[0].category.color}></Card>
     {:else}
       <Card
         memo={$fullmemos[currentMemoIdx - 1]}
-        --width="20%"
+        --padding=".8rem"
+        --width="20%" 
         --color={$fullmemos[currentMemoIdx - 1].category.color}
       >
         <div>précedent</div>
       </Card>
       <Card
         memo={$fullmemos[currentMemoIdx + 1]}
-        --width="20%"
+        --padding=".8rem"
+        --width="20%" 
         --color={$fullmemos[currentMemoIdx + 1].category.color}
       >
         <div>suivant</div>
