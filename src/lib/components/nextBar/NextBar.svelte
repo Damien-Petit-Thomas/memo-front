@@ -1,6 +1,6 @@
 <script>
   import { fullmemos } from "$lib/stores/fullmemos.js";
-  import Card from "../card/Card.svelte";
+  import Card from "$lib/components/card/Card.svelte";
   export let currentMemoIdx;
 </script>
 
