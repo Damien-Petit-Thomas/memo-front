@@ -4,6 +4,7 @@
   import { send, receive } from '$lib/utils/transition.js';
   export let title;
   export let store;
+	import { flip } from 'svelte/animate';
  
   
   let name = '';
@@ -52,6 +53,8 @@ function handleRemove(item) {
         class="item"
         in:receive={{ key: item.id }}
         out:send={{ key: item.id }}
+   animate:flip={{ duration: 800 }}
+
       >
         <div 
         class="categoty-item"

@@ -75,7 +75,7 @@
     float: right;
     background-color: transparent;
     border: none;
-    font-size: 2rem;
+    font-size: 1.2rem;
     cursor: pointer;
     transition: transform 0.4s ease-in-out;
     margin: 0;

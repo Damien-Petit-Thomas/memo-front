@@ -25,12 +25,13 @@
 
 	});
 	let selectedCategory;
-	$: console.log(selectedCategory)
 	function showMemos(e) {
     selectedCategory = e.detail;
-		console.log("show memos", e.detail)
 	}
 
+
+
+	
 
 				</script>
 

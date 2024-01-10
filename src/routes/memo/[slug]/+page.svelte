@@ -171,6 +171,7 @@
     flex-direction: column;
     padding: 20px;
     min-width: 70%;
+    min-height: 95vh;
     widows: 15%;
     height: fit-content;
     background-color: rgb(29, 32, 32);
