@@ -1,12 +1,14 @@
 <script>
-export let memo;
+export let memo = null;
 </script>
 
 
 
 <div class="card">
   <slot/>
+  {#if memo !== null}
   <a href="/memo/{memo.slug}">{memo.title}</a>
+  {/if}
 </div>
 
 
@@ -14,6 +16,7 @@ export let memo;
 
 <style>
   .card {
+    text-align: center;
     border: 1px solid darkgrey;
     border-radius: 20px;
     width: var(--width, 30%);

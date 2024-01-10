@@ -21,7 +21,6 @@
         </h1>
     </div>
     <nav  class="header-right">
-        pgprogj
         <a href="/">formation</a>
         <a href="/">blog</a>
         <a href="/">Tags</a>
