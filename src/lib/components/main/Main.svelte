@@ -1,4 +1,5 @@
 <script>
+	import {onMount} from 'svelte';
   import { memos } from "$lib/stores/memo.js";
   import { fullmemos } from "$lib/stores/fullmemos.js";
   import { categories } from "$lib/stores/category.js";
@@ -6,9 +7,11 @@
   import Card from "$lib/components/card/Card.svelte";
   export let selectedCategory; 
   let currentMemoIdx = 0;
+  let dataAvalaible = false
+
 
   $: mem = $memos.filter((memo) => memo.category_id === selectedCategory?.id)
-  $: if ($fullmemos.filter((memo) => memo.category.id === selectedCategory?.id).length !== 0){
+  $: if ($fullmemos !== null && $fullmemos.filter((memo) => memo.category.id === selectedCategory?.id).length !== 0){
     currentMemoIdx = $fullmemos.findIndex((memo) => memo.category.id === selectedCategory?.id)
   }
   
@@ -23,7 +26,10 @@
     <div class="container_main-header">
       <h2>Accueil</h2>
     </div>
-    {#if $memos.length === 0}
+    {#if $fullmemos === undefined}
+      <p>Chargement des données</p>
+    {/if}
+      {#if $memos.length === 0}
       <p>Il n'y a pas encore de mémo</p>
     {/if}
     <div class="container_memo-card">
@@ -47,8 +53,8 @@
     <div class="container_memo-card">
       {#each mem as memo}
         <Card {memo} --color={selectedCategory.color} />
-      {/each}
-    </div>
+      {/each} 
+    </div> 
   {/if}
 
   <NextBar {currentMemoIdx}/>

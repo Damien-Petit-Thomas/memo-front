@@ -6,6 +6,24 @@
 
 <div class="contaner_nextbar">
   {#if $fullmemos.length > 0}
+  {#if $fullmemos.length === 1}
+    <Card
+      memo={$fullmemos[0]}
+      --color={$fullmemos[0].category.color}
+      --width="20%"
+      --padding=".8rem"
+    >
+      <div>précedent</div>
+    </Card>
+    <Card
+      memo={$fullmemos[0]}
+      --color={$fullmemos[0].category.color}
+      --width="20%"
+      --padding=".8rem"
+    >
+      <div>suivant</div>
+    </Card>
+  {:else}
     {#if currentMemoIdx === 0}
       <Card
         --color={$fullmemos[currentMemoIdx].category.color}
@@ -57,6 +75,7 @@
         <div>suivant</div>
       </Card>
     {/if}
+  {/if}
   {/if}
 </div>
 
