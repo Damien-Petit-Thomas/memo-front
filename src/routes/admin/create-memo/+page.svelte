@@ -69,7 +69,6 @@
           name : e.detail[i].name
         }
       }
-      console.log("nouvel item ",newItem)
       memoItems.update(items => [...items, newItem]);
     }
   }

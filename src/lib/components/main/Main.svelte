@@ -1,14 +1,11 @@
 <script>
-  import { onMount } from "svelte";
-  import { memos } from "$lib/stores/memo.js";
   import { fullmemos } from "$lib/stores/fullmemos.js";
-  import { categories } from "$lib/stores/category.js";
   import NextBar from "../nextBar/NextBar.svelte";
   import Card from "$lib/components/card/Card.svelte";
   export let selectedCategory;
   let currentMemoIdx = 0;
 
-  $: mem = $memos.filter((memo) => memo.category_id === selectedCategory?.id);
+  $: mem = $fullmemos.filter((memo) => memo.category.id === selectedCategory?.id);
   $: if (
     $fullmemos !== null &&
     $fullmemos.filter((memo) => memo.category.id === selectedCategory?.id)

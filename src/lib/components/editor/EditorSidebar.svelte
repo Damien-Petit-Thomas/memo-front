@@ -1,14 +1,16 @@
 <script>
-  import { createEventDispatcher } from 'svelte';
+  import { createEventDispatcher } from "svelte";
 
   const dispatch = createEventDispatcher();
   export let items;
   export let styles;
   let showStylesSelection = false;
   let availableStyle = [];
- let currentItem; 
+  let currentItem;
   function showStyles(item) {
-    availableStyle = styles.filter(style => item.available_style.includes(style.id));
+    availableStyle = styles.filter((style) =>
+      item.available_style.includes(style.id),
+    );
     showStylesSelection = true;
   }
 
@@ -16,56 +18,47 @@
     if (item.available_style !== null) {
       currentItem = item;
       showStyles(item);
+    } else {
+      console.log("handleClick", item);
+      dispatch("selectItem", [item]);
     }
-    else {
-      console.log("handleClick", item)
-      dispatch('selectItem', [item]);}
   }
 
   function handleStyleClick(e) {
     currentItem.style = e.css;
     currentItem.style_id = e.id;
-    console.log("handleStyleCick(e)", currentItem)
 
-     dispatch('selectItem', [currentItem] );
-     showStylesSelection = false;
+    dispatch("selectItem", [currentItem]);
+    showStylesSelection = false;
   }
-
-
-
 </script>
 
 <section>
-  <button id="saveMemo" on:click={() => dispatch('saveMemo')}>Sauvegarder</button>
+  <button id="saveMemo" on:click={() => dispatch("saveMemo")}
+    >Sauvegarder</button
+  >
   <div class="content-type-container">
     {#each items as item (item.id)}
-      {#if item.name !== 'detail' && item.name !== 'summary'}
         <button on:click={() => handleCLick(item)}>
           {item.name}
         </button>
-      {/if}
     {/each}
   </div>
 
-{#if showStylesSelection}
-  <div 
-  class="card">
-    {#if availableStyle.length > 0}
-      <h3>choix du style </h3>
-      {#each availableStyle as style}
-        <div class="style-item">
-          <button
-          on:click={handleStyleClick(style)} 
-          >{style.name}</button>
-        </div>
-      {/each}
-    {:else}
-      <p class="no-styles">No styles available</p>
-    {/if}
-  </div>
-
-{/if}
-  
+  {#if showStylesSelection}
+    <div class="card">
+      {#if availableStyle.length > 0}
+        <h3>choix du style</h3>
+        {#each availableStyle as style}
+          <div class="style-item">
+            <button on:click={handleStyleClick(style)}>{style.name}</button>
+          </div>
+        {/each}
+      {:else}
+        <p class="no-styles">No styles available</p>
+      {/if}
+    </div>
+  {/if}
 </section>
 
 <style>
@@ -93,7 +86,6 @@
     background-color: rgb(203, 232, 219);
     color: #4a535f;
   }
-
 
   .style-item {
     margin-bottom: 0.5rem;

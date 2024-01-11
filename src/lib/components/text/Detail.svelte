@@ -3,13 +3,23 @@
 	export let value;
 	export let isEditable = true;
 	let isSave = true;
-	let original = value;
 	export let css = null;
 const dispatch = createEventDispatcher();
 
+
+  $: value1 = value.split('\n')[0];
+  $: value2 = value1.split('\n')[1];
+
+  console.log(value1);
+  console.log(value2);
+
+
+
 function handleKeyDown(e) {
   const trimmedInnerText = e.target.innerText.trim();
-  const trimmedOriginal = 'detail'
+  const trimmedOriginal = `visible text
+                            invisible text`;
+
 
   if (trimmedInnerText === trimmedOriginal) {
     e.target.innerText = '';
@@ -21,7 +31,9 @@ function handleKeyDown(e) {
     isSave = true;
   } else {
     isSave = false;
-  }
+  } 
+
+  
 }
 function handleBlur(e) {
   const trimmedInnerText = e.target.innerText.trim();
@@ -38,7 +50,10 @@ function handleBlur(e) {
 
 </script>
 
-
+<details>
+  <summary>{@html value1}</summary>
+  {@html value2}
+  </details>
 
 <pre
 style={css} 
