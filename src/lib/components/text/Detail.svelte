@@ -27,7 +27,7 @@
     const trimmedInnerText = e.target.innerText.trim();
 
 
-  if (trimmedInnerText === detail) {
+  if (trimmedInnerText === "detail") {
     e.target.innerText = '';
   }
     if (e.ctrlKey && e.key === " ") {
@@ -100,18 +100,36 @@
     animation: notSave 3s infinite;
   }
 
-  .detail {
+  .detail, .summary {
     width: 90%;
-    background-color: red;
-    color: rgb(174, 174, 189);
-  }
-  .summary {
-    width: 90%;
-    background-color: blue;
-    color: rgb(174, 174, 189);
   }
 
   pre.isSave {
     animation: save 0.5s 3;
   }
+
+
+  details {
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  padding: 0.5em 0.5em 0;
+}
+
+summary {
+  font-weight: bold;
+  margin: -0.5em -0.5em 0;
+  padding: 0.5em;
+}
+
+details[open] {
+  padding: 0.5em;
+}
+
+details[open] summary {
+  border-bottom: 1px solid #aaa;
+  margin-bottom: 0.5em;
+}
+
+
+
 </style>

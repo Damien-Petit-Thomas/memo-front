@@ -39,7 +39,7 @@
   >
   <div class="content-type-container">
     {#each items as item (item.id)}
-    {#if item.name !== "warning"}
+    {#if item.name !== "warning" && item.name !== "summary"}
         <button on:click={() => handleCLick(item)}>
           {item.name}
         </button>
