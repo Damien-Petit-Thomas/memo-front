@@ -26,7 +26,7 @@ onNavigate((navigation) => {
 <main>
   <Header />
 
-    <slot />
+      <slot />
  
   <Footer />
 </main>
@@ -34,5 +34,13 @@ onNavigate((navigation) => {
 
 
 <style>
-  
+
+
+  main {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+
 </style>

@@ -11,6 +11,7 @@
 <style>
 footer {
   background-color: rgb(30, 35, 48);
+  height: 3vh;
   color: black;
   font-weight: 700;
   text-align: center;

@@ -12,9 +12,7 @@
   export let item, value;
   let original;
 
-  console.log("editorEditableElement", item);
   const css = item.style?.css !== undefined ? item.style.css : "";
-  console.log("css", css);
   let content = item.content !== undefined ? item.content : item.name;
 
   const components = {
@@ -31,9 +29,8 @@
   });
 
   function saveContent(e) {
-    console.log("saveContent", e);
     let content = e.detail;
-
+    console.log("contentToSave", content)
     if (content === "") {
       content = original;
     }

@@ -16,11 +16,15 @@ export let memo = null;
 
 <style>
   .card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     text-align: center;
     border: 1px solid darkgrey;
     border-radius: 20px;
+    height: 5rem;
     width: var(--width, 30%);
-    margin: 1rem;
+    margin: var(--margin, 1rem);
     padding: var(--padding, 2.5rem);
   }
 .card > a {

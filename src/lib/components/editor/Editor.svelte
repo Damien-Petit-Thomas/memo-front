@@ -2,7 +2,6 @@
   import { dndzone, SOURCES, TRIGGERS } from 'svelte-dnd-action';
   import { flip } from 'svelte/animate';
   import EditableItem from "$lib/components/editor/EditorEditableItem.svelte";
-  import Toolbar from "./EditorToolBar.svelte";
   import { memoItems } from '$lib/stores/Editor.js';
   import { currentMemo } from '$lib/stores/currentMemo.js';
   $: title = {
@@ -57,7 +56,6 @@
   
 </script>
 
-<Toolbar />
 <div class="wrapper">
   <EditableItem item={title} value={handleValue(title)}   />
   <section class="editor"

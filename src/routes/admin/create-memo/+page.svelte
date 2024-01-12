@@ -98,7 +98,6 @@
     categoryId = categoryId !== undefined ? categoryId : memoCategory;
     
     const itemsToSave = $memoItems.map(item => {
-      console.log("saveMemo", item)
       const position = count++;
       return {
         position,

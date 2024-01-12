@@ -1,92 +1,117 @@
 <script>
-	import { createEventDispatcher } from "svelte";
-	export let value;
-	export let isEditable = true;
-	let isSave = true;
-	export let css = null;
-const dispatch = createEventDispatcher();
+  import { createEventDispatcher } from "svelte";
+  import { onMount } from "svelte";
+
+  export let value;
+  export let isEditable = true;
+  let isSave = true;
+  export let css = null;
+
+  const dispatch = createEventDispatcher();
+  const separation = "__@@__";
+
+  let currentSummary;
+  let currentDetail;
+  let summary;
+  let detail;
+  onMount(() => {
+    if (value === "detail") {
+      value = `summary${separation}detail`;
+    }
+
+    // Initial split to set summary and detail
+  [summary, detail] = value.split(separation);
+  });
+
+  function handleKeyDownDetail(e) {
+    const trimmedInnerText = e.target.innerText.trim();
 
 
-  $: value1 = value.split('\n')[0];
-  $: value2 = value1.split('\n')[1];
+  if (trimmedInnerText === detail) {
+    e.target.innerText = '';
+  }
+    if (e.ctrlKey && e.key === " ") {
+      e.preventDefault();
+      currentDetail = trimmedInnerText;
+      const finalstring = `${currentSummary}${separation}${currentDetail}`;
+      dispatch("contentEdited", finalstring);
+      isSave = true;
+    } else {
+      isSave = false;
+    }
+  }
 
-  console.log(value1);
-  console.log(value2);
-
-
-
-function handleKeyDown(e) {
-  const trimmedInnerText = e.target.innerText.trim();
-  const trimmedOriginal = `visible text
-                            invisible text`;
-
+  function handleKeyDownSummary(e) {
+    const trimmedInnerText = e.target.innerText.trim();
+  const trimmedOriginal = "summary"
 
   if (trimmedInnerText === trimmedOriginal) {
     e.target.innerText = '';
   }
-
-  if (e.ctrlKey && e.key === ' ') {
-    e.preventDefault();
-    dispatch('contentEdited', trimmedInnerText);
-    isSave = true;
-  } else {
-    isSave = false;
-  } 
-
-  
-}
-function handleBlur(e) {
-  const trimmedInnerText = e.target.innerText.trim();
-  const trimmedOriginal = 'paragraphe'
-
-  if (trimmedInnerText === '') {
-  return e.target.innerText = trimmedOriginal;
+    if (e.ctrlKey && e.key === " ") {
+      e.preventDefault();
+      currentSummary = trimmedInnerText;
+      const finalstring = `${currentSummary}${separation}${currentDetail}`;
+      dispatch("contentEdited", finalstring);
+      isSave = true;
+    } else {
+      isSave = false;
+    }
   }
-  dispatch('contentEdited', trimmedInnerText);
-  isSave = true;
-}
-
-
-
 </script>
 
-<details>
-  <summary>{@html value1}</summary>
-  {@html value2}
-  </details>
-
-<pre
-style={css} 
-contenteditable={isEditable}
-on:keydown={handleKeyDown}
-on:blur={handleBlur}
-class:isSave={isSave}
-class:isEditable={isEditable}
-  >
-  {@html value}
-</pre>
-
-
+{#if isEditable}
+  ce texte sera visible
+  <pre
+    class="summary"
+    style={css}
+    contenteditable={isEditable}
+    on:keydown={handleKeyDownSummary}
+    class:isSave
+    class:isEditable>
+    {@html summary}
+  </pre>
+  ce texte sera caché
+  <pre
+    class="detail"
+    style={css}
+    contenteditable={isEditable}
+    on:keydown={handleKeyDownDetail}
+    class:isSave
+    class:isEditable>
+    {@html detail}
+  </pre>
+{:else}
+  <pre>
+    <details>
+      <summary>{@html summary}</summary>
+      {@html detail}
+    </details>
+  </pre>
+{/if}
 
 <style>
-
-
   pre {
     margin: 0 1rem 0 1rem;
   }
   pre.isEditable {
     border-left: 1px solid lightskyblue;
-
     color: rgb(174, 174, 189);
-	animation: notSave 3s infinite; 
+    animation: notSave 3s infinite;
+  }
 
+  .detail {
+    width: 90%;
+    background-color: red;
+    color: rgb(174, 174, 189);
+  }
+  .summary {
+    width: 90%;
+    background-color: blue;
+    color: rgb(174, 174, 189);
   }
 
   pre.isSave {
-    animation: save .5s 3;
+    animation: save 0.5s 3;
   }
-
-
-
-
 </style>

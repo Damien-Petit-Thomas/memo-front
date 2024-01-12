@@ -39,9 +39,11 @@
   >
   <div class="content-type-container">
     {#each items as item (item.id)}
+    {#if item.name !== "warning"}
         <button on:click={() => handleCLick(item)}>
           {item.name}
         </button>
+    {/if}
     {/each}
   </div>
 

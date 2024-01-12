@@ -17,8 +17,9 @@ function handleKeyDown(e) {
 
   if (e.ctrlKey && e.key === ' ') {
     e.preventDefault();
-    dispatch('contentEdited', trimmedInnerText);
     isSave = true;
+    console.log('this.innerText.trim()', this.innerText.trim());
+    dispatch('contentEdited', this.innerText.trim());
   } else {
     isSave = false;
   }

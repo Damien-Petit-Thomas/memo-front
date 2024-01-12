@@ -5,8 +5,7 @@
   import Toc from '$lib/components/sidebar/Toc.svelte';
   import Paragraphe from '$lib/components/text/Paragraph.svelte';
   import Blockquote from '$lib/components/text/Blockquote.svelte';
-  import Summary from '../../../lib/components/text/Summary.svelte';
-  import DetailFormat from '../../../lib/components/text/DetailFormat.svelte';
+  import Detail from '../../../lib/components/text/Detail.svelte';
   import NoteCard from '../../../lib/components/text/NoteCard.svelte';
   import { page } from '$app/stores';
   import { fullmemos } from '$lib/stores/fullmemos.js';
@@ -19,8 +18,7 @@
     noteCard: NoteCard,
     code: Code,
     paragraphe: Paragraphe,
-    detailFormat: DetailFormat,
-    summary: Summary,
+    detail:Detail,
     blockquote: Blockquote  
   };
   
@@ -49,21 +47,21 @@
         // on classe les items par position
         copyMemo.contents.sort((a, b) => a.position - b.position);
         memo.contents.sort((a, b) => a.position - b.position);
-        const detail = copyMemo.contents.find((item) => item.type.name === 'detail');
-        const summary = copyMemo.contents.find((item) => item.type.name === 'summary');
-        if (detail && summary) {
-          const detailFormated = {
-            id: detail.id,
-            content: [detail.content, summary.content],
-            position: detail.position,
-            type: {
-              name: 'detailFormat',
-              css: 'detail-format',
-            },
-          };
-          copyMemo.contents = copyMemo.contents.filter((item) => item.type.name !== 'detail' && item.type.name !== 'summary');
-          copyMemo.contents = [...copyMemo.contents, detailFormated];
-        }
+        // const detail = copyMemo.contents.find((item) => item.type.name === 'detail');
+        // const summary = copyMemo.contents.find((item) => item.type.name === 'summary');
+        // if (detail && summary) {
+        //   const detailFormated = {
+        //     id: detail.id,
+        //     content: [detail.content, summary.content],
+        //     position: detail.position,
+        //     type: {
+        //       name: 'detailFormat',
+        //       css: 'detail-format',
+        //     },
+        //   };
+        //   copyMemo.contents = copyMemo.contents.filter((item) => item.type.name !== 'detail' && item.type.name !== 'summary');
+        //   copyMemo.contents = [...copyMemo.contents, detailFormated];
+        // }
         
         isDataReady = true;
       }

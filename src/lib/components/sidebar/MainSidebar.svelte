@@ -92,6 +92,7 @@
     min-width: 15%;
     padding-top: 20px;
     overflow-x: hidden;
+    height: 100vh;
   }
 
   .category {

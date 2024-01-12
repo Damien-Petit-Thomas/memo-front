@@ -41,18 +41,21 @@
 
 
 <div class="container">
-	<Sidebar on:showMemos={showMemos}/>
-	<Main  {selectedCategory}/>
+		<Sidebar on:showMemos={showMemos}/>
+		<Main  {selectedCategory}/>
 </div>
 
 
 
 
 <style>
+
+
+
 	.container {
 		display: flex;
-		max-height: 100vh;
 		width: 100vw;
+		height: 92vh;
 	}
 
 	
