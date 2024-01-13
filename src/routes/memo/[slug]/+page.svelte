@@ -10,6 +10,7 @@
   import { page } from '$app/stores';
   import { fullmemos } from '$lib/stores/fullmemos.js';
   import  {currentMemo} from '$lib/stores/currentMemo.js';
+  import  NextBar  from '$lib/components/nextBar/NextBar.svelte';
   let isEditable = false;
   // Actual default values
   const md = markdownit();
@@ -27,7 +28,7 @@
   let memo;
   let lexicon;
   let isDataReady = false;
-  
+  let currentMemoIdx;
   page.subscribe(async ($page) => {
     
     if ($fullmemos.length === 0) {
@@ -38,6 +39,7 @@
     pageSlug = $page.params.slug;
     memo = $fullmemos.find((m) => m.slug === pageSlug);
     if (memo) {
+      currentMemoIdx= $fullmemos.findIndex((m) => m.slug === pageSlug);
       copyMemo = JSON.parse(JSON.stringify(memo));
       if (copyMemo.contents){
         copyMemo.contents.forEach((item) => {
@@ -47,22 +49,6 @@
         // on classe les items par position
         copyMemo.contents.sort((a, b) => a.position - b.position);
         memo.contents.sort((a, b) => a.position - b.position);
-        // const detail = copyMemo.contents.find((item) => item.type.name === 'detail');
-        // const summary = copyMemo.contents.find((item) => item.type.name === 'summary');
-        // if (detail && summary) {
-        //   const detailFormated = {
-        //     id: detail.id,
-        //     content: [detail.content, summary.content],
-        //     position: detail.position,
-        //     type: {
-        //       name: 'detailFormat',
-        //       css: 'detail-format',
-        //     },
-        //   };
-        //   copyMemo.contents = copyMemo.contents.filter((item) => item.type.name !== 'detail' && item.type.name !== 'summary');
-        //   copyMemo.contents = [...copyMemo.contents, detailFormated];
-        // }
-        
         isDataReady = true;
       }
     } else {
@@ -124,33 +110,40 @@
 <div class="container">
   
   <MainSidebar /> 
-  <div class="content"  contenteditable="false">
-    {#if isDataReady}
+  <div class="container_main">
+    <div class="content"  contenteditable="false">
+      {#if isDataReady}
     
-    <h2 id="memo-title">{copyMemo.title}</h2>
-    {#if copyMemo}
-    {#if copyMemo.contents}
-    {#each copyMemo.contents as content (content.id)}
-    {#if components[content.type.name]}
+      <h2 id="memo-title">{copyMemo.title}</h2>
+      {#if copyMemo}
+      {#if copyMemo.contents}
+      {#each copyMemo.contents as content (content.id)}
+      {#if components[content.type.name]}
     
-    <svelte:component 
-    {isEditable} 
-    this={components[content.type.name]} 
-    value={content.content}
-    css={content.style.css}/>
-    {:else}
-    <p>{content.content}</p>
-    {/if}
+      <svelte:component
+      {isEditable}
+      this={components[content.type.name]}
+      value={content.content}
+      css={content.style.css}/>
+      {:else}
+      <p>{content.content}</p>
+      {/if}
     
-    {/each}
-    {/if}
-    {/if}
-    {/if}
-  </div> 
+      {/each}
+      {/if}
+      {/if}
+      {/if}
+    </div>
+    <div class="container_nextbar">
+      <NextBar {currentMemoIdx}/>
+    </div>
+  </div>
   <Toc 
   title={copyMemo.title}
   doc={memo.contents}/>
 </div>
+
+
 
 <style>
 
@@ -160,6 +153,22 @@
     min-width: 100vw;
   }
 
+  .container_nextbar {
+    width: 100%;
+    padding: 1rem;
+    display: flex;
+    background-color: rgb(29, 32, 32);
+
+    justify-content: center;
+    border: 1px solid #818181;
+  }
+  .container_main {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between ;
+    align-items: center;
+    width: 100%;
+  }
 
   
   .content {
@@ -168,7 +177,7 @@
     display: flex;
     flex-direction: column;
     padding: 20px;
-    min-width: 70%;
+    min-width: 100%;
     min-height: 95vh;
     widows: 15%;
     height: fit-content;

@@ -110,12 +110,17 @@
 
 
   details {
+  background-color: rgb(57, 57, 67);
   border: 1px solid #aaa;
   border-radius: 4px;
   padding: 0.5em 0.5em 0;
+  color:rgb(253, 253, 253)
 }
 
 summary {
+  background-color: #686868;
+
+  cursor: pointer;
   font-weight: bold;
   margin: -0.5em -0.5em 0;
   padding: 0.5em;

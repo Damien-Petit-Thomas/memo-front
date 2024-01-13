@@ -27,7 +27,7 @@
             --width="20%"
             --padding="1.8rem"
           >
-            <div>suivant</div>
+            <div><p>suivant</p></div>
           </Card>
         {:else}
           <Card
@@ -36,7 +36,8 @@
             --width="20%"
             --padding=".8rem"
           >
-            <div>précédent</div>
+          <div><p class="preview">précédent</p></div>
+
           </Card>
         {/if}
       {:else}
@@ -47,7 +48,8 @@
             --width="20%"
             --padding=".8rem"
           >
-            <div>précédent</div>
+          <div><p class="preview">précédent</p></div>
+
           </Card>
           <Card
             memo={$fullmemos[currentMemoIdx + 1]}
@@ -55,7 +57,8 @@
             --width="20%"
             --padding=".8rem"
           >
-            <div>suivant</div>
+          <div><p class="next">suivant</p></div>
+
           </Card>
         {:else if currentMemoIdx === $fullmemos.length - 1}
           <Card
@@ -64,7 +67,8 @@
             --width="20%"
             --padding=".8rem"
           >
-            <div>précédent</div>
+          <div><p>précédent</p></div>
+
           </Card>
           <Card
             memo={$fullmemos[0]}
@@ -72,7 +76,8 @@
             --width="20%"
             --padding=".8rem"
           >
-            <div>suivant</div>
+          <div><p class="preview" >suivant</p></div>
+
           </Card>
         {:else}
           <Card
@@ -81,7 +86,8 @@
             --width="20%"
             --padding=".8rem"
           >
-            <div>précédent</div>
+          <div><p class="preview">précédent</p></div>
+
           </Card>
           <Card
             memo={$fullmemos[currentMemoIdx + 1]}
@@ -89,7 +95,8 @@
             --width="20%"
             --padding=".8rem"
           >
-            <div>suivant</div>
+          <div><p class="next">suivant</p></div>
+
           </Card>
         {/if}
       {/if}
@@ -99,11 +106,45 @@
 
 
 <style>
+
+
+p.next{
+  background-size: 100% 3px;
+  background: linear-gradient(#4d4668 0 0) calc(100% - var(--p,0%)) / var(--p,0%) no-repeat;
+  transition: .4s, background-position 0s;
+}
+p.preview{
+  background: linear-gradient(#4d4668 0 0) var(--p, 0) / var(--p, 0) no-repeat;
+  transition: .4s, background-position 0s;
+  
+}
+
+p.next:hover{
+  --p: 100%;
+  color: #fff;
+}
+
+p.preview:hover{
+  --p: 100%;
+  color: #fff;
+}
+
+
+
+
+
+
+
+  
+
+
+
   .container_nextbar {
     display: flex;
     justify-content: space-between;
+    align-items: flex-end;
     width: 100%;
-    height: fit-content;
+    
     margin: 2rem;
   }
 </style>
