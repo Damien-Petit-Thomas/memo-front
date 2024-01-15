@@ -1,10 +1,5 @@
 export const load = async ({ fetch }) => {
   const url = import.meta.env.VITE_URL_API;
-  console.log(import.meta.env.VITE_URL_API);
-  console.log(import.meta.env);
-  console.log(url);
-
-
   try {
     const [
       cateoriesResponse,
