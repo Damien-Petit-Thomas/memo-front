@@ -19,7 +19,6 @@
       currentItem = item;
       showStyles(item);
     } else {
-      console.log("handleClick", item);
       dispatch("selectItem", [item]);
     }
   }

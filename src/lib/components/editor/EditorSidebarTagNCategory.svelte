@@ -23,7 +23,6 @@
   
     onMount(async () => {
   if ($categories.length === 0) {
-    console.log("categories onmount");
 
     await categories.get();
 
@@ -48,7 +47,6 @@
 
   
     function handleTagChange(e) {
-      console.log("toggle tags", e.target)
       const id = parseInt(e.target.value);
       $tags = $tags.map(tag => {
         if (tag.id === id) {

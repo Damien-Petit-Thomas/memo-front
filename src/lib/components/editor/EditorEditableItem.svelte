@@ -30,7 +30,6 @@
 
   function saveContent(e) {
     let content = e.detail;
-    console.log("contentToSave", content)
     if (content === "") {
       content = original;
     }

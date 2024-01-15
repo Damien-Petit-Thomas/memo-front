@@ -36,7 +36,6 @@
     // on retire le   # de l'id
     id = id.substring(1);
     const element = document.getElementById(id);
-    console.log(id);
     if (element) {
       const offset =
         element.offsetTop - window.innerHeight * 0.1 + element.offsetHeight / 2;

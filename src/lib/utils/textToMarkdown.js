@@ -147,7 +147,6 @@ export const detectLinks = (text, id, linkList) => {
     if (linkMatch) {
       const linkText = linkMatch[1];
       const linkUrl = linkMatch[2];
-      console.log('linkMatch', linkUrl);
       saveLink(linkText, linkUrl, id, linkList);
     }
   });

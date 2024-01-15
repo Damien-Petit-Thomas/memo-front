@@ -39,7 +39,6 @@
       $currentMemo.contents.sort((a, b) => a.position -b.position);
       $currentMemo.contents.forEach(item => {
         memoItems.update(items => [...items, item]);       
-        console.log("on mount item", item) 
       })
       currentMemo.set({})
     }
@@ -54,7 +53,6 @@
   function handleSelectItem(e) {
     for (let i= 0; i < e.detail.length; i++){
       const count = Math.random()
-      console.log("nouvel item canva", e.detail)
       
       const newItem = {
         content : e.detail[i].name,

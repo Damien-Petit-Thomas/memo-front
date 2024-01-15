@@ -1,6 +1,5 @@
 export const load = async ({ fetch }) => {
   const url = import.meta.env.VITE_BACK_CONTAINER_NAME;
-  console.log(import.meta.env);
   try {
     const [
       cateoriesResponse,
@@ -74,7 +73,6 @@ export const load = async ({ fetch }) => {
       tags, categories, todos, memos, fullmemos, lexicon, links, styles,
     };
   } catch (error) {
-    console.log(error);
     return { error: 'Unable to fetch currencies' };
   }
 };

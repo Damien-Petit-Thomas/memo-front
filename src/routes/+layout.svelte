@@ -6,9 +6,7 @@
   import Footer from "$lib/components/footer/Footer.svelte";
 
 onNavigate((navigation) => {
-  console.log("onNavigate");
 	if (!document.startViewTransition) {
-   console.log("no transition")
     return;
   }
 
