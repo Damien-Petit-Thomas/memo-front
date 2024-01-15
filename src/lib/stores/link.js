@@ -5,7 +5,7 @@ export const link = (() => {
   const linkList = [];
   // Méthode pour ajouter une nouvelle tâche
   const url = import.meta.env.VITE_API_URL;
-
+console.log(url)
   const get = async () => {
     try {
       const response = await fetch(`http://${url}/api/link`);

@@ -10,8 +10,7 @@ VOLUME /app
 
 
 # Force production mode for better DNS resolution
-CMD ["npm", "run", "dev"]
-
+CMD ["npm", "run", "dev", "--", "--host", "--mode", "producton"]
 
 # # Build Stage
 # FROM node:lts-slim as build
