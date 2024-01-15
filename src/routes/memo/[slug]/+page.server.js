@@ -1,6 +1,6 @@
 
 export const load = async ({ fetch }) => {
-  const url = import.meta.env.VITE_URL_API;
+  const url = import.meta.env.VITE_BACK_CONTAINER_NAME;
 
   try {
     const response = await fetch(`http://${url}/api/memo`);

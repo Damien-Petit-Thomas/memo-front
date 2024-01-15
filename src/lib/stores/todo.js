@@ -1,5 +1,5 @@
 import { writable } from 'svelte/store';
-const url = import.meta.env.VITE_URL;
+const url = import.meta.env.VITE_API_URL;
 export const todos = (() => {
   const { subscribe, set, update } = writable([]);
   // si le store est vide, on va chercher les données dans la BDD

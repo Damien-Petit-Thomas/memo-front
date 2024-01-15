@@ -2,7 +2,7 @@ import { writable } from 'svelte/store';
 
 export const categories = (() => {
   const { subscribe, update, set } = writable([]);
-  const url = import.meta.env.VITE_URL;
+  const url = import.meta.env.VITE_API_URL;
   const get = async () => {
     try {
       const response = await fetch(`http://${url}/api/category`);

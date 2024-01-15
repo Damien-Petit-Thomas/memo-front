@@ -2,7 +2,7 @@ import { writable } from 'svelte/store';
 
 export const tags = (() => {
   const { subscribe, set, update } = writable([]);
-  const url = import.meta.env.VITE_URL;
+  const url = import.meta.env.VITE_API_URL;
 
 
   // Méthode pour ajouter une nouvelle tâche

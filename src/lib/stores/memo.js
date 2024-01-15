@@ -4,7 +4,7 @@ export const memos = (() => {
   const { subscribe, set, update } = writable([]);
 
   // Méthode pour ajouter une nouvelle tâche
-  const url = import.meta.env.VITE_URL;
+  const url = import.meta.env.VITE_API_URL;
 
   const get = async () => {
     try {

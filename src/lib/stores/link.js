@@ -4,7 +4,7 @@ export const link = (() => {
   const { subscribe, update, set } = writable([]);
   const linkList = [];
   // Méthode pour ajouter une nouvelle tâche
-  const url = import.meta.env.VITE_URL;
+  const url = import.meta.env.VITE_API_URL;
 
   const get = async () => {
     try {

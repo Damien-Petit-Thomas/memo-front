@@ -2,7 +2,7 @@ import { writable } from 'svelte/store';
 
 export const fullmemos = (() => {
   const { subscribe, set, update } = writable([]);
-  const url = import.meta.env.VITE_URL;
+  const url = import.meta.env.VITE_API_URL;
 
 
   const get = async () => {
