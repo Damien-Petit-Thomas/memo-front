@@ -149,7 +149,7 @@
 
   .container {
     display: flex;
-    height: 100vh;
+    min-height: 100vh;
     min-width: 100vw;
   }
 
@@ -167,6 +167,7 @@
     flex-direction: column;
     justify-content: space-between ;
     align-items: center;
+    height: 100%;
     width: 100%;
   }
 

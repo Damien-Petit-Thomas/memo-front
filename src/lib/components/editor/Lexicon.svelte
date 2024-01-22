@@ -33,6 +33,10 @@
 
 
 <style>
+  details{
+    cursor: pointer;
+    margin:.5rem;
+  }
   form {
     display: flex;
     flex-direction: column;

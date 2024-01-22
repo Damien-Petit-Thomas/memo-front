@@ -139,7 +139,11 @@
       display: inline;
     }
 
-  
+    details{
+      cursor: pointer;
+      padding: .5rem;
+    }
+
     .selected {
       text-decoration: underline;
       font-size: 3rem;
