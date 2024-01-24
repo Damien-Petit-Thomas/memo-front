@@ -9,8 +9,17 @@
   import Blockquote from "$lib/components/text/Blockquote.svelte";
   import DOMPurity from "dompurify";
   import NoteCard from "$lib/components/text/NoteCard.svelte";
-  export let item, value;
+  export let item, value, isDeleted = false ;
   let original;
+
+
+
+$: if (isDeleted){
+
+  isDeleted = false
+  // on recharge la page
+  window.location.reload()
+}
 
   const css = item.style?.css !== undefined ? item.style.css : "";
   let content = item.content !== undefined ? item.content : item.name;
@@ -66,7 +75,7 @@
     />
   {:else}
     <p>{content}</p>
-  {/if}
+{/if}
 </div>
 
 <style>

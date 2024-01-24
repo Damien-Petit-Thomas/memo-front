@@ -49,19 +49,19 @@ export const memos = (() => {
   };
 
   // Méthode pour supprimer une tâche
-  const remove = async (memo) => {
+  const remove = async (memoId) => {
     try {
       // Envoyer la demande de suppression à la BDD
-      const response = await fetch(`http://${url}/api/memo/${memo.id}`, {
+      const response = await fetch(`http://${url}/api/memo/${memoId}`, {
         method: 'DELETE',
       });
 
       if (response.ok) {
         // Mettre à jour le store en excluant la tâche supprimée
-        update(($memos) => $memos.filter((t) => t.id !== memo.id));
-      } else {
-        console.error(`Error removing memo: ${response.status}`);
+        update(($memos) => $memos.filter((t) => t.id !== memoId));
+        return true;
       }
+      console.error(`Error removing memo: ${response.status}`);
     } catch (error) {
       console.error('An unexpected error occurred:', error);
     }

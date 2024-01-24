@@ -4,11 +4,13 @@
   import EditableItem from "$lib/components/editor/EditorEditableItem.svelte";
   import { memoItems } from '$lib/stores/Editor.js';
   import { currentMemo } from '$lib/stores/currentMemo.js';
+  export let isDeleted = false;
+
   $: title = {
     content: $currentMemo?.title || "titre",
     name: "title",
   };
-  
+
   const flipDurationMs = 200;
   let dragDisabled = true;
   let deletedItems = [];
@@ -47,7 +49,8 @@
   
   
   function handleValue(item) {
-    return  item.content !== undefined ? item.content : item.content = item.name
+
+  return  item.content !== undefined ? item.content : item.content = item.name
   }
   
   
@@ -57,7 +60,8 @@
 </script>
 
 <div class="wrapper">
-  <EditableItem item={title} value={handleValue(title)}   />
+  <EditableItem item={title} value={handleValue(title)} {isDeleted}   />
+
   <section class="editor"
   use:dndzone="{{ items: $memoItems, dragDisabled, flipDurationMs }}"
   on:consider="{handleConsider}"

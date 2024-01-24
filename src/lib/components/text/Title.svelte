@@ -3,7 +3,6 @@
 	export let value;
 	export let isEditable = true;
 	let isSave =  true;
-	let original = value;
 	export let css = null;
 const dispatch = createEventDispatcher();
 
